@@ -1,0 +1,18 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: solra-frontend
+
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: solra-frontend
+  template:
+    metadata:
+      labels:
+        app: solra-frontend
+    spec:
+      containers:
+        - name: solra-frontend
+          image: ghcr.io/fisa4th-final-project/solra-frontend

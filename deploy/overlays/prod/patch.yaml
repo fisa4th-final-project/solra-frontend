@@ -1,0 +1,15 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: solra-frontend
+spec:
+  template:
+    spec:
+      containers:
+        - name: solra-frontend
+          env:
+            - name: VUE_PROFILES_ACTIVE
+              value: prod
+          envFrom:
+            - configMapRef:
+                name: prod-config-map
