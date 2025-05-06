@@ -6,3 +6,6 @@ declare module '*.vue' {
   const component: DefineComponent<{}, {}, any>
   export default component
 }
+
+// vuetify/styles 모듈 추가
+declare module 'vuetify/styles';
