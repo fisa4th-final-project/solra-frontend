@@ -1,12 +1,12 @@
 import { createRouter, createWebHistory } from 'vue-router'
 // import { useAuthStore } from '@/store/auth'
 
-import SigninPage from '@/pages/SigninPage.vue'
+import LoginPage from '@/pages/LoginPage.vue'
 import MainFrame from '@/frames/MainFrame.vue'
 
 const routes = [
-  { path: '/signin', 
-    component: SigninPage 
+  { path: '/login', 
+    component: LoginPage 
   },
   {
     path: '/',
