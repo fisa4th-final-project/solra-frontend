@@ -1,0 +1,17 @@
+{
+  "folders": [
+    {
+      "name": "solra-frontend",
+      "path": "."
+    }
+  ],
+  "settings": {
+    "typescript.preferences.importModuleSpecifier": "non-relative",
+    "javascript.preferences.importModuleSpecifier": "non-relative",
+  },
+  "extensions": {
+    "recommendations": [
+      "Vue.volar"
+    ]
+  }
+}
