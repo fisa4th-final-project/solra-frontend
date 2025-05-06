@@ -14,6 +14,20 @@ import * as directives from 'vuetify/directives'
 const vuetify = createVuetify({
   components,
   directives,
+  theme: {
+    defaultTheme: 'solraTheme',
+    themes: {
+      solraTheme: {
+        dark: true,
+        colors: {
+          primary: '#FF6500',
+          secondary: '#1E3E62',
+          background: '#0B192C',
+          text: '#000000'
+        }
+      }
+    }
+  }
 })
 
 const app = createApp(App)
