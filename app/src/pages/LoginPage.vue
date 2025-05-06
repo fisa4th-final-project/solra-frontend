@@ -1,5 +1,7 @@
 <script setup>
+  import { ref } from 'vue'
 
+  const visible = ref(false)
 </script>
 
 <template>
@@ -12,12 +14,46 @@
         <h2 class="highlight">Welcome!</h2>
         <p>플랫폼을 이용하시려면 로그인해주세요.</p>
       </div>
+
       <div class="login-input">
-        <form>
-          <input type="text">
-          <input type="password">
-          <input type="submit">
-        </form>
+        <div class="text-subtitle-1 text-medium">Account</div>
+
+        <v-text-field
+          placeholder="Username"
+          prepend-inner-icon="mdi-email-outline"
+          variant="outlined"
+        ></v-text-field>
+
+        <div class="text-subtitle-1 text-medium d-flex align-center justify-space-between">
+          Password
+          <a
+            class="text-caption text-decoration-none text-blue"
+            href="#"
+            rel="noopener noreferrer"
+            target="_blank"
+          >
+            Forgot password?</a>
+        </div>
+
+        <v-text-field
+          :append-inner-icon="visible ? 'mdi-eye-off' : 'mdi-eye'"
+          :type="visible ? 'text' : 'password'"
+
+          placeholder="Password"
+          prepend-inner-icon="mdi-lock-outline"
+          variant="outlined"
+          @click:append-inner="visible = !visible"
+        ></v-text-field>
+
+        <v-btn
+          class="mb-8"
+          color="primary"
+          size="large"
+          variant="tonal"
+          block
+        >
+          Log In
+        </v-btn>
       </div>
     </div>
   </div>
@@ -62,5 +98,8 @@
     flex-direction: column;
     width: 100%;
     gap: 10px;
+  }
+  .login-input {
+    width: 100%;
   }
 </style>
