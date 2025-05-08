@@ -1,7 +1,19 @@
 <script setup>
+  import { loginApi } from '@/lib/api/user/loginApi';
   import { ref } from 'vue'
 
   const visible = ref(false)
+  const form = ref({
+    userLoginId: '',
+    password: ''
+  })
+  async function loginHandler() {
+    const res = await loginApi({
+      userLoginId: form.value.userLoginId,
+      password: form.value.password
+    });
+    console.log(res);
+  }
 </script>
 
 <template>
@@ -14,47 +26,51 @@
         <h2 class="highlight">Welcome!</h2>
         <p>플랫폼을 이용하시려면 로그인해주세요.</p>
       </div>
+      <v-form @submit.prevent="loginHandler">
+        <div class="login-input">
+          <div class="text-subtitle-1 text-medium">Account</div>
 
-      <div class="login-input">
-        <div class="text-subtitle-1 text-medium">Account</div>
+          <v-text-field
+            placeholder="Username"
+            prepend-inner-icon="mdi-email-outline"
+            variant="outlined"
+            v-model="form.userLoginId"
+          ></v-text-field>
 
-        <v-text-field
-          placeholder="Username"
-          prepend-inner-icon="mdi-email-outline"
-          variant="outlined"
-        ></v-text-field>
+          <div class="text-subtitle-1 text-medium d-flex align-center justify-space-between">
+            Password
+            <a
+              class="text-caption text-decoration-none text-blue"
+              href="#"
+              rel="noopener noreferrer"
+              target="_blank"
+            >
+              Forgot password?</a>
+          </div>
 
-        <div class="text-subtitle-1 text-medium d-flex align-center justify-space-between">
-          Password
-          <a
-            class="text-caption text-decoration-none text-blue"
-            href="#"
-            rel="noopener noreferrer"
-            target="_blank"
+          <v-text-field
+            :append-inner-icon="visible ? 'mdi-eye-off' : 'mdi-eye'"
+            :type="visible ? 'text' : 'password'"
+
+            placeholder="Password"
+            prepend-inner-icon="mdi-lock-outline"
+            variant="outlined"
+            @click:append-inner="visible = !visible"
+            v-model="form.password"
+          ></v-text-field>
+
+          <v-btn
+            type="submit"
+            class="mb-8"
+            color="primary"
+            size="large"
+            variant="tonal"
+            block
           >
-            Forgot password?</a>
+            Log In
+          </v-btn>
         </div>
-
-        <v-text-field
-          :append-inner-icon="visible ? 'mdi-eye-off' : 'mdi-eye'"
-          :type="visible ? 'text' : 'password'"
-
-          placeholder="Password"
-          prepend-inner-icon="mdi-lock-outline"
-          variant="outlined"
-          @click:append-inner="visible = !visible"
-        ></v-text-field>
-
-        <v-btn
-          class="mb-8"
-          color="primary"
-          size="large"
-          variant="tonal"
-          block
-        >
-          Log In
-        </v-btn>
-      </div>
+      </v-form>
     </div>
   </div>
 </template>
