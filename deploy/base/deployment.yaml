@@ -16,3 +16,6 @@ spec:
       containers:
         - name: solra-frontend
           image: ghcr.io/fisa4th-final-project/solra-frontend
+          envFrom:
+            - secretRef:
+                name: solra-frontend-secret
