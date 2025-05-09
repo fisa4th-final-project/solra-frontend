@@ -59,7 +59,9 @@
       >
       <!-- 
       todo:
-      1. userStore 생성 후 { org / dept } 동적 주입
+      1. userStore 생성
+      2. { org / dept } 동적 주입
+      3. { username? or id } 동적 주입
       -->
         우리FIS / 인프라 통합
       </v-list-item-title>
