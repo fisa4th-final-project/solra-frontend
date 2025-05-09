@@ -1,4 +1,6 @@
 import type { ApiRequest } from '@/lib/global/ApiRequest';
+import { ApiError } from '@/lib/global/customError';
+
 
 export async function apiRequest<T = any>(options: ApiRequest): Promise<T> {
   const {
@@ -23,12 +25,17 @@ export async function apiRequest<T = any>(options: ApiRequest): Promise<T> {
     config.body = JSON.stringify(body);
   }
 
-  const url = import.meta.env.VITE_API_URL + path;
+  const url = `${import.meta.env.VITE_API_URL}/${path}`;
   const res = await fetch(url, config);
 
   if (!res.ok) {
     const error = await res.json().catch(() => ({}));
-    throw new Error(error.message || `api 커넥션 에러 ${res.status}`);
+    const unExpected = {
+      success: false,
+      code: res.status,
+      message: 'api 커넥션 에러',
+    }
+    throw new ApiError(error || unExpected);
   }
 
   return res.json();
