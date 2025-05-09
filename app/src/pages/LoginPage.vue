@@ -31,7 +31,10 @@ import { loginApi } from '@/lib/api/user/loginApi';
         <h2 class="highlight">Welcome!</h2>
         <p>플랫폼을 이용하시려면 로그인해주세요.</p>
       </div>
-      <v-form @submit.prevent="loginHandler">
+      <v-form 
+        @submit.prevent="loginHandler"
+        class="login-form"
+      >
         <div class="login-input">
           <div class="text-subtitle-1 text-medium">Account</div>
 
@@ -121,6 +124,9 @@ import { loginApi } from '@/lib/api/user/loginApi';
     gap: 10px;
   }
   .login-input {
+    width: 100%;
+  }
+  .login-form {
     width: 100%;
   }
 </style>
