@@ -3,21 +3,19 @@ import Sidebar from '@/components/layout/Sidebar.vue'
 </script>
 
 <template>
-  <div class="main-frame">
-    <Sidebar />
-    <div class="content">
-      <router-view />
-    </div>
-  </div>
+  <v-app>
+
+    <v-layout>
+      <Sidebar/>
+      <v-main>
+        <router-view />
+      </v-main>
+    </v-layout>
+  </v-app>
 </template>
 
-<style scoped>
-.main-frame {
-  display: flex;
-}
-
-.content {
-  flex: 1;
-  padding: 20px;
+<style lang="scss" scoped>
+.v-layout {
+  width: 100vw;
 }
 </style>

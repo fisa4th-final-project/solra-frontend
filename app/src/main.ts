@@ -24,7 +24,8 @@ const vuetify = createVuetify({
           primary: '#FF6500',
           secondary: '#1E3E62',
           background: '#0B192C',
-          text: '#000000'
+          text: '#000000',
+          textGray:"rgb(175, 175, 175)"
         }
       }
     }
@@ -34,7 +35,7 @@ const vuetify = createVuetify({
 const app = createApp(App)
 const pinia = createPinia()
 
-app.config.errorHandler = globalErrorHandler
+// app.config.errorHandler = globalErrorHandler
 
 app.use(pinia)
 app.use(router)
