@@ -1,5 +1,5 @@
 <script setup>
-  import Dialog from '@/components/common/dialog.vue';
+  import Dialog from '@/components/common/Dialog.vue';
 import { loginApi } from '@/lib/api/user/loginApi';
   import { ref } from 'vue'
 
