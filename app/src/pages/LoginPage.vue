@@ -1,22 +1,27 @@
 <script setup>
-  import { loginApi } from '@/lib/api/user/loginApi';
+  import Dialog from '@/components/common/dialog.vue';
+import { loginApi } from '@/lib/api/user/loginApi';
   import { ref } from 'vue'
 
   const visible = ref(false)
   const form = ref({
     userLoginId: '',
     password: ''
-  })
+  });
+
   async function loginHandler() {
     const res = await loginApi({
       userLoginId: form.value.userLoginId,
       password: form.value.password
+    }).finally(() => {
+      form.value.userLoginId = '';
+      form.value.password = '';
     });
-    console.log(res);
   }
 </script>
 
 <template>
+  <Dialog></Dialog>
   <div class="login-page">
     <div class="container left">
       <h1>S O L R A</h1>
