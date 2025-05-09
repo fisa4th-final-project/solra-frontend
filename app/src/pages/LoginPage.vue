@@ -1,22 +1,27 @@
 <script setup>
-  import { loginApi } from '@/lib/api/user/loginApi';
+  import Dialog from '@/components/common/dialog.vue';
+import { loginApi } from '@/lib/api/user/loginApi';
   import { ref } from 'vue'
 
   const visible = ref(false)
   const form = ref({
     userLoginId: '',
     password: ''
-  })
+  });
+
   async function loginHandler() {
     const res = await loginApi({
       userLoginId: form.value.userLoginId,
       password: form.value.password
+    }).finally(() => {
+      form.value.userLoginId = '';
+      form.value.password = '';
     });
-    console.log(res);
   }
 </script>
 
 <template>
+  <Dialog></Dialog>
   <div class="login-page">
     <div class="container left">
       <h1>S O L R A</h1>
@@ -26,7 +31,10 @@
         <h2 class="highlight">Welcome!</h2>
         <p>플랫폼을 이용하시려면 로그인해주세요.</p>
       </div>
-      <v-form @submit.prevent="loginHandler">
+      <v-form 
+        @submit.prevent="loginHandler"
+        class="login-form"
+      >
         <div class="login-input">
           <div class="text-subtitle-1 text-medium">Account</div>
 
@@ -116,6 +124,9 @@
     gap: 10px;
   }
   .login-input {
+    width: 100%;
+  }
+  .login-form {
     width: 100%;
   }
 </style>
