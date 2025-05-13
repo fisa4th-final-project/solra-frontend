@@ -15,6 +15,7 @@ export async function loginApi(reqDto: LoginRequestDto) {
     method: "POST",
     path: "api/auth/login",
     body: reqDto,
+    auth: true
   }).then(async (res: ApiResponse<LoginResponseDto>) => {
     if (res.data) {
       auth.login(res.data);
