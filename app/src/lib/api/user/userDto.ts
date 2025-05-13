@@ -8,13 +8,13 @@ export interface LoginResponseDto {
   userId: number,
   orgId?: number,
   deptId?: number,
-  roles: [
-    {
-      roleId: number,
-      roleName: string,
-      description: string,
-      createdAt: string,
-      updatedAt?: string
-    }
-  ]
+  roles: LoginResRole[]
+}
+
+export interface LoginResRole {
+  roleId: number,
+  roleName: string,
+  description: string,
+  createdAt: string,
+  updatedAt?: string
 }
