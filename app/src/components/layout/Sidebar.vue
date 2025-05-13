@@ -148,7 +148,7 @@
           v-for="menu in filteredMenus"
           :key="menu.to"
         >
-          <template v-slot:activator="{ isOpen, props }" >
+          <template v-slot:activator="{ props }" >
             <v-list-item
               v-bind="props"
               :key="menu.to"
