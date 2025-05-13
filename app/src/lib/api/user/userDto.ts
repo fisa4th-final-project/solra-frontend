@@ -18,3 +18,12 @@ export interface LoginResRole {
   createdAt: string,
   updatedAt?: string
 }
+
+export interface WhomiResponseDto {
+  userId: number,
+  userName: string,
+  userLoginId: string,
+  email: string,
+  departmentId?: number,
+  organizationId?: number
+}
