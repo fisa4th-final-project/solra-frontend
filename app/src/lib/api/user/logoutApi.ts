@@ -1,31 +1,28 @@
 import { apiRequest } from "@/lib/global/apiHandler";
-import type { LoginRequestDto, LoginResponseDto } from "@/lib/api/user/userDto";
 import { ApiError } from "@/lib/global/customError";
 import { router } from "@/router";
 import { useDialogStore } from "@/store/dialog";
 import { useAuthStore } from "@/store/auth";
 import type { ApiResponse } from "@/lib/global/ApiResponse";
 
-export async function loginApi(reqDto: LoginRequestDto) {
+export async function logoutApi() {
 
   const dialog = useDialogStore();
   const auth = useAuthStore();
 
   await apiRequest({
     method: "POST",
-    path: "api/auth/login",
-    body: reqDto,
-    auth: true
-  }).then(async (res: ApiResponse<LoginResponseDto>) => {
+    path: "api/auth/logout"
+  }).then(async (res: ApiResponse<null>) => {
     if (res.data) {
-      auth.login(res.data);
+      auth.logout();
       console.log(auth.$state);
-      await router.push('/');
+      await router.push('/login');
     }
   }).catch((e: ApiError) => {
     console.error(e.res);
     dialog.open({
-      title: '로그인 실패',
+      title: '로그아웃 실패',
       message: e.res.message
     });
 
