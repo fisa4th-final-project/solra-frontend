@@ -14,6 +14,21 @@ const routes = [
     component: LoginPage 
   },
   {
+    path: '/admin',
+    component: MainFrame,
+    children: [
+      { path: 'dashboard', component: Dashboard },
+      { path: 'org-dashboard', component: Dashboard },
+      { path: 'dept-dashboard', component: Dashboard },
+      { path: 'proj-dashboard', component: Dashboard },
+      { path: 'org-dept', component: Workload },
+      { path: 'org', component: User },
+      { path: 'depts', component: User },
+      { path: 'proj', component: User },
+
+    ]
+  },
+  {
     path: '/',
     component: MainFrame,
     children: [
