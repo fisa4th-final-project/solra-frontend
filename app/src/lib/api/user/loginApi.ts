@@ -26,7 +26,8 @@ export async function loginApi(reqDto: LoginRequestDto) {
     console.error(e.res);
     dialog.open({
       title: '로그인 실패',
-      message: e.res.message
+      message: e.res.message,
+      type: 'mainframe'
     });
 
   });

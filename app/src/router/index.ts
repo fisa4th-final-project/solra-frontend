@@ -1,39 +1,103 @@
 import { createRouter, createWebHistory } from 'vue-router'
-// import { useAuthStore } from '@/store/auth'
 
 import LoginPage from '@/pages/LoginPage.vue'
 import Dashboard from '@/pages/Dashboard.vue'
-import User from '@/pages/User.vue'
+import User from '@/pages/admin/User.vue'
 import Workload from '@/pages/Workload.vue'
+import UserGroup from '@/pages/admin/UserGroup.vue'
+import Register from '@/pages/admin/Register.vue'
 
 import MainFrame from '@/frames/MainFrame.vue'
+import UserDetail from '@/pages/admin/UserDetail.vue'
+import PatchUser from '@/pages/admin/PatchUser.vue'
 
 const routes = [
   { 
     path: '/login', 
-    component: LoginPage 
+    component: LoginPage,
+    meta: {
+      breadcrumb: [{ title: '로그인', href: '/login', disabled: false }]
+    }
   },
   {
     path: '/admin',
     component: MainFrame,
+    meta: {
+      breadcrumb: [{ title: '관리자', href: '/admin', disabled: false }]
+    },
     children: [
-      { path: 'dashboard', component: Dashboard },
-      { path: 'org-dashboard', component: Dashboard },
-      { path: 'dept-dashboard', component: Dashboard },
-      { path: 'proj-dashboard', component: Dashboard },
-      { path: 'org-dept', component: Workload },
-      { path: 'org', component: User },
-      { path: 'depts', component: User },
-      { path: 'proj', component: User },
-
+      { 
+        path: 'dashboard', 
+        component: Dashboard,
+        meta: {
+          breadcrumb: [
+            { title: '관리자', href: '/admin', disabled: false},
+            { title: '대시보드', href: '/admin/dashboard', disabled: false }
+          ]
+        }
+      },
+      { 
+        path: 'users', 
+        component: User,
+        meta: {
+          breadcrumb: [
+            { title: '관리자', href: '/admin', disabled: false},
+            { title: '사용자', href: '/admin/users', disabled: false }
+          ]
+        }
+      },
+      {
+        path: 'users/:userId',
+        component: UserDetail,
+        meta: {
+          breadcrumb: [
+            { title: '관리자', href: '/admin', disabled: false },
+            { title: '사용자', href: '/admin/users', disabled: false }
+          ]
+        }
+      },
+      {
+        path: 'users/:userId/profile-edit',
+        name: 'PatchUser',
+        component: PatchUser,
+        meta: {
+          breadcrumb: [
+            { title: '관리자', href: '/admin', disabled: false },
+            { title: '사용자', href: '/admin/users', disabled: false }
+          ]
+        }
+      },
+      {
+        path: 'users/register',
+        component: Register,
+        meta: {
+          breadcrumb: [
+            { title: '관리자', href: '/admin', disabled: false },
+            { title: '사용자', href: '/admin/users', disabled: false },
+            { title: '등록', href: '/admin/users/register', disabled: false }
+          ]
+        }
+      },
+      { 
+        path: 'group', 
+        component: UserGroup,
+        meta: {
+          breadcrumb: [
+            { title: '관리자', href: '/admin', disabled: false},
+            { title: '사용자 그룹', href: '/admin/group', disabled: false }
+          ]
+        }
+      },
     ]
   },
   {
     path: '/',
     component: MainFrame,
+    meta: {
+      breadcrumb: [{ title: '홈', href: '/', disabled: false }]
+    },
     children: [
       { path: 'dashboard', component: Dashboard },
-      { path: 'user', component: User },
       { path: 'workload', component: Workload },
 
     ]

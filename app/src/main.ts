@@ -23,8 +23,10 @@ const vuetify = createVuetify({
           primary: '#FF6500',
           secondary: '#1E3E62',
           background: '#0B192C',
+          backgroundLight: '#F7F8FC',
           text: '#000000',
-          textGray:"rgb(175, 175, 175)"
+          textGray:"rgb(175, 175, 175)",
+          cardBorder:"#DFE0EB"
         }
       }
     }
