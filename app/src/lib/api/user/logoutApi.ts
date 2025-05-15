@@ -23,7 +23,8 @@ export async function logoutApi() {
     console.error(e.res);
     dialog.open({
       title: '로그아웃 실패',
-      message: e.res.message
+      message: e.res.message,
+      type: 'mainframe'
     });
 
   });

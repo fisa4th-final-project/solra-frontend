@@ -30,7 +30,8 @@ export async function whomiApi() {
     console.error(e.res);
     dialog.open({
       title: '내 정보조회 실패',
-      message: e.res.message
+      message: e.res.message,
+      type: 'mainframe'
     });
 
   });
