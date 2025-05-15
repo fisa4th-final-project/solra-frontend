@@ -9,7 +9,8 @@
 
   const theme = useTheme().current.value;
   const auth = useAuthStore();
-  await whomiApi();
+  whomiApi();
+
   // ---- Mock Auth ----
 
   auth.login({
@@ -39,6 +40,12 @@
         roleId: 4,
         roleName: 'dev',
         description: '개발자',
+        createdAt: '2025-05-12'
+      },
+      {
+        roleId: 5,
+        roleName: 'root',
+        description: '루트',
         createdAt: '2025-05-12'
       }
     ]
