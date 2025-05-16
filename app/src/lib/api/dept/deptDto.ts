@@ -18,3 +18,18 @@ export interface GetDeptsResponseDto {
   organizationId: number,
   deptName: string
 }
+
+export interface UpdateDeptRequestDto {
+  deptId: number
+  deptName: string
+}
+
+export interface UpdateDeptResponseDto {
+  deptId: number,
+  organizationId: number,
+  deptName: string
+}
+
+export interface DeleteDeptQueryParam {
+  deptId: number
+}
