@@ -24,16 +24,87 @@
             <v-card-text
               class="pt-0 pb-0"
             >
-              <v-chip
-                size="x-small"
-              >
-                {{ 
-                  orgs?.find((org) => 
-                    org.orgId === dept.organizationId
-                  )?.orgName
-                }}
-              </v-chip>
+            <v-menu location="bottom">
+              <template v-slot:activator="{ props }">
+                <v-chip
+                  v-bind="props"
+                  size="x-small"
+                >
+                  {{ getOrg(dept.organizationId)?.orgName }}
+                </v-chip>
+              </template>
+
+              <v-list>
+                <v-list-item>
+                  <v-list-item-title
+                    @click="dialog.open({
+                      title: '',
+                      message: '',
+                      type: 'editOrg'
+                    })"
+                  >
+                    조직 이름 편집
+                  </v-list-item-title>
+                  <v-list-item-title
+                    @click="dialog.open({
+                      title: '',
+                      message: '',
+                      type: 'deleteOrg'
+                    })"
+                  >
+                    조직 삭제
+                  </v-list-item-title>
+                </v-list-item>
+              </v-list>
+            </v-menu>
+             
             </v-card-text>
+            <Dialog v-if="dialog.getType === 'editOrg'">
+              <template v-slot:title>
+                <span>조직 이름 편집</span>
+              </template>
+              <v-text-field
+                :placeholder="getOrg(dept.organizationId)?.orgName"
+                underline
+                label="조직 이름"
+                type="text"
+                color="primary"
+                theme="light"
+                v-model="updateOrgName"
+              />
+              <template v-slot:actions>
+                <v-btn @click="() => {
+                  updateOrgName = '';
+                  dialog.close();
+                }">
+                  취소
+                </v-btn>
+                <v-btn @click="async() => await updateOrgApi({
+                  orgId: dept.organizationId,
+                  orgName: updateOrgName
+                })">
+                  수정
+                </v-btn>
+              </template>
+            </Dialog>
+            <Dialog v-if="dialog.getType === 'deleteOrg'">
+              <template v-slot:title>
+                <span>조직 삭제</span>
+              </template>
+              <span>"{{ getOrg(dept.organizationId)?.orgName }}"을 삭제하시겠습니까?</span>
+              <template v-slot:actions>
+                <v-btn @click="() => {
+                  dialog.close();
+                }">
+                  취소
+                </v-btn>
+                    <v-btn @click="async() => await deleteOrgApi({
+                      orgId: dept.organizationId
+                    })">
+                  삭제
+                </v-btn>
+              </template>
+            </Dialog>
           </template>
           <v-card-title class="pt-0">
             <v-row no-gutters justify="space-between" align="center">
@@ -42,7 +113,7 @@
                 icon="mdi-dots-horizontal"
                 flat
                 size="small"
-                :to="`/admin/dept/${dept.deptId}`"
+                :to="`/admin/userGroup/depts/${dept.deptId}`"
               ></v-btn>
             </v-row>
           </v-card-title>
@@ -60,11 +131,17 @@ import { getDeptsApi } from '@/lib/api/dept/getDeptsApi';
 import { getOrgsApi } from '@/lib/api/org/getOrgsApi';
 import { onMounted, ref } from 'vue';
 import { useTheme } from 'vuetify';
+import Dialog from '@/components/common/Dialog.vue';
+import { useDialogStore } from '@/store/dialog';
+import { updateOrgsApi as updateOrgApi } from '@/lib/api/org/updateOrgApi';
+import { deleteOrgApi } from '@/lib/api/org/deleteOrgApi';
 
 const theme = useTheme().current.value;
-
+const dialog = useDialogStore();
 const orgs = ref<GetOrgsResponseDto[]>();
 const depts = ref<GetDeptsResponseDto[]>();
+
+const updateOrgName = ref<string>('');
 
 onMounted(async () => {
   await getOrgsApi().then((resOrgs) => {
@@ -80,4 +157,10 @@ onMounted(async () => {
     });
   });
 });
+
+function getOrg(orgId: number) {
+  return orgs.value?.find((org) => 
+    org.orgId === orgId
+  )
+}
 </script>

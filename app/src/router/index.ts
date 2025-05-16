@@ -111,6 +111,16 @@ const routes = [
             { title: '부서 추가', href: '/admin/userGroup/depts/add', disabled: false }
           ]
         }
+      },
+      {
+        path: 'userGroup/depts/:deptId',
+        component: AddDept,
+        meta: {
+          breadcrumb: [
+            { title: '관리자', href: '/admin', disabled: false },
+            { title: '사용자 그룹', href: '/admin/userGroup', disabled: false },
+          ]
+        }
       }
     ]
   },
