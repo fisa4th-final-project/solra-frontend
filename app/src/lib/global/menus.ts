@@ -51,32 +51,32 @@ export const sidebarMenus = [
     ]
   },
   {
-    title: '사용자 그룹 관리',
-    icon: 'mdi-view-dashboard',
-    to: '/admin/org-dept',
+    title: '사용자 그룹',
+    icon: 'mdi-office-building',
+    to: '/admin/userGroup',
     roles: [
       'root', 'org-admin', 'dept-admin', 'proj-admin'
     ],
     children: [
       {
-        title: '조직 관리',
-        to: '/admin/orgs',
+        title: '사용자 그룹 관리',
+        to: '/admin/userGroup',
         roles: [
           'root'
         ]
       }, 
       {
-        title: '부서 관리',
-        to: '/admin/depts',
+        title: '조직 추가',
+        to: '/admin/userGroup/orgs/add',
         roles: [
-          'root', 'org-admin'
+          'root'
         ]
       },
       {
-        title: '프로젝트 관리',
-        to: '/admin/proj',
+        title: '부서 추가',
+        to: '/admin/userGroup/depts/add',
         roles: [
-          'root', 'proj-admin'
+          'root', 'org-admin'
         ]
       }
     ]
@@ -88,6 +88,21 @@ export const sidebarMenus = [
     roles: [
       'root'
     ],
-    children: []
+    children: [
+      {
+        title: '사용자 관리',
+        to: '/admin/users',
+        roles: [
+          'root'
+        ]
+      },
+      {
+        title: '사용자 추가',
+        to: '/admin/users/register',
+        roles: [
+          'root'
+        ]
+      }
+    ]
   }
 ]
