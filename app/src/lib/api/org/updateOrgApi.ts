@@ -2,30 +2,30 @@ import { apiRequest } from "@/lib/global/apiHandler";
 import { ApiError } from "@/lib/global/customError";
 import { useDialogStore } from "@/store/dialog";
 import type { ApiResponse } from "@/lib/global/ApiResponse";
-import type { CreateOrgRequestDto, CreateOrgResponseDto } from "@/lib/api/org/orgDto";
+import { router } from "@/router";
+import type { UpdateOrgRequestDto, UpdateOrgResponseDto } from "@/lib/api/org/orgDto";
 
-export async function createOrgApi(reqDto: CreateOrgRequestDto) {
+export async function updateOrgsApi(reqDto: UpdateOrgRequestDto) {
 
   const dialog = useDialogStore();
 
   await apiRequest({
-    method: "POST",
-    path: "api/organizations",
+    method: "PATCH",
+    path: `api/organizations/${reqDto.orgId}`,
     body: reqDto,
     auth: true
-  }).then(async (res: ApiResponse<CreateOrgResponseDto>) => {
+  }).then(async (res: ApiResponse<UpdateOrgResponseDto>) => {
     if (res.data) {
-      console.log(res.data);
       dialog.open({
-        title: '조직 생성이 완료되었습니다.',
-        message: res.data.orgName,
+        title: '조직 수정이 완료되었습니다.',
+        message: `org: ${res.data.orgName}`,
         type: 'mainframe'
       });
     }
   }).catch((e: ApiError) => {
     console.error(e.res);
     dialog.open({
-      title: '조직 생성 실패',
+      title: '조직 수정 실패',
       message: e.res.message,
       type: 'mainframe'
     });
