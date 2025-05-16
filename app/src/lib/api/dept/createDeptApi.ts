@@ -2,7 +2,6 @@ import { apiRequest } from "@/lib/global/apiHandler";
 import { ApiError } from "@/lib/global/customError";
 import { useDialogStore } from "@/store/dialog";
 import type { ApiResponse } from "@/lib/global/ApiResponse";
-import { router } from "@/router";
 import type { CreateDeptRequestDto, CreateDeptResponseDto } from "@/lib/api/dept/deptDto";
 
 export async function createDeptApi(reqDto: CreateDeptRequestDto) {

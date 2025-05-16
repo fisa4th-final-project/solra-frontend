@@ -2,7 +2,6 @@ import { apiRequest } from "@/lib/global/apiHandler";
 import { ApiError } from "@/lib/global/customError";
 import { useDialogStore } from "@/store/dialog";
 import type { ApiResponse } from "@/lib/global/ApiResponse";
-import { router } from "@/router";
 import type { UpdateOrgRequestDto, UpdateOrgResponseDto } from "@/lib/api/org/orgDto";
 
 export async function updateOrgsApi(reqDto: UpdateOrgRequestDto) {
