@@ -12,8 +12,28 @@ import UserDetail from '@/pages/admin/UserDetail.vue'
 import PatchUser from '@/pages/admin/PatchUser.vue'
 import AddDept from '@/pages/admin/AddDept.vue'
 import AddOrg from '@/pages/admin/AddOrg.vue'
+import DataComponents from '@/pages/dev/DataComponents.vue'
 
 const routes = [
+  {
+    path: '/dev',
+    component: MainFrame, 
+    children: [
+      {
+        path: 'components/data',
+        component: DataComponents,
+        meta: {
+          breadcrumb: [
+            { title: '개발자', href: '/dev', disabled: false },
+            { title: '데이터 컴포넌트', href: '/components/data', disabled: false },
+          ]
+        }
+      }
+    ],
+    meta: {
+      breadcrumb: [{ title: '개발자', href: '/dev', disabled: false }]
+    }
+  },
   { 
     path: '/login', 
     component: LoginPage,
