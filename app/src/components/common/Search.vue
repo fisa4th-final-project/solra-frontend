@@ -1,64 +1,48 @@
 <template>
 
-    <v-form 
-      @submit.prevent="async () => {
-        emit('data', apiHandler());
-      }"
+    <Form 
+      @submit.prevent="submitHandler"
     >
       <v-text-field 
         v-model="input"
         :label=label
+        :type="type"
         rounded="lg"
-        type="text"
         density="default"
+        variant="plain"
+        prepend-icon="mdi-magnify"
+        class="pb-4 pl-4 pr-3"
         clearable
-        variant="outlined"
-        theme="light"
         hide-details
-        bg-color="white"
-        :color="theme.colors.primary"
+        single-line
       >
-        <template v-slot:prepend-inner="{ isFocused }">
-          <v-icon
-            :color="isFocused.value ? theme.colors.primary : 'black'"
-          >
-            mdi-magnify
-          </v-icon>
-        </template>
       </v-text-field>
-    </v-form>
+      <template v-slot:submit>
+      <div></div>
+      </template>
+    </Form>
 
 </template>
 
 <script lang="ts" setup>
 
+import Form from '@/components/common/Form.vue';
 import { ref } from 'vue';
-import { useTheme } from 'vuetify';
 
-  defineProps<{
-    apiHandler: () => void
-    label: string
+  const input = ref('');
+
+  const props = defineProps<{
+    apiHandler: () => Promise<any>;
+    label: string;
+    type: string;
   }>();
 
   const emit = defineEmits<{
-    (e: 'data', result: any): void
+    (e: 'data', result: any): void;
   }>();
 
-  const theme = useTheme().current.value;
-  const input = ref('');
+  const submitHandler = async () => {
+    emit('data', props.apiHandler());
+  }
 
 </script>
-
-<style scoped>
-
-  ::v-deep(.v-field__outline) {
-    --v-field-border-width: 2px; 
-    color: #DFE0EB;
-    opacity: 1;
-  }
-  ::v-deep(.v-field__outline) {
-    --v-field-border-width: 2px; 
-    --v-field-border-opacity: 1;
-    color: #DFE0EB;
-  }
-</style>
