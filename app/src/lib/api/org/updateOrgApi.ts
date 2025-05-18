@@ -4,7 +4,7 @@ import { useDialogStore } from "@/store/dialog";
 import type { ApiResponse } from "@/lib/global/ApiResponse";
 import type { UpdateOrgRequestDto, UpdateOrgResponseDto } from "@/lib/api/org/orgDto";
 
-export async function updateOrgsApi(reqDto: UpdateOrgRequestDto) {
+export async function updateOrgApi(reqDto: UpdateOrgRequestDto) {
 
   const dialog = useDialogStore();
 
