@@ -1,43 +1,37 @@
 <template>
   <v-dialog 
     v-model="dialogStore.showDialog" 
-    min-width="400"
-    theme="light"
-    
+    max-width="400"
   >
-    <v-card
-      rounded="lg"
-      flat
-      style="
-        padding: 20px 0;
-        border: 2px solid #DFE0EB;
-        "
-    >
-      <v-card-title class="text-h5">
+    <Card>
+      <template v-slot:title>
         <slot name="title">
           {{ dialogStore.dialogTitle }}
         </slot>
-      </v-card-title>
+      </template>
 
-      <v-card-text>
+      <template v-slot:text>
         <slot name="default">
           {{ dialogStore.dialogMessage }}
         </slot>
-      </v-card-text>
+      </template>
 
-      <v-card-actions>
-        <v-spacer />
-        <slot name="actions">
-          <v-btn text @click="dialogStore.close">확인</v-btn>
-        </slot>
-      </v-card-actions>
-    </v-card>
+      <template v-slot:actions>
+        <v-card-actions>
+          <slot name="actions">
+            <v-btn text @click="dialogStore.close">확인</v-btn>
+          </slot>
+        </v-card-actions>
+      </template>
+    </Card>
   </v-dialog>
 </template>
 
 <script setup lang="ts">
-import { useDialogStore } from '@/store/dialog';
-const dialogStore = useDialogStore();
 
+import Card from '@/components/common/Card.vue';
+import { useDialogStore } from '@/store/dialog';
+
+const dialogStore = useDialogStore();
 
 </script>
