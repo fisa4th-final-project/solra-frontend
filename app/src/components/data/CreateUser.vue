@@ -41,20 +41,8 @@
         color="primary"
         clearable
       />
-      <v-text-field
-        v-model="form.orgId"
-        variant="underlined"
-        label="조직 ID (선택)"
-        color="primary"
-        clearable
-      />
-      <v-text-field
-        v-model="form.deptId"
-        variant="underlined"
-        label="부서 ID (선택)"
-        color="primary"
-        clearable
-      />
+      <SelectOrgList :form="form"/>
+      <SelectDeptList :orgId="form.org.orgId" :form="form"/>
       <v-btn
         :disabled="!valid"
         class="mt-4"
@@ -73,6 +61,8 @@
 import { ref } from 'vue'
 
 import SideContents from '@/components/layout/SideContents.vue';
+import SelectOrgList from '@/components/data/SelectOrgList.vue';
+import SelectDeptList from '@/components/data/SelectDeptList.vue';
 
 import { createUserApi } from '@/lib/api/user/createUserApi';
 
@@ -83,8 +73,14 @@ const form = ref({
   password: '',
   userName: '',
   email: '',
-  orgId: '',
-  deptId: ''
+  org: {
+    orgId: 0,
+    orgName: ''
+  },
+  dept: {
+    deptId: 0,
+    deptName: ''
+  }
 })
 
 const rules = {
@@ -99,8 +95,8 @@ const submitForm = () => {
     password: form.value.password ,
     userName: form.value.userName ,
     email: form.value.email ,
-    orgId: form.value.orgId ? parseInt(form.value.orgId) : undefined,
-    deptId: form.value.deptId ? parseInt(form.value.deptId) : undefined,
+    orgId: form.value.org.orgId ,
+    deptId: form.value.dept.deptId
   });
 }
 </script>
