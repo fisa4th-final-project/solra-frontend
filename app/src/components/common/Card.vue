@@ -4,7 +4,9 @@
       <slot name="title"></slot>
     </v-card-title>
 
-    <slot></slot>
+    <v-card-item>
+      <slot></slot>
+    </v-card-item>
 
     <v-card-text v-if="!noText">
       <slot name="text"></slot>
