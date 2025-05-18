@@ -2,7 +2,6 @@ import { apiRequest } from "@/lib/global/apiHandler";
 import { ApiError } from "@/lib/global/customError";
 import { useDialogStore } from "@/store/dialog";
 import type { DeleteUserQueryParam } from "@/lib/api/user/userDto";
-import { router } from "@/router";
 
 export async function deleteUserApi(reqParam: DeleteUserQueryParam) {
 
@@ -18,7 +17,6 @@ export async function deleteUserApi(reqParam: DeleteUserQueryParam) {
       message: `${res.message}`,
       type: 'mainframe'
     });
-    router.back();
   }).catch(async (e: ApiError) => {
     console.error(e.res);
     dialog.open({

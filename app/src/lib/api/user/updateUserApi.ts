@@ -3,7 +3,6 @@ import { ApiError } from "@/lib/global/customError";
 import { useDialogStore } from "@/store/dialog";
 import type { ApiResponse } from "@/lib/global/ApiResponse";
 import type { UpdateUserRequestDto, UpdateUserResponseDto } from "@/lib/api/user/userDto";
-import { router } from "@/router";
 
 export async function updateUserApi(reqDto: UpdateUserRequestDto) {
 
@@ -21,7 +20,6 @@ export async function updateUserApi(reqDto: UpdateUserRequestDto) {
         message: `user: ${res.data.userName}`,
         type: 'mainframe'
       });
-      router.back();
     }
   }).catch((e: ApiError) => {
     console.error(e.res);
