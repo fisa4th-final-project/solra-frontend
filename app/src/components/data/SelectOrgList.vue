@@ -1,0 +1,39 @@
+<template>
+  <v-select
+    v-model="form.org"
+    :items="orgs"
+    variant="underlined"
+    label="조직 선택"
+    color="primary"
+    item-title="orgName"
+    item-value="orgId"
+    return-object
+  />
+</template>
+<script lang="ts" setup>
+
+  import { onMounted, ref } from 'vue';
+
+  import type { GetOrgsResponseDto } from '@/lib/api/org/orgDto';
+  import { getOrgsApi } from '@/lib/api/org/getOrgsApi';
+
+
+  const orgs = ref<GetOrgsResponseDto[]>();
+
+  defineProps<{
+    form: {
+      org: {
+        orgId: number,
+        orgName: string
+      }
+    }
+  }>()
+
+  onMounted(async () => {
+    await getOrgsApi().then((resOrgs) => {
+      if (!resOrgs) return;
+      orgs.value = resOrgs;
+    });
+  });
+
+</script>
