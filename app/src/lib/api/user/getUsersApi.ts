@@ -8,8 +8,8 @@ export async function getUsersApi(reqParam: GetUsersQueryParam):Promise<GetUsers
 
   const dialog = useDialogStore();
 
-  const page = reqParam.page >= 0 ? `page=${reqParam.page}` : null
-  const size = reqParam.size >= 0 ? `size=${reqParam.size}` : null
+  const page = reqParam.page > 0 ? `page=${reqParam.page}` : null
+  const size = reqParam.size > 0 ? `size=${reqParam.size}` : null
 
   let query = '';
   const params = [page, size].filter(Boolean).join('&');

@@ -19,6 +19,16 @@ export interface GetDeptsResponseDto {
   deptName: string
 }
 
+export interface GetDeptDetailRequestParam {
+  deptId: number
+}
+
+export interface GetDeptDetailResponseDto {
+  deptId: number,
+  organizationId: number,
+  deptName: string
+}
+
 export interface UpdateDeptRequestDto {
   deptId: number
   deptName: string
