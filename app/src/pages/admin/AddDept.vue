@@ -4,7 +4,7 @@
     <v-col>
       <Card>
         <template v-slot:title>부서 추가</template>
-        <Form v-model="valid" @submit.prevent="submitForm">
+        <v-form v-model="valid" @submit.prevent="submitForm">
           <v-select
             v-model="form.org"
             :items="orgs"
@@ -23,19 +23,16 @@
             color="primary"
             clearable
           />
-
-          <template v-slot:submit>
-            <v-btn
-              :disabled="!valid"
-              class="mt-4"
-              type="submit"
-              color="primary"
-              block
-            >
-              등록
-            </v-btn>
-          </template>
-        </Form>
+          <v-btn
+            :disabled="!valid"
+            class="mt-4"
+            type="submit"
+            color="primary"
+            block
+          >
+            등록
+          </v-btn>
+        </v-form>
       </Card>
     </v-col>
   </v-row>
@@ -46,7 +43,6 @@
   import { onMounted, ref } from 'vue'
 
   import Card from '@/components/common/Card.vue';
-  import Form from '@/components/common/Form.vue';
 
   import type { GetOrgsResponseDto } from '@/lib/api/org/orgDto';
   import { createDeptApi } from '@/lib/api/dept/createDeptApi';

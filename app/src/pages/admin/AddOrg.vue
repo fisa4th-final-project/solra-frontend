@@ -4,7 +4,7 @@
     <v-col>
       <Card>
         <template v-slot:title>조직 추가</template>
-        <Form v-model="valid" @submit.prevent="submitForm">
+        <v-form v-model="valid" @submit.prevent="submitForm">
           <v-text-field
             v-model="form.orgName"
             :rules="[rules.required]"
@@ -13,19 +13,16 @@
             color="primary"
             clearable
           />
-
-          <template v-slot:submit>
-            <v-btn
-              class="mt-4"
-              :disabled="!valid"
-              type="submit"
-              color="primary"
-              block
-            >
-              등록
-            </v-btn>
-          </template>
-        </Form>
+          <v-btn
+            class="mt-4"
+            :disabled="!valid"
+            type="submit"
+            color="primary"
+            block
+          >
+            등록
+          </v-btn>
+        </v-form>
       </Card>
     </v-col>
   </v-row>
@@ -36,7 +33,6 @@
   import { ref } from 'vue';
 
   import Card from '@/components/common/Card.vue';
-  import Form from '@/components/common/Form.vue';
 
   import { createOrgApi } from '@/lib/api/org/createOrgApi';
 
