@@ -10,8 +10,6 @@ import Register from '@/pages/admin/Register.vue'
 import MainFrame from '@/frames/MainFrame.vue'
 import UserDetail from '@/pages/admin/UserDetail.vue'
 import PatchUser from '@/pages/admin/PatchUser.vue'
-import AddDept from '@/pages/admin/AddDept.vue'
-import AddOrg from '@/pages/admin/AddOrg.vue'
 import DataComponents from '@/pages/dev/DataComponents.vue'
 
 const routes = [
@@ -110,31 +108,9 @@ const routes = [
           ]
         }
       },
-      { 
-        path: 'userGroup/orgs/add', 
-        component: AddOrg,
-        meta: {
-          breadcrumb: [
-            { title: '관리자', href: '/admin', disabled: false},
-            { title: '사용자 그룹', href: '/admin/userGroup', disabled: false },
-            { title: '조직 추가', href: '/admin/userGroup/orgs/add', disabled: false }
-          ]
-        }
-      },
-      { 
-        path: 'userGroup/depts/add', 
-        component: AddDept,
-        meta: {
-          breadcrumb: [
-            { title: '관리자', href: '/admin', disabled: false},
-            { title: '사용자 그룹', href: '/admin/userGroup', disabled: false },
-            { title: '부서 추가', href: '/admin/userGroup/depts/add', disabled: false }
-          ]
-        }
-      },
       {
         path: 'userGroup/depts/:deptId',
-        component: AddDept,
+        component: UserGroup,
         meta: {
           breadcrumb: [
             { title: '관리자', href: '/admin', disabled: false },
