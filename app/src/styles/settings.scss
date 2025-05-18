@@ -1,0 +1,9 @@
+// 참고 - https: //vuetifyjs.com/en/features/sass-variables/#usage
+
+@use 'vuetify/settings' with ( 
+  $card-border-width: thin,
+  $card-border-color: rgba(var(--v-border-color, #DFE0EB), var(--v-border-opacity)),
+
+  $field-border-width: thin,
+  // $field-border-color: rgba(var(--v-border-color, #DFE0EB), var(--v-border-opacity)),
+);
