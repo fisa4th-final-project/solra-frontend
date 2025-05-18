@@ -4,13 +4,12 @@
       <v-col>
         <v-hover>
           <template v-slot:default="{ isHovering, props }">
-            
             <Card 
               v-bind="props"
-              :color="isHovering ? 'white': theme.colors.backgroundLight" 
+              :color="isHovering ? 'secondary': 'surface'" 
               @click="">
               <v-row no-gutters justify="center" align="center">
-                <v-icon :color="theme.colors.cardBorder" size="60">mdi-plus</v-icon>
+                <v-icon size="60">mdi-plus</v-icon>
               </v-row>
             </Card>
           </template>
@@ -69,7 +68,6 @@
                 label="조직 이름"
                 type="text"
                 color="primary"
-                theme="light"
                 v-model="updateOrgName"
               />
               <template v-slot:actions>
@@ -98,9 +96,9 @@
                 }">
                   취소
                 </v-btn>
-                    <v-btn @click="async() => await deleteOrgApi({
-                      orgId: dept.organizationId
-                    })">
+                <v-btn @click="async() => await deleteOrgApi({
+                  orgId: dept.organizationId
+                })">
                   삭제
                 </v-btn>
               </template>
@@ -124,19 +122,21 @@
   
 </template>
 <script lang="ts" setup>
+
+import { onMounted, ref } from 'vue';
+
 import Card from '@/components/common/Card.vue';
+import Dialog from '@/components/common/Dialog.vue';
+
+import { useDialogStore } from '@/store/dialog';
+
 import type { GetDeptsResponseDto } from '@/lib/api/dept/deptDto';
 import type { GetOrgsResponseDto } from '@/lib/api/org/orgDto';
 import { getDeptsApi } from '@/lib/api/dept/getDeptsApi';
 import { getOrgsApi } from '@/lib/api/org/getOrgsApi';
-import { onMounted, ref } from 'vue';
-import { useTheme } from 'vuetify';
-import Dialog from '@/components/common/Dialog.vue';
-import { useDialogStore } from '@/store/dialog';
-import { updateOrgsApi as updateOrgApi } from '@/lib/api/org/updateOrgApi';
+import { updateOrgApi } from '@/lib/api/org/updateOrgApi';
 import { deleteOrgApi } from '@/lib/api/org/deleteOrgApi';
 
-const theme = useTheme().current.value;
 const dialog = useDialogStore();
 const orgs = ref<GetOrgsResponseDto[]>();
 const depts = ref<GetDeptsResponseDto[]>();

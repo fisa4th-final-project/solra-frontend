@@ -1,19 +1,24 @@
 <template>
-  <v-card theme="light" rounded="lg" flat
-    :color="color"
-    style="
-      padding: 20px 0;
-      border: 2px solid #DFE0EB;
-    "
-  >
-    <slot name="title">
-    </slot>
-    <slot>
-    </slot>
+  <v-card rounded="lg" flat :class="`${noGutters ? 'pa-0' : 'py-5'}`">
+    <v-card-title v-if="!noTitle">
+      <slot name="title"></slot>
+    </v-card-title>
+
+    <slot></slot>
+
+    <v-card-text v-if="!noText">
+      <slot name="text"></slot>
+    </v-card-text>
+
+    <slot name="actions"></slot>
   </v-card>
 </template>
+
 <script lang="ts" setup>
+
   defineProps<{
-    color?: string
-  }>()
+    noTitle?: boolean;
+    noText?: boolean;
+    noGutters?: boolean;
+  }>();
 </script>

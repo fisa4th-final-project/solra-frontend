@@ -1,86 +1,79 @@
 <template>
-  <v-container class="py-10" max-width="600px">
-    <v-card
-      theme="light"
-      rounded="xl"
-      flat
-      style="
-        padding: 20px;
-        border: 2px solid #DFE0EB;
-      "
-    >
-      <v-card-title class="text-h5">사용자 편집</v-card-title>
-      <v-card-text>
-        <v-form v-model="valid" @submit.prevent="submitForm">
+  <v-container>
+    <Card>
+      <template v-slot:title>사용자 편집</template>
+        <Form v-model="valid" @submit.prevent="submitForm">
           <v-text-field
-            variant="underlined"
             v-model="form.userLoginId"
-            label="사용자 ID"
             :rules="[rules.required]"
+            color="primary"
+            variant="underlined"
+            label="사용자 ID"
             clearable
-            :color="theme.colors.primary"
           />
           <v-text-field
-            variant="underlined"
             v-model="form.password"
+            color="primary"
+            variant="underlined"
             label="비밀번호"
             type="password"
             clearable
-            :color="theme.colors.primary"
           />
           <v-text-field
-            variant="underlined"
             v-model="form.userName"
-            label="이름"
             :rules="[rules.required]"
+            color="primary"
+            variant="underlined"
+            label="이름"
             clearable
-            :color="theme.colors.primary"
           />
           <v-text-field
-            variant="underlined"
             v-model="form.email"
+            :rules="[rules.required, rules.email]"
+            color="primary"
+            variant="underlined"
             label="이메일"
             type="email"
-            :rules="[rules.required, rules.email]"
             clearable
-            :color="theme.colors.primary"
           />
           <v-text-field
             variant="underlined"
-            disabled
+            color="primary"
             label="조직 ID (선택)"
             clearable
-            :color="theme.colors.primary"
+            disabled
           />
           <v-text-field
             variant="underlined"
-            disabled
+            color="primary"
             label="부서 ID (선택)"
+            disabled
             clearable
-            bg-color="white"
-            :color="theme.colors.primary"
           />
 
           <v-btn
-            class="mt-4"
             :disabled="!valid"
+            color="primary"
+            class="mt-4"
             type="submit"
-            :color="theme.colors.primary"
-            block
+            flat
           >
             수정
           </v-btn>
-        </v-form>
-      </v-card-text>
-    </v-card>
+        </Form>
+    </Card>
   </v-container>
 </template>
 
 <script lang="ts" setup>
-import { updateUserApi } from '@/lib/api/user/updateUserApi';
-import { useTargetUserStore } from '@/store/targetUser';
+
 import { ref } from 'vue'
-import { useTheme } from 'vuetify'
+
+import { useTargetUserStore } from '@/store/targetUser';
+
+import { updateUserApi } from '@/lib/api/user/updateUserApi';
+import Card from '@/components/common/Card.vue';
+import Form from '@/components/common/Form.vue';
 
 const targetUser = useTargetUserStore()
 const user = targetUser.getUser
@@ -93,7 +86,6 @@ const form = ref({
   password: '',
 })
 
-const theme = useTheme().current.value;
 const rules = {
   required: (v: string) => !!v || '필수 입력 항목입니다.',
   email: (v: string) =>

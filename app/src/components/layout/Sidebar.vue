@@ -2,12 +2,10 @@
   import { logoutApi } from '@/lib/api/user/logoutApi';
   import { whomiApi } from '@/lib/api/user/whomiApi';
   import { sidebarMenus } from '@/lib/global/menus';
+  import { useToggleTheme } from '@/lib/global/setTheme';
   import { useAuthStore } from '@/store/auth';
   import { computed, reactive, ref, watch } from 'vue'
-  import { useTheme } from 'vuetify'
 
-
-  const theme = useTheme().current.value;
   const auth = useAuthStore();
   whomiApi();
 
@@ -53,6 +51,7 @@
   
   // ---- Mock Auth ----
 
+  const { toggleTheme, isDark } = useToggleTheme();
 
   const userRoles = computed(() => auth.getRoles).value;
   const filteredMenus = computed(() => 
@@ -93,7 +92,6 @@
     :rail="rail"
     permanent
     @click="rail = false"
-    :style="{backgroundColor: theme.colors.background}"
     class="d-flex flex-column"
   >
     <div>
@@ -129,13 +127,7 @@
           padding-bottom: 20px;
         "
       >
-        <v-list-item-title
-          :style="{
-            fontSize: '0.8rem',
-            color: theme.colors.textGray
-          }"
-        >
-
+        <v-list-item-title>
           {{ auth.getMe.orgName }} / {{ auth.getMe.deptName }}
         </v-list-item-title>
         <v-list-item-title>
@@ -149,7 +141,6 @@
 
       <v-list 
         density="default"
-        
       >
         <v-list-group 
           v-for="menu in filteredMenus"
@@ -173,7 +164,6 @@
             :title="sub.title"
             :key="sub.to"
             :to="sub.to"
-            :color=theme.colors.primary
             exact
             link
           >
@@ -194,6 +184,9 @@
           icon="mdi-logout"
           @click="logoutApi"
         >
+        </v-btn>
+        <v-btn icon @click="toggleTheme">
+          <v-icon>{{ isDark() ? 'mdi-weather-sunny' : 'mdi-weather-night' }}</v-icon>
         </v-btn>
       </v-btn-group>
     </div>

@@ -11,25 +11,35 @@ import { createVuetify } from 'vuetify'
 import * as components from 'vuetify/components'
 import * as directives from 'vuetify/directives'
 
+export const lightTheme = {
+  dark: false,
+  colors: {
+    primary: '#FF6500',
+    secondary: '#1E3E62',
+    background: '#FFFFFF',
+    surface: '#FFFFFF',
+  },
+}
+
+export const darkTheme = {
+  dark: true,
+  colors: {
+    primary: '#FF6500',
+    secondary: '#91B4D5',
+    background: '#0B192C',
+    surface: '#1E2A3A',
+  },
+}
+
 const vuetify = createVuetify({
   components,
   directives,
   theme: {
-    defaultTheme: 'solraTheme',
+    defaultTheme: 'darkTheme',
     themes: {
-      solraTheme: {
-        dark: true,
-        colors: {
-          primary: '#FF6500',
-          secondary: '#1E3E62',
-          background: '#0B192C',
-          backgroundLight: '#F7F8FC',
-          text: '#000000',
-          textGray:"rgb(175, 175, 175)",
-          cardBorder:"#DFE0EB"
-        }
-      }
-    }
+      lightTheme,
+      darkTheme,
+    },
   }
 })
 

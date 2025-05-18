@@ -1,19 +1,13 @@
 <template>
   <v-breadcrumbs 
     :items="items"
-    style="
-      font-size: large;
-      padding: 0;
-      padding-bottom: 30px;
-    "
-    :color="color"
   >
   <template v-slot:divider>
     <v-breadcrumbs-divider
     >
-    <p :style="{color:color}">
-      /
-    </p>
+      <v-icon>
+        mdi-slash-forward
+      </v-icon>      
     </v-breadcrumbs-divider>
   </template>
   </v-breadcrumbs>
@@ -28,8 +22,7 @@
   }
 
   defineProps<{
-    items: Item[],
-    color: string,
+    items: Item[]
   }>();
 
 </script>

@@ -1,86 +1,77 @@
 <template>
-  <v-container class="py-10" max-width="600px">
-    <v-card
-      theme="light"
-      rounded="xl"
-      flat
-      style="
-        padding: 20px;
-        border: 2px solid #DFE0EB;
-      "
-    >
-      <v-card-title class="text-h5">사용자 등록</v-card-title>
-      <v-card-text>
-        <v-form v-model="valid" @submit.prevent="submitForm">
-          <v-text-field
-            variant="underlined"
-            v-model="form.userLoginId"
-            label="사용자 ID"
-            :rules="[rules.required]"
-            clearable
-            :color="theme.colors.primary"
-          />
-          <v-text-field
-            variant="underlined"
-            v-model="form.password"
-            label="비밀번호"
-            type="password"
-            :rules="[rules.required]"
-            clearable
-            :color="theme.colors.primary"
-          />
-          <v-text-field
-            variant="underlined"
-            v-model="form.userName"
-            label="이름"
-            :rules="[rules.required]"
-            clearable
-            :color="theme.colors.primary"
-          />
-          <v-text-field
-            variant="underlined"
-            v-model="form.email"
-            label="이메일"
-            type="email"
-            :rules="[rules.required, rules.email]"
-            clearable
-            :color="theme.colors.primary"
-          />
-          <v-text-field
-            variant="underlined"
-            v-model="form.orgId"
-            label="조직 ID (선택)"
-            clearable
-            :color="theme.colors.primary"
-          />
-          <v-text-field
-            variant="underlined"
-            v-model="form.deptId"
-            label="부서 ID (선택)"
-            clearable
-            bg-color="white"
-            :color="theme.colors.primary"
-          />
+  <v-container>
+    <Card>
+      <template v-slot:title>사용자 등록</template>
+      <v-form v-model="valid" @submit.prevent="submitForm">
+        <v-text-field
+          v-model="form.userLoginId"
+          :rules="[rules.required]"
+          variant="underlined"
+          label="사용자 ID"
+          color="primary"
+          clearable
+        />
+        <v-text-field
+          v-model="form.password"
+          :rules="[rules.required]"
+          variant="underlined"
+          label="비밀번호"
+          type="password"
+          color="primary"
+          clearable
+        />
+        <v-text-field
+          v-model="form.userName"
+          :rules="[rules.required]"
+          variant="underlined"
+          label="이름"
+          color="primary"
+          clearable
+        />
+        <v-text-field
+          v-model="form.email"
+          :rules="[rules.required, rules.email]"
+          variant="underlined"
+          label="이메일"
+          type="email"
+          color="primary"
+          clearable
+        />
+        <v-text-field
+          v-model="form.orgId"
+          variant="underlined"
+          label="조직 ID (선택)"
+          color="primary"
+          clearable
+        />
+        <v-text-field
+          v-model="form.deptId"
+          variant="underlined"
+          label="부서 ID (선택)"
+          color="primary"
+          clearable
+        />
 
-          <v-btn
-            class="mt-4"
-            :disabled="!valid"
-            type="submit"
-            :color="theme.colors.primary"
-            block
-          >
-            등록
-          </v-btn>
-        </v-form>
-      </v-card-text>
-    </v-card>
+        <v-btn
+          :disabled="!valid"
+          class="mt-4"
+          type="submit"
+          color="primary"
+          block
+        >
+          등록
+        </v-btn>
+      </v-form>
+    </Card>
   </v-container>
 </template>
 
 <script lang="ts" setup>
-import { createUserApi } from '@/lib/api/user/createUserApi';
+
 import { ref } from 'vue'
-import { useTheme } from 'vuetify'
+
+import { createUserApi } from '@/lib/api/user/createUserApi';
+import Card from '@/components/common/Card.vue';
 
 const valid = ref(false)
 
@@ -93,7 +84,6 @@ const form = ref({
   deptId: ''
 })
 
-const theme = useTheme().current.value;
 const rules = {
   required: (v: string) => !!v || '필수 입력 항목입니다.',
   email: (v: string) =>
