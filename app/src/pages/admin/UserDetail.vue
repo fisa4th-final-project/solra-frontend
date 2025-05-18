@@ -4,43 +4,17 @@
   >
     <v-row no-gutters justify="space-between" class="ga-5">
       <v-col>
-        <v-card
-          theme="light"
-          rounded="lg"
-          flat
-          class="h-100"
-          style="
-            padding: 20px 0;
-            border: 2px solid #DFE0EB;
-            "
-        >
+        <Card>
         {{ user.organizationId }}
-        </v-card>
+        </Card>
       </v-col>
       <v-col>
-        <v-card
-          theme="light"
-          rounded="lg"
-          flat
-          class="h-100"
-          style="
-            padding: 20px 0;
-            border: 2px solid #DFE0EB;
-            "
-        >
+        <Card>
         {{ user.departmentId }}
-        </v-card>
+        </Card>
       </v-col>
       <v-col cols="6">
-        <v-card
-          theme="light"
-          rounded="lg"
-          flat
-          style="
-            padding: 20px 0;
-            border: 2px solid #DFE0EB;
-            "
-        >
+        <Card>
           <v-row no-gutters>
             <v-col class="d-flex flex-column ga-5">
               <v-row no-gutters class="pl-4 pr-4" align="center">
@@ -51,11 +25,7 @@
                 </v-col>
                 <v-col align="end" >
                   <span
-                    class="text-caption"
-                    :style="{ 
-                      color: theme.colors.primary,
-                      cursor: 'pointer'
-                    }"
+                    class="cursor-pointer text-caption text-primary"
                     @click="editUser"
                   >Edit</span>
                 </v-col>
@@ -90,20 +60,12 @@
               </v-row>
             </v-col>
           </v-row>
-        </v-card>
+        </Card>
       </v-col>
     </v-row>
     <v-row no-gutters justify="space-between" class="ga-5">
       <v-col>
-        <v-card
-          theme="light"
-          flat
-          rounded="lg"
-          style="
-            padding: 20px 0;
-            border: 2px solid #DFE0EB;
-            "
-        >
+        <Card>
         <v-row no-gutters>
           
           <v-col class="d-flex flex-column ga-5">
@@ -115,12 +77,8 @@
               </v-col>
               <v-col align="end">
                 <span
-                class="text-caption"
-                :style="{ 
-                  color: theme.colors.primary,
-                  cursor: 'pointer'
-                }"
-              >Edit</span>
+                  class="cursor-pointer text-caption text-primary"
+                >Edit</span>
             </v-col>
           </v-row>
           
@@ -136,7 +94,7 @@
             </v-row>
           </v-col>
         </v-row>
-        </v-card>
+        </Card>
       </v-col>
     </v-row>
     <v-row no-gutters>
@@ -155,16 +113,14 @@
             사용자 ID: {{ user.userLoginId }} 
           </template>
           <template v-slot:actions>
-            <v-btn-group>
-              <v-btn
-                color="gray"
-                @click="dialog.close()"
-              >취소</v-btn>
-              <v-btn
-                color="red"
-                @click="deleteUserApi({userId: user.userId})"
-              >삭제</v-btn>
-            </v-btn-group>
+            <v-btn
+              color=""
+              @click="dialog.close()"
+            >취소</v-btn>
+            <v-btn
+              color="red"
+              @click="deleteUserApi({userId: user.userId})"
+            >삭제</v-btn>
           </template>
         </Dialog>
       </v-col>
@@ -172,19 +128,23 @@
   </v-container>
 </template>
 <script lang="ts" setup>
+
+  import { onMounted, ref } from 'vue';
+
   import Dialog from '@/components/common/Dialog.vue';
-  import { getUserDetailApi } from '@/lib/api/user/getUserDetailApi';
-  import type { GetUserDetailResponseDto } from '@/lib/api/user/userDto';
-  import { getUserRoleByUserIdApi } from '@/lib/api/userRole/getUserRoleApi';
-  import type { GetUserRoleByUserIdResponseDto } from '@/lib/api/userRole/UserRoleDto';
+  import Card from '@/components/common/Card.vue';
+
   import {router} from '@/router'
+
   import { useDialogStore } from '@/store/dialog';
   import { useTargetUserStore } from '@/store/targetUser';
-  import { onMounted, ref } from 'vue';
-  import { useTheme } from 'vuetify';
+
+  import type { GetUserDetailResponseDto } from '@/lib/api/user/userDto';
+  import type { GetUserRoleByUserIdResponseDto } from '@/lib/api/userRole/UserRoleDto';
+  import { getUserDetailApi } from '@/lib/api/user/getUserDetailApi';
+  import { getUserRoleByUserIdApi } from '@/lib/api/userRole/getUserRoleApi';
   import { deleteUserApi } from '@/lib/api/user/deleteUserApi';
 
-  const theme = useTheme().current.value;
   const dialog = useDialogStore();
   const targetUser = useTargetUserStore();
   const userId = router.currentRoute.value.params.userId;
