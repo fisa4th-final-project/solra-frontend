@@ -2,34 +2,35 @@
   <v-app >
     <v-layout>
       <Sidebar/>
-      <v-main
-      :style="{backgroundColor: theme.colors.backgroundLight}"
-      >
+      <v-main>
         <Dialog v-if="dialog.getType === 'mainframe'"></Dialog>
         <v-container>
           <PageHeader 
-          :items="routeStore.getBreadcrumbs"
-          :color="theme.colors.text"
+            :items="routeStore.getBreadcrumbs"
           />
           <router-view />
         </v-container>
       </v-main>
     </v-layout>
+    <SideContents>
+      
+    </SideContents>
   </v-app>
 </template>
 
 <script setup lang="ts">
 import { watch } from 'vue'
+
 import Sidebar from '@/components/layout/Sidebar.vue'
 import PageHeader from '@/components/layout/PageHeader.vue'
 import Dialog from '@/components/common/Dialog.vue'
 import type { Item } from '@/components/layout/PageHeader.vue'
-import { useTheme } from 'vuetify'
+
 import { router } from '@/router'
 import { useRouteStore } from '@/store/route'
 import { useDialogStore } from '@/store/dialog'
+import SideContents from '@/components/layout/SideContents.vue'
 
-const theme = useTheme().current.value;
 const dialog = useDialogStore();
 const routeStore = useRouteStore();
 
