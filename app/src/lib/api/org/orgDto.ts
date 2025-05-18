@@ -12,6 +12,15 @@ export interface GetOrgsResponseDto {
   orgName: string
 }
 
+export interface GetOrgDetailRequestDto {
+  orgId: number
+}
+
+export interface GetOrgDetailResponseDto {
+  orgId: number,
+  orgName: string
+}
+
 export interface UpdateOrgRequestDto {
   orgId: number,
   orgName: string
@@ -25,3 +34,4 @@ export interface UpdateOrgResponseDto {
 export interface DeleteOrgQueryParam {
   orgId: number
 }
+
