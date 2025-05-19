@@ -1,10 +1,10 @@
-import type { DeleteRolePermQueryParam } from "@/lib/api/rolePerm/rolePermDto";
+import type { DeleteRolePermRequestDto } from "@/lib/api/rolePerm/rolePermDto";
 import { apiRequest } from "@/lib/global/apiHandler";
 import { ApiError } from "@/lib/global/customError";
 import { useDialogStore } from "@/store/dialog";
 
 
-export async function deleteRolePermApi(reqParam: DeleteRolePermQueryParam) {
+export async function deleteRolePermApi(reqParam: DeleteRolePermRequestDto) {
 
   const dialog = useDialogStore();
 
