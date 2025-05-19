@@ -75,7 +75,18 @@
       </v-row>
 
     </div>
-    <!-- org -->
+    <!-- user group -->
+
+    <!-- role & permission -->
+    <div>
+      <v-row>
+        <v-col>
+          <h2>createRole</h2>
+          <CreateRole/>
+        </v-col>
+      </v-row>
+    </div>
+    <!-- role & permission -->
 
   </div>
 </template>
@@ -96,6 +107,7 @@ import UpdateOrg from '@/components/data/UpdateOrg.vue';
 import UpdateDept from '@/components/data/UpdateDept.vue';
 import DeleteOrg from '@/components/data/DeleteOrg.vue';
 import DeleteDept from '@/components/data/DeleteDept.vue';
+import CreateRole from '@/components/data/CreateRole.vue';
 
 interface userRef {
   userId: number;
