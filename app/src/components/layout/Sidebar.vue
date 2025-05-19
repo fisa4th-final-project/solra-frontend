@@ -65,7 +65,7 @@
     :rail="rail"
     permanent
     @click="rail = false"
-    class="d-flex flex-column"
+    class="d-flex flex-column position-fixed"
   >
     <div>
       <v-list-item
