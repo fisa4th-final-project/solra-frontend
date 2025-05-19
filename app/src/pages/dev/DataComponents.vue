@@ -80,8 +80,8 @@
     <v-divider />
 
     <!-- role & permission -->
+    <h1>역할 & 권한</h1>
     <div>
-      <h1>역할</h1>
     <v-row>
       <v-col cols="6">
         <h2>getRoleList</h2>
@@ -91,21 +91,38 @@
         <h2>getRole</h2>
         <GetRoleDetail :role-id="role.roleId" />
       </v-col>
+      <v-col cols="6">
+        <h2>getPermList</h2>
+        <GetPermList v-model="selectedPerm" />
+      </v-col>
     </v-row>
     </div>
+    
     <div>
       <v-row>
-        <v-col>
+        <v-col cols="4">
           <h2>createRole</h2>
           <CreateRole/>
         </v-col>
-        <v-col>
+        <v-col cols="4">
           <h2>updateRole</h2>
           <UpdateRole :role-id="role.roleId"/>
         </v-col>
-        <v-col>
+        <v-col cols="4">
           <h2>deleteRole</h2>
           <DeleteRole :role="role"/>
+        </v-col>
+        <v-col cols="4">
+          <h2>createPerm</h2>
+          <CreatePerm />
+        </v-col>
+        <v-col cols="4">
+          <h2>updatePerm</h2>
+          <UpdatePerm :perm-id="selectedPerm[0]?.permissionId"/>
+        </v-col>
+        <v-col cols="4">
+          <h2>deletePerm</h2>
+          <DeletePerm :perm="{permId: selectedPerm[0]?.permissionId, permName: selectedPerm[0]?.permissionName}"/>
         </v-col>
       </v-row>
     </div>
@@ -135,6 +152,10 @@ import GetRoleList from '@/components/data/GetRoleList.vue';
 import GetRoleDetail from '@/components/data/GetRoleDetail.vue';
 import UpdateRole from '@/components/data/UpdateRole.vue';
 import DeleteRole from '@/components/data/DeleteRole.vue';
+import CreatePerm from '@/components/data/CreatePerm.vue';
+import GetPermList from '@/components/data/GetPermList.vue';
+import UpdatePerm from '@/components/data/UpdatePerm.vue';
+import DeletePerm from '@/components/data/DeletePerm.vue';
 
 interface userRef {
   userId: number;
@@ -169,6 +190,12 @@ const selectRole = (item: any) => {
     roleId: item.roleId,
     roleName: item.roleName
   }
-  console.log(role.value);
 }
+
+const selectedPerm = ref<{
+  permissionId: number;
+  permissionName: string;
+  description: string;
+}[]>([]);
+
 </script>
