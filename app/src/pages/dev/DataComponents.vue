@@ -78,14 +78,18 @@
     <!-- user group -->
 
     <!-- role & permission -->
-     <div>
-      <v-row>
-        <v-col>
-          <h2>getRoleList</h2>
-          <GetRoleList @selected="selectRole" />
-        </v-col>
-      </v-row>
-     </div>
+    <div>
+    <v-row>
+      <v-col cols="6">
+        <h2>getRoleList</h2>
+        <GetRoleList @selected="selectRole" />
+      </v-col>
+      <v-col cols="6">
+        <h2>getRole</h2>
+        <GetRoleDetail :role-id="role.roleId" />
+      </v-col>
+    </v-row>
+    </div>
     <div>
       <v-row>
         <v-col>
@@ -117,6 +121,7 @@ import DeleteOrg from '@/components/data/DeleteOrg.vue';
 import DeleteDept from '@/components/data/DeleteDept.vue';
 import CreateRole from '@/components/data/CreateRole.vue';
 import GetRoleList from '@/components/data/GetRoleList.vue';
+import GetRoleDetail from '@/components/data/GetRoleDetail.vue';
 
 interface userRef {
   userId: number;
