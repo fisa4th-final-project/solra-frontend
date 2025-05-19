@@ -35,3 +35,7 @@ export interface UpdateRoleResponseDto {
   roleName: string;
   description: string;
 }
+
+export interface DeleteRoleQueryParam {
+  roleId: number;
+}
