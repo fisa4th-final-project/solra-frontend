@@ -143,9 +143,13 @@
     <v-divider />
 
     <!-- cluster -->
+    <h1>클러스터</h1>
     <div>
       <v-row>
-        <GetClusterList />
+        <v-col>
+          <h1>getClusterList</h1>
+          <GetClusterList />
+        </v-col>
       </v-row>
     </div>
     <!-- cluster -->
