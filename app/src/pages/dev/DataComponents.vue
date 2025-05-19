@@ -151,6 +151,12 @@
           <GetClusterList />
         </v-col>
       </v-row>
+      <v-row>
+        <v-col>
+          <h1>getClusterDetail</h1>
+          <GetClusterDetail :cluster-id="1" />
+        </v-col>
+      </v-row>
     </div>
     <!-- cluster -->
   </div>
@@ -183,6 +189,7 @@ import UpdatePerm from '@/components/data/UpdatePerm.vue';
 import DeletePerm from '@/components/data/DeletePerm.vue';
 import DeleteRolePerm from '@/components/data/DeleteRolePerm.vue';
 import GetClusterList from '@/components/data/GetClusterList.vue';
+import GetClusterDetail from '@/components/data/GetClusterDetail.vue';
 
 interface userRef {
   userId: number;
