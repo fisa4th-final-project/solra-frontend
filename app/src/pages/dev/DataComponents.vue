@@ -102,6 +102,7 @@
       <v-row>
         <v-col cols="4">
           <h2>createRole</h2>
+          <h2>createRolePerm</h2>
           <CreateRole/>
         </v-col>
         <v-col cols="4">

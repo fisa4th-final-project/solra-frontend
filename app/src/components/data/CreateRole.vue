@@ -22,10 +22,7 @@
         color="primary"
         clearable
       />
-      <!-- 
-      todo:
-      1. 역할 - 권한 연결 추가
-      -->
+      <GetPermList v-model="perms" />
       <v-btn
         :disabled="!valid"
         class="mt-4"
@@ -45,13 +42,21 @@
   import SideContents from '@/components/layout/SideContents.vue';
   
   import { createRoleApi } from '@/lib/api/role/createRoleApi';
+  import GetPermList from '@/components/data/GetPermList.vue';
+import { createRolePermApi } from '@/lib/api/rolePerm/createRolePermApi';
 
-  const valid = ref(false)
+  const valid = ref(false);
 
   const form = ref({
     roleName: '',
     description: ''
-  })
+  });
+
+  const perms = ref<{
+    permissionId: number;
+    permissionName: string;
+    description: string;
+  }[]>();
 
   /*
   todo:
@@ -65,10 +70,22 @@
   }
 
   const submitForm = async () => {
-    await createRoleApi({
+    createRoleApi({
       roleName: form.value.roleName,
       description: form.value.description
-    });
+    }).then((res) => {
+      if (!res) return
+      perms.value?.forEach( async (perm) => {
+        await createRolePermApi({
+          roleId: res.roleId,
+          permissionId: perm.permissionId
+        });
+        /*
+        todo:
+        1.RolePerm 생성 후 action (예: 특정 페이지로 라우팅, error 처리)
+        */
+      })
+    })
   }
 
 </script>
