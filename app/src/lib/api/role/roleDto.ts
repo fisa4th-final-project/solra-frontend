@@ -24,3 +24,14 @@ export interface GetRoleDetailResponseDto {
   roleName: string;
   description: string;
 }
+
+export interface UpdateRoleRequestDto {
+  roleId: number;
+  description: string;
+}
+
+export interface UpdateRoleResponseDto {
+  roleId: number;
+  roleName: string;
+  description: string;
+}

@@ -96,6 +96,10 @@
           <h2>createRole</h2>
           <CreateRole/>
         </v-col>
+        <v-col>
+          <h2>updateRole</h2>
+          <UpdateRole :role-id="role.roleId"/>
+        </v-col>
       </v-row>
     </div>
     <!-- role & permission -->
@@ -122,6 +126,7 @@ import DeleteDept from '@/components/data/DeleteDept.vue';
 import CreateRole from '@/components/data/CreateRole.vue';
 import GetRoleList from '@/components/data/GetRoleList.vue';
 import GetRoleDetail from '@/components/data/GetRoleDetail.vue';
+import UpdateRole from '@/components/data/UpdateRole.vue';
 
 interface userRef {
   userId: number;
