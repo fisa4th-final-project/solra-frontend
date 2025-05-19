@@ -8,3 +8,9 @@ export interface CreateRoleResponseDto {
   roleName: string;
   description?: string;
 }
+
+export interface GetRolesResponseDto {
+  roleId: number;
+  roleName: string;
+  description: string;
+}

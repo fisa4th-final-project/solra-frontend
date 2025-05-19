@@ -78,6 +78,14 @@
     <!-- user group -->
 
     <!-- role & permission -->
+     <div>
+      <v-row>
+        <v-col>
+          <h2>getRoleList</h2>
+          <GetRoleList @selected="selectRole" />
+        </v-col>
+      </v-row>
+     </div>
     <div>
       <v-row>
         <v-col>
@@ -108,6 +116,7 @@ import UpdateDept from '@/components/data/UpdateDept.vue';
 import DeleteOrg from '@/components/data/DeleteOrg.vue';
 import DeleteDept from '@/components/data/DeleteDept.vue';
 import CreateRole from '@/components/data/CreateRole.vue';
+import GetRoleList from '@/components/data/GetRoleList.vue';
 
 interface userRef {
   userId: number;
@@ -132,4 +141,16 @@ const userGroupForm = ref({
   }
 });
 
+interface roleRef {
+  roleId: number;
+  roleName: string;
+}
+const role = ref<roleRef>({} as roleRef);
+const selectRole = (item: any) => {
+  role.value = {
+    roleId: item.roleId,
+    roleName: item.roleName
+  }
+  console.log(role.value);
+}
 </script>
