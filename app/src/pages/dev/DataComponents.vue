@@ -80,8 +80,8 @@
     <v-divider />
 
     <!-- role & permission -->
+    <h1>역할 & 권한</h1>
     <div>
-      <h1>역할</h1>
     <v-row>
       <v-col cols="6">
         <h2>getRoleList</h2>
@@ -93,19 +93,24 @@
       </v-col>
     </v-row>
     </div>
+    
     <div>
       <v-row>
-        <v-col>
+        <v-col cols="4">
           <h2>createRole</h2>
           <CreateRole/>
         </v-col>
-        <v-col>
+        <v-col cols="4">
           <h2>updateRole</h2>
           <UpdateRole :role-id="role.roleId"/>
         </v-col>
-        <v-col>
+        <v-col cols="4">
           <h2>deleteRole</h2>
           <DeleteRole :role="role"/>
+        </v-col>
+        <v-col cols="4">
+          <h2>createPerm</h2>
+          <CreatePerm />
         </v-col>
       </v-row>
     </div>
@@ -135,6 +140,7 @@ import GetRoleList from '@/components/data/GetRoleList.vue';
 import GetRoleDetail from '@/components/data/GetRoleDetail.vue';
 import UpdateRole from '@/components/data/UpdateRole.vue';
 import DeleteRole from '@/components/data/DeleteRole.vue';
+import CreatePerm from '@/components/data/CreatePerm.vue';
 
 interface userRef {
   userId: number;
