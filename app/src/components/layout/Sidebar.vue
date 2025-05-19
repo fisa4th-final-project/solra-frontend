@@ -4,7 +4,7 @@
   import { sidebarMenus } from '@/lib/global/menus';
   import { useToggleTheme } from '@/lib/global/setTheme';
   import { useAuthStore } from '@/store/auth';
-  import { computed, reactive, ref, watch } from 'vue'
+  import { ref } from 'vue'
 
   const auth = useAuthStore();
   whomiApi();
@@ -53,8 +53,6 @@
   // ---- Mock Auth ----
 
   const { toggleTheme, isDark } = useToggleTheme();
-
-  const userRoles = computed(() => auth.getRoles).value;
 
   const drawer = ref(true);
   const rail = ref(true);
