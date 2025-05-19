@@ -75,7 +75,41 @@
       </v-row>
 
     </div>
-    <!-- org -->
+    <!-- user group -->
+
+    <v-divider />
+
+    <!-- role & permission -->
+    <div>
+      <h1>역할</h1>
+    <v-row>
+      <v-col cols="6">
+        <h2>getRoleList</h2>
+        <GetRoleList @selected="selectRole" />
+      </v-col>
+      <v-col cols="6">
+        <h2>getRole</h2>
+        <GetRoleDetail :role-id="role.roleId" />
+      </v-col>
+    </v-row>
+    </div>
+    <div>
+      <v-row>
+        <v-col>
+          <h2>createRole</h2>
+          <CreateRole/>
+        </v-col>
+        <v-col>
+          <h2>updateRole</h2>
+          <UpdateRole :role-id="role.roleId"/>
+        </v-col>
+        <v-col>
+          <h2>deleteRole</h2>
+          <DeleteRole :role="role"/>
+        </v-col>
+      </v-row>
+    </div>
+    <!-- role & permission -->
 
   </div>
 </template>
@@ -96,6 +130,11 @@ import UpdateOrg from '@/components/data/UpdateOrg.vue';
 import UpdateDept from '@/components/data/UpdateDept.vue';
 import DeleteOrg from '@/components/data/DeleteOrg.vue';
 import DeleteDept from '@/components/data/DeleteDept.vue';
+import CreateRole from '@/components/data/CreateRole.vue';
+import GetRoleList from '@/components/data/GetRoleList.vue';
+import GetRoleDetail from '@/components/data/GetRoleDetail.vue';
+import UpdateRole from '@/components/data/UpdateRole.vue';
+import DeleteRole from '@/components/data/DeleteRole.vue';
 
 interface userRef {
   userId: number;
@@ -120,4 +159,16 @@ const userGroupForm = ref({
   }
 });
 
+interface roleRef {
+  roleId: number;
+  roleName: string;
+}
+const role = ref<roleRef>({} as roleRef);
+const selectRole = (item: any) => {
+  role.value = {
+    roleId: item.roleId,
+    roleName: item.roleName
+  }
+  console.log(role.value);
+}
 </script>
