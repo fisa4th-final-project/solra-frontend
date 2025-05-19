@@ -25,3 +25,7 @@ export interface UpdatePermResponseDto {
   permissionName: string;
   description: string;
 }
+
+export interface DeletePermQueryParam {
+  permId: number;
+}

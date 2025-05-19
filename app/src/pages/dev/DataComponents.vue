@@ -120,6 +120,10 @@
           <h2>updatePerm</h2>
           <UpdatePerm :perm-id="selectedPerm[0]?.permissionId"/>
         </v-col>
+        <v-col cols="4">
+          <h2>deletePerm</h2>
+          <DeletePerm :perm="{permId: selectedPerm[0]?.permissionId, permName: selectedPerm[0]?.permissionName}"/>
+        </v-col>
       </v-row>
     </div>
     <!-- role & permission -->
@@ -136,7 +140,7 @@ import UpdateUser from '@/components/data/UpdateUser.vue';
 import SelectOrgList from '@/components/data/SelectOrgList.vue';
 import SelectDeptList from '@/components/data/SelectDeptList.vue';
 
-import { ref, watch } from 'vue';
+import { ref } from 'vue';
 import CreateOrg from '@/components/data/CreateOrg.vue';
 import CreateDept from '@/components/data/CreateDept.vue';
 import UpdateOrg from '@/components/data/UpdateOrg.vue';
@@ -151,6 +155,7 @@ import DeleteRole from '@/components/data/DeleteRole.vue';
 import CreatePerm from '@/components/data/CreatePerm.vue';
 import GetPermList from '@/components/data/GetPermList.vue';
 import UpdatePerm from '@/components/data/UpdatePerm.vue';
+import DeletePerm from '@/components/data/DeletePerm.vue';
 
 interface userRef {
   userId: number;
