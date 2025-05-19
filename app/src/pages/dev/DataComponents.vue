@@ -91,6 +91,10 @@
         <h2>getRole</h2>
         <GetRoleDetail :role-id="role.roleId" />
       </v-col>
+      <v-col cols="6">
+        <h2>getPermList</h2>
+        <GetPermList v-model="selectedPerm" />
+      </v-col>
     </v-row>
     </div>
     
@@ -128,7 +132,7 @@ import UpdateUser from '@/components/data/UpdateUser.vue';
 import SelectOrgList from '@/components/data/SelectOrgList.vue';
 import SelectDeptList from '@/components/data/SelectDeptList.vue';
 
-import { ref } from 'vue';
+import { ref, watch } from 'vue';
 import CreateOrg from '@/components/data/CreateOrg.vue';
 import CreateDept from '@/components/data/CreateDept.vue';
 import UpdateOrg from '@/components/data/UpdateOrg.vue';
@@ -141,6 +145,7 @@ import GetRoleDetail from '@/components/data/GetRoleDetail.vue';
 import UpdateRole from '@/components/data/UpdateRole.vue';
 import DeleteRole from '@/components/data/DeleteRole.vue';
 import CreatePerm from '@/components/data/CreatePerm.vue';
+import GetPermList from '@/components/data/GetPermList.vue';
 
 interface userRef {
   userId: number;
@@ -175,6 +180,11 @@ const selectRole = (item: any) => {
     roleId: item.roleId,
     roleName: item.roleName
   }
-  console.log(role.value);
 }
+
+const selectedPerm = ref([]);
+
+watch(() => selectedPerm.value, () => {
+  console.log(selectedPerm.value);
+})
 </script>
