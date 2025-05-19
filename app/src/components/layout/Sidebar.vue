@@ -9,6 +9,7 @@
   const auth = useAuthStore();
   whomiApi();
 
+  console.log(sidebarMenus)
   // ---- Mock Auth ----
 
   auth.login({
@@ -54,35 +55,9 @@
   const { toggleTheme, isDark } = useToggleTheme();
 
   const userRoles = computed(() => auth.getRoles).value;
-  const filteredMenus = computed(() => 
-    sidebarMenus.filter(menu => 
-      menu.roles.includes('ALL') 
-      || menu.roles.some(menuRole => 
-        userRoles.some((userRole) => userRole.roleName == menuRole)
-      )
-    )
-    .map(menu => ({
-      ...menu,
-      children: menu.children
-        ? menu.children.filter(child => 
-          child.roles.some(menuRole => 
-            userRoles.some((userRole) => userRole.roleName == menuRole)
-          )
-        )
-        : []
-    }))
-  );
 
   const drawer = ref(true);
   const rail = ref(true);
-  
-  const openGroups = reactive<Record<string, boolean>>({});
-
-  watch(openGroups, (val) => {
-    console.log(val);
-
-  }, { deep: true })
-
 
 </script>
 
@@ -142,53 +117,40 @@
       <v-list 
         density="default"
       >
-        <v-list-group 
-          v-for="menu in filteredMenus"
+        <v-list-item
+          v-for="menu in sidebarMenus"
           :key="menu.to"
-        >
-          <template v-slot:activator="{ props }" >
-            <v-list-item
-              v-bind="props"
-              :key="menu.to"
-              :title="menu.title"
-              :prepend-icon="menu.icon"
-              :to="menu.to" 
-              exact
-              link
-            />
-          </template>
-
-          <v-list-item    @click="rail = false"
-          
-            v-for="sub in menu.children"
-            :title="sub.title"
-            :key="sub.to"
-            :to="sub.to"
-            exact
-            link
-          >
-          </v-list-item>
-        </v-list-group>
+          :title="menu.title"
+          :prepend-icon="menu.icon"
+          :to="menu.to" 
+          exact
+          link
+        />
         
       </v-list>
     </div>
     <div
       class="mt-auto"
     >
-      <v-btn-group
-        rounded="xl"
-        variant="outlined"
-        
-      >
-        <v-btn 
-          icon="mdi-logout"
-          @click="logoutApi"
+      <v-list-item prepend-icon="mdi-dots-horizontal-circle-outline">
+
+        <v-btn-group
+          rounded="xl"
+          variant="outlined"
+          
         >
-        </v-btn>
-        <v-btn icon @click="toggleTheme">
-          <v-icon>{{ isDark() ? 'mdi-weather-sunny' : 'mdi-weather-night' }}</v-icon>
-        </v-btn>
-      </v-btn-group>
+          <v-btn icon @click="toggleTheme">
+            <v-icon>{{ isDark() ? 'mdi-weather-sunny' : 'mdi-weather-night' }}</v-icon>
+          </v-btn>
+          <v-btn 
+            icon="mdi-logout"
+            @click="logoutApi"
+          >
+          </v-btn>
+          
+        </v-btn-group>
+      </v-list-item>
+
     </div>
   </v-navigation-drawer>
 </template>
