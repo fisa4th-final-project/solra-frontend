@@ -129,6 +129,13 @@
           <h2>deletePerm</h2>
           <DeletePerm :perm="{permId: selectedPerm[0]?.permissionId, permName: selectedPerm[0]?.permissionName}"/>
         </v-col>
+        <v-col cols="4">
+          <h2>deleteRolePerm</h2>
+          <DeleteRolePerm 
+            :perm="permission"
+            :role="role"
+          />
+        </v-col>
       </v-row>
     </div>
     <!-- role & permission -->
@@ -161,6 +168,7 @@ import CreatePerm from '@/components/data/CreatePerm.vue';
 import GetPermList from '@/components/data/GetPermList.vue';
 import UpdatePerm from '@/components/data/UpdatePerm.vue';
 import DeletePerm from '@/components/data/DeletePerm.vue';
+import DeleteRolePerm from '@/components/data/DeleteRolePerm.vue';
 
 interface userRef {
   userId: number;
@@ -185,15 +193,27 @@ const userGroupForm = ref({
   }
 });
 
-interface roleRef {
+interface RoleRef {
   roleId: number;
   roleName: string;
 }
-const role = ref<roleRef>({} as roleRef);
+
+interface PermissionRef {
+  permissionId: number;
+  permissionName: string;
+}
+
+const role = ref<RoleRef>({} as RoleRef);
+const permission = ref<PermissionRef>({} as PermissionRef);
+
 const selectRole = (item: any) => {
   role.value = {
     roleId: item.roleId,
     roleName: item.roleName
+  }
+  permission.value = {
+    permissionId: item.permissionId,
+    permissionName: item.permissionName
   }
 }
 

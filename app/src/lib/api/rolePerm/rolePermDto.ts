@@ -18,3 +18,8 @@ export interface GetRolePermsResponseDto {
   permissionName: string;
   description: string;
 }
+
+export interface DeleteRolePermQueryParam {
+  roleId: number;
+  permissionId: number;
+}
