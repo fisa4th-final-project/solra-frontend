@@ -16,7 +16,7 @@
 </template>
 
 <script lang="ts" setup>
-import { onMounted, ref } from 'vue';
+import { onMounted, ref, watch } from 'vue';
 import Card from '@/components/common/Card.vue';
 import type { DataTableHeader } from 'vuetify';
 import { getClusterDetailApi } from '@/lib/api/cluster/getClusterDetailApi';
@@ -39,8 +39,8 @@ interface clusterRef {
 
 const cluster = ref<clusterRef>({} as clusterRef);
 
-const loadCluster = async () => {
-  await getClusterDetailApi({
+const loadCluster = () => {
+  getClusterDetailApi({
     clusterId: props.clusterId
   }).then((res) => {
     if (res) cluster.value = res
@@ -59,6 +59,11 @@ const clusterHeader: readonly DataTableHeader[] = [
   { key: 'value', title: '값', align: 'end' },
 ];
 
-onMounted(loadCluster);
+onMounted(() => {
+  if (props.clusterId) loadCluster();
+});
 
+watch(() => props.clusterId, () => {
+  loadCluster();
+});
 </script>

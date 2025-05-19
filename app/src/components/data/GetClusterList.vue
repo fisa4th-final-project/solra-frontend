@@ -8,7 +8,7 @@
       md="6"
       xl="4"
     >
-      <Card no-title no-text no-gutters>
+      <Card no-title no-text no-gutters @click="selectCluster(cluster)">
         <v-data-table
           :headers="clusterHeader"
           :items="mapClusterToTableRows(cluster)"
@@ -32,7 +32,15 @@ import Card from '@/components/common/Card.vue';
 import { getClustersApi } from '@/lib/api/cluster/getClustersApi';
 import type { DataTableHeader } from 'vuetify';
 
-const clusters = ref<{
+const emit = defineEmits<{
+  (e: 'selected', item: clusterRef): void
+}>()
+
+const selectCluster = (item: clusterRef) => {
+  emit('selected', item)
+}
+
+interface clusterRef {
   clusterId: number;
   orgId: number;
   name: string;
@@ -42,7 +50,9 @@ const clusters = ref<{
   apiServerUrl: string;
   createdAt: Date;
   updatedAt: Date;
-}[]>([]);
+}
+
+const clusters = ref<clusterRef[]>([]);
 
 const loadClusters = async () => {
   const res = await getClustersApi();

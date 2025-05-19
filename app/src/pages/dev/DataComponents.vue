@@ -148,13 +148,13 @@
       <v-row>
         <v-col>
           <h1>getClusterList</h1>
-          <GetClusterList />
+          <GetClusterList @selected="selectCluster"/>
         </v-col>
       </v-row>
       <v-row>
         <v-col>
           <h1>getClusterDetail</h1>
-          <GetClusterDetail :cluster-id="1" />
+          <GetClusterDetail :cluster-id="cluster.clusterId" />
         </v-col>
       </v-row>
     </div>
@@ -243,5 +243,23 @@ const selectedPerm = ref<{
   permissionName: string;
   description: string;
 }[]>([]);
+
+interface clusterRef {
+  clusterId: number;
+  orgId: number;
+  name: string;
+  env: string;
+  caCert: string;
+  saToken: string;
+  apiServerUrl: string;
+  createdAt: Date;
+  updatedAt: Date;
+}
+
+const cluster = ref<clusterRef>({} as clusterRef);
+
+const selectCluster = (item: any) => {
+  cluster.value = item;
+}
 
 </script>
