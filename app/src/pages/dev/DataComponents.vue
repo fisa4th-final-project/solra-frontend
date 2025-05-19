@@ -116,6 +116,10 @@
           <h2>createPerm</h2>
           <CreatePerm />
         </v-col>
+        <v-col cols="4">
+          <h2>updatePerm</h2>
+          <UpdatePerm :perm-id="selectedPerm[0]?.permissionId"/>
+        </v-col>
       </v-row>
     </div>
     <!-- role & permission -->
@@ -146,6 +150,7 @@ import UpdateRole from '@/components/data/UpdateRole.vue';
 import DeleteRole from '@/components/data/DeleteRole.vue';
 import CreatePerm from '@/components/data/CreatePerm.vue';
 import GetPermList from '@/components/data/GetPermList.vue';
+import UpdatePerm from '@/components/data/UpdatePerm.vue';
 
 interface userRef {
   userId: number;
@@ -182,9 +187,10 @@ const selectRole = (item: any) => {
   }
 }
 
-const selectedPerm = ref([]);
+const selectedPerm = ref<{
+  permissionId: number;
+  permissionName: string;
+  description: string;
+}[]>([]);
 
-watch(() => selectedPerm.value, () => {
-  console.log(selectedPerm.value);
-})
 </script>

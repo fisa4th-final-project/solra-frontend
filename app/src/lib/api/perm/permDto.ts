@@ -14,3 +14,14 @@ export interface GetPermsResponseDto {
   permissionName: string;
   description: string;
 }
+
+export interface UpdatePermRequestParam {
+  permId: number;
+  description: string;
+}
+
+export interface UpdatePermResponseDto {
+  permissionId: number;
+  permissionName: string;
+  description: string;
+}
