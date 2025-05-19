@@ -33,7 +33,7 @@ import { ref } from 'vue';
 
 import SideContents from '@/components/layout/SideContents.vue';
 
-import { updatePermApi } from '@/lib/api/perm/getPermDetailApi';
+import { updatePermApi } from '@/lib/api/perm/updatePermApi';
 
 
   const props = defineProps<{
