@@ -95,6 +95,10 @@
         <h2>getPermList</h2>
         <GetPermList v-model="selectedPerm" />
       </v-col>
+      <v-col cols="6">
+        <h2>getRolePermList</h2>
+        <GetRolePerm />
+      </v-col>
     </v-row>
     </div>
     

@@ -8,3 +8,13 @@ export interface CreateRolePermResponseDto {
   roleId: number;
   permissionId: number;
 }
+
+export interface GetRolePermsRequestParam {
+  roleId: number;
+}
+
+export interface GetRolePermsResponseDto {
+  permissionId: number;
+  permissionName: string;
+  description: string;
+}
