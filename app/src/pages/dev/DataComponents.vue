@@ -140,6 +140,15 @@
     </div>
     <!-- role & permission -->
 
+    <v-divider />
+
+    <!-- cluster -->
+    <div>
+      <v-row>
+        <GetClusterList />
+      </v-row>
+    </div>
+    <!-- cluster -->
   </div>
 </template>
 
@@ -169,6 +178,7 @@ import GetPermList from '@/components/data/GetPermList.vue';
 import UpdatePerm from '@/components/data/UpdatePerm.vue';
 import DeletePerm from '@/components/data/DeletePerm.vue';
 import DeleteRolePerm from '@/components/data/DeleteRolePerm.vue';
+import GetClusterList from '@/components/data/GetClusterList.vue';
 
 interface userRef {
   userId: number;
