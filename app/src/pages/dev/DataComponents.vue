@@ -169,6 +169,10 @@
           <h1>updateCluster</h1>
           <UpdateCluster :cluster-id="cluster.clusterId" />
         </v-col>
+        <v-col>
+          <h1>deleteCluster</h1>
+          <DeleteCluster :cluster="cluster" />
+        </v-col>
       </v-row>
     </div>
     <!-- cluster -->
@@ -205,6 +209,7 @@ import GetClusterList from '@/components/data/GetClusterList.vue';
 import GetClusterDetail from '@/components/data/GetClusterDetail.vue';
 import CreateCluster from '@/components/data/CreateCluster.vue';
 import UpdateCluster from '@/components/data/UpdateCluster.vue';
+import DeleteCluster from '@/components/data/DeleteCluster.vue';
 
 interface userRef {
   userId: number;

@@ -67,3 +67,7 @@ export interface UpdateClusterResponseDto {
   createdAt: Date;
   updatedAt: Date;
 }
+
+export interface DeleteClusterQueryParam {
+  clusterId: number;
+}
