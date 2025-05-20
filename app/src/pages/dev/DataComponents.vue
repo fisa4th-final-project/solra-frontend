@@ -218,6 +218,15 @@
         </v-col>
       </v-row>
     </div>
+
+    <div>
+      <v-row>
+        <v-col>
+          <h1>getDeployList</h1>
+          <GetDeployList :cluster-id="cluster.clusterId" :name="ns.name"/>
+        </v-col>
+      </v-row>
+    </div>
     <!-- cluster -->
   </div>
 </template>
@@ -260,6 +269,7 @@ import GetNSDetail from '@/components/data/GetNSDetail.vue';
 import CreateNS from '@/components/data/CreateNS.vue';
 import UpdateNS from '@/components/data/UpdateNS.vue';
 import DeleteNS from '@/components/data/DeleteNS.vue';
+import GetDeployList from '@/components/data/GetDeployList.vue';
 
 interface userRef {
   userId: number;
