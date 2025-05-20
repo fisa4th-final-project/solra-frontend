@@ -95,6 +95,10 @@
         <h2>getPermList</h2>
         <GetPermList v-model="selectedPerm" />
       </v-col>
+      <v-col cols="6">
+        <h2>getRolePermList</h2>
+        <GetRolePerm />
+      </v-col>
     </v-row>
     </div>
     
@@ -102,6 +106,7 @@
       <v-row>
         <v-col cols="4">
           <h2>createRole</h2>
+          <h2>createRolePerm</h2>
           <CreateRole/>
         </v-col>
         <v-col cols="4">
@@ -124,10 +129,53 @@
           <h2>deletePerm</h2>
           <DeletePerm :perm="{permId: selectedPerm[0]?.permissionId, permName: selectedPerm[0]?.permissionName}"/>
         </v-col>
+        <v-col cols="4">
+          <h2>deleteRolePerm</h2>
+          <DeleteRolePerm 
+            :perm="permission"
+            :role="role"
+          />
+        </v-col>
       </v-row>
     </div>
     <!-- role & permission -->
 
+    <v-divider />
+
+    <!-- cluster -->
+    <h1>클러스터</h1>
+    <div>
+      <v-row>
+        <v-col>
+          <h1>getClusterList</h1>
+          <GetClusterList @selected="selectCluster"/>
+        </v-col>
+      </v-row>
+      <v-row>
+        <v-col>
+          <h1>getClusterDetail</h1>
+          <GetClusterDetail :cluster-id="cluster.clusterId" />
+        </v-col>
+      </v-row>
+    </div>
+    
+    <div>
+      <v-row>
+        <v-col>
+          <h1>createCluster</h1>
+          <CreateCluster />
+        </v-col>
+        <v-col>
+          <h1>updateCluster</h1>
+          <UpdateCluster :cluster-id="cluster.clusterId" />
+        </v-col>
+        <v-col>
+          <h1>deleteCluster</h1>
+          <DeleteCluster :cluster="cluster" />
+        </v-col>
+      </v-row>
+    </div>
+    <!-- cluster -->
   </div>
 </template>
 
@@ -156,6 +204,12 @@ import CreatePerm from '@/components/data/CreatePerm.vue';
 import GetPermList from '@/components/data/GetPermList.vue';
 import UpdatePerm from '@/components/data/UpdatePerm.vue';
 import DeletePerm from '@/components/data/DeletePerm.vue';
+import DeleteRolePerm from '@/components/data/DeleteRolePerm.vue';
+import GetClusterList from '@/components/data/GetClusterList.vue';
+import GetClusterDetail from '@/components/data/GetClusterDetail.vue';
+import CreateCluster from '@/components/data/CreateCluster.vue';
+import UpdateCluster from '@/components/data/UpdateCluster.vue';
+import DeleteCluster from '@/components/data/DeleteCluster.vue';
 
 interface userRef {
   userId: number;
@@ -180,15 +234,27 @@ const userGroupForm = ref({
   }
 });
 
-interface roleRef {
+interface RoleRef {
   roleId: number;
   roleName: string;
 }
-const role = ref<roleRef>({} as roleRef);
+
+interface PermissionRef {
+  permissionId: number;
+  permissionName: string;
+}
+
+const role = ref<RoleRef>({} as RoleRef);
+const permission = ref<PermissionRef>({} as PermissionRef);
+
 const selectRole = (item: any) => {
   role.value = {
     roleId: item.roleId,
     roleName: item.roleName
+  }
+  permission.value = {
+    permissionId: item.permissionId,
+    permissionName: item.permissionName
   }
 }
 
@@ -197,5 +263,23 @@ const selectedPerm = ref<{
   permissionName: string;
   description: string;
 }[]>([]);
+
+interface clusterRef {
+  clusterId: number;
+  orgId: number;
+  name: string;
+  env: string;
+  caCert: string;
+  saToken: string;
+  apiServerUrl: string;
+  createdAt: Date;
+  updatedAt: Date;
+}
+
+const cluster = ref<clusterRef>({} as clusterRef);
+
+const selectCluster = (item: any) => {
+  cluster.value = item;
+}
 
 </script>

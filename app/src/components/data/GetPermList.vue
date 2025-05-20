@@ -42,7 +42,7 @@
     align: 'start' | 'end';
   }[] = [
     { 
-      title: '역할 명',
+      title: '권한 명',
       key: 'permissionName',
       align: 'start'
     },
