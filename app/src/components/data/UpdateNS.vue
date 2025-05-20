@@ -35,7 +35,7 @@
 </template>
 <script lang="ts" setup>
 
-  import { computed, onMounted, ref, watch } from 'vue';
+  import { onMounted, ref, watch } from 'vue';
 
   import SideContents from '@/components/layout/SideContents.vue';
   import { getNSDetailApi } from '@/lib/api/ns/getNSDetail.Api';
