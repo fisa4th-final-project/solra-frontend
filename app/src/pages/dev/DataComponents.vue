@@ -223,7 +223,13 @@
       <v-row>
         <v-col>
           <h1>getDeployList</h1>
-          <GetDeployList :cluster-id="cluster.clusterId" :name="ns.name"/>
+          <GetDeployList :cluster-id="cluster.clusterId" :name="ns.name" @selected="selectDeploy"/>
+        </v-col>
+      </v-row>
+      <v-row>
+        <v-col>
+          <h1>getDeployDetail</h1>
+          <GetDeployDetail :cluster-id="cluster.clusterId" :ns-name="ns.name" :deploy-name="deploy.name"/>
         </v-col>
       </v-row>
     </div>
@@ -270,6 +276,7 @@ import CreateNS from '@/components/data/CreateNS.vue';
 import UpdateNS from '@/components/data/UpdateNS.vue';
 import DeleteNS from '@/components/data/DeleteNS.vue';
 import GetDeployList from '@/components/data/GetDeployList.vue';
+import GetDeployDetail from '@/components/data/GetDeployDetail.vue';
 
 interface userRef {
   userId: number;
@@ -346,7 +353,6 @@ interface nodeRef {
 const node = ref<nodeRef>({} as nodeRef);
 const selectNode = (item: any) => {
   node.value = item;
-  console.log(node.value.name);
 }
 
 interface nsRef {
@@ -356,6 +362,13 @@ interface nsRef {
 const ns = ref<nsRef>({} as nsRef);
 const selectNS = (item: any) => {
   ns.value = item;
-  console.log(item);
+}
+
+interface deployRef {
+  name: string
+}
+const deploy = ref<deployRef>({} as deployRef);
+const selectDeploy = (item: any) => {
+  deploy.value = item;
 }
 </script>

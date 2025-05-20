@@ -59,7 +59,7 @@ const emit = defineEmits<{
 }>()
 
 const selectDeploy = (item: GetDeployListResponseDto) => {
-  emit('selected', item)
+  emit('selected', item);
 }
 
 const props = defineProps<{
