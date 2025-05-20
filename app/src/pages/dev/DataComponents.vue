@@ -187,6 +187,15 @@
         </v-col>
       </v-row>
     </div>
+
+    <div>
+      <v-row>
+        <v-col>
+          <h1>getNSList</h1>
+          <GetNSList :cluster-id="cluster.clusterId"/>
+        </v-col>
+      </v-row>
+    </div>
     <!-- cluster -->
   </div>
 </template>
@@ -224,6 +233,7 @@ import UpdateCluster from '@/components/data/UpdateCluster.vue';
 import DeleteCluster from '@/components/data/DeleteCluster.vue';
 import GetNodeList from '@/components/data/GetNodeList.vue';
 import GetNodeDetail from '@/components/data/GetNodeDetail.vue';
+import GetNSList from '@/components/data/GetNSList.vue';
 
 interface userRef {
   userId: number;
