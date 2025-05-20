@@ -158,6 +158,15 @@
         </v-col>
       </v-row>
     </div>
+    
+    <div>
+      <v-row>
+        <v-col>
+          <h1>createCluster</h1>
+          <CreateCluster />
+        </v-col>
+      </v-row>
+    </div>
     <!-- cluster -->
   </div>
 </template>
@@ -190,6 +199,7 @@ import DeletePerm from '@/components/data/DeletePerm.vue';
 import DeleteRolePerm from '@/components/data/DeleteRolePerm.vue';
 import GetClusterList from '@/components/data/GetClusterList.vue';
 import GetClusterDetail from '@/components/data/GetClusterDetail.vue';
+import CreateCluster from '@/components/data/CreateCluster.vue';
 
 interface userRef {
   userId: number;
