@@ -192,7 +192,29 @@
       <v-row>
         <v-col>
           <h1>getNSList</h1>
-          <GetNSList :cluster-id="cluster.clusterId"/>
+          <GetNSList :cluster-id="cluster.clusterId" @selected="selectNS"/>
+        </v-col>
+      </v-row>
+
+      <v-row>
+        <v-col>
+          <h1>getNSDetail</h1>
+          <GetNSDetail :cluster-id="cluster.clusterId" :ns-name="ns.name"/>
+        </v-col>
+      </v-row>
+
+      <v-row>
+        <v-col>
+          <h1>createNS</h1>
+          <CreateNS :cluster-id="cluster.clusterId"/>
+        </v-col>
+        <v-col>
+          <h1>updateNS</h1>
+          <UpdateNS :cluster-id="cluster.clusterId" :name="ns.name"/>
+        </v-col>
+        <v-col>
+          <h1>deleteNS</h1>
+          <DeleteNS :cluster-id="cluster.clusterId" :name="ns.name"/>
         </v-col>
       </v-row>
     </div>
@@ -234,6 +256,10 @@ import DeleteCluster from '@/components/data/DeleteCluster.vue';
 import GetNodeList from '@/components/data/GetNodeList.vue';
 import GetNodeDetail from '@/components/data/GetNodeDetail.vue';
 import GetNSList from '@/components/data/GetNSList.vue';
+import GetNSDetail from '@/components/data/GetNSDetail.vue';
+import CreateNS from '@/components/data/CreateNS.vue';
+import UpdateNS from '@/components/data/UpdateNS.vue';
+import DeleteNS from '@/components/data/DeleteNS.vue';
 
 interface userRef {
   userId: number;
@@ -299,9 +325,7 @@ interface clusterRef {
   createdAt: Date;
   updatedAt: Date;
 }
-
 const cluster = ref<clusterRef>({} as clusterRef);
-
 const selectCluster = (item: any) => {
   cluster.value = item;
 }
@@ -313,5 +337,15 @@ const node = ref<nodeRef>({} as nodeRef);
 const selectNode = (item: any) => {
   node.value = item;
   console.log(node.value.name);
+}
+
+interface nsRef {
+  clusterId: number;
+  name: string;
+}
+const ns = ref<nsRef>({} as nsRef);
+const selectNS = (item: any) => {
+  ns.value = item;
+  console.log(item);
 }
 </script>
