@@ -157,6 +157,12 @@
           <GetClusterDetail :cluster-id="cluster.clusterId" />
         </v-col>
       </v-row>
+      <v-row>
+        <v-col>
+          <h1>getNodeList</h1>
+          <GetNodeList :cluster-id="cluster.clusterId" />
+        </v-col>
+      </v-row>
     </div>
     
     <div>
@@ -210,6 +216,7 @@ import GetClusterDetail from '@/components/data/GetClusterDetail.vue';
 import CreateCluster from '@/components/data/CreateCluster.vue';
 import UpdateCluster from '@/components/data/UpdateCluster.vue';
 import DeleteCluster from '@/components/data/DeleteCluster.vue';
+import GetNodeList from '@/components/data/GetNodeList.vue';
 
 interface userRef {
   userId: number;
