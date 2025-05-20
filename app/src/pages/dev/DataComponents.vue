@@ -165,6 +165,10 @@
           <h1>createCluster</h1>
           <CreateCluster />
         </v-col>
+        <v-col>
+          <h1>updateCluster</h1>
+          <UpdateCluster :cluster-id="cluster.clusterId" />
+        </v-col>
       </v-row>
     </div>
     <!-- cluster -->
@@ -200,6 +204,7 @@ import DeleteRolePerm from '@/components/data/DeleteRolePerm.vue';
 import GetClusterList from '@/components/data/GetClusterList.vue';
 import GetClusterDetail from '@/components/data/GetClusterDetail.vue';
 import CreateCluster from '@/components/data/CreateCluster.vue';
+import UpdateCluster from '@/components/data/UpdateCluster.vue';
 
 interface userRef {
   userId: number;

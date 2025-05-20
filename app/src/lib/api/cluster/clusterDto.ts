@@ -46,3 +46,24 @@ export interface CreateClusterResponseDto {
   createdAt: Date;
   updatedAt: Date;
 }
+
+export interface UpdateClusterRequestDto {
+  clusterId: number;
+  name: string;
+  env: string;
+  caCert: string;
+  saToken: string;
+  apiServerUrl: string;
+}
+
+export interface UpdateClusterResponseDto {
+  clusterId: number;
+  orgId: number;
+  name: string;
+  env: string;
+  caCert: string;
+  saToken: string;
+  apiServerUrl: string;
+  createdAt: Date;
+  updatedAt: Date;
+}
