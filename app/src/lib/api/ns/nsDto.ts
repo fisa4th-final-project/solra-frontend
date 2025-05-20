@@ -22,3 +22,16 @@ export interface GetNSDetailResponseDto {
   annotations: {};
   createdAt: Date;
 }
+
+export interface CreateNSRequestDto {
+  clusterId: number;
+  name: string;
+}
+
+export interface CreateNSResponseDto {
+  name: string;
+  status: string;
+  labels: {};
+  annotations: {};
+  createAt: Date;
+}

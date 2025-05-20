@@ -202,6 +202,13 @@
           <GetNSDetail :cluster-id="cluster.clusterId" :ns-name="ns.name"/>
         </v-col>
       </v-row>
+
+      <v-row>
+        <v-col>
+          <h1>createNS</h1>
+          <CreateNS :cluster-id="cluster.clusterId"/>
+        </v-col>
+      </v-row>
     </div>
     <!-- cluster -->
   </div>
@@ -242,6 +249,7 @@ import GetNodeList from '@/components/data/GetNodeList.vue';
 import GetNodeDetail from '@/components/data/GetNodeDetail.vue';
 import GetNSList from '@/components/data/GetNSList.vue';
 import GetNSDetail from '@/components/data/GetNSDetail.vue';
+import CreateNS from '@/components/data/CreateNS.vue';
 
 interface userRef {
   userId: number;
