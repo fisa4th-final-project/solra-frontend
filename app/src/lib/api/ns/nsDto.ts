@@ -35,3 +35,18 @@ export interface CreateNSResponseDto {
   annotations: {};
   createAt: Date;
 }
+
+export interface UpdateNSRequestDto {
+  clusterId: number;
+  name: string;
+  labels: {};
+  annotations: {};
+}
+
+export interface UpdateNSResponseDto {
+  name: string;
+  status: string;
+  labels: {};
+  annotations: {};
+  createAt: Date;
+}

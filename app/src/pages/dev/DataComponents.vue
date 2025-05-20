@@ -208,6 +208,10 @@
           <h1>createNS</h1>
           <CreateNS :cluster-id="cluster.clusterId"/>
         </v-col>
+        <v-col>
+          <h1>updateNS</h1>
+          <UpdateNS :cluster-id="cluster.clusterId" :name="ns.name"/>
+        </v-col>
       </v-row>
     </div>
     <!-- cluster -->
@@ -250,6 +254,7 @@ import GetNodeDetail from '@/components/data/GetNodeDetail.vue';
 import GetNSList from '@/components/data/GetNSList.vue';
 import GetNSDetail from '@/components/data/GetNSDetail.vue';
 import CreateNS from '@/components/data/CreateNS.vue';
+import UpdateNS from '@/components/data/UpdateNS.vue';
 
 interface userRef {
   userId: number;
