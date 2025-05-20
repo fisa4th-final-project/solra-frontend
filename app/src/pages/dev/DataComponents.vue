@@ -157,6 +157,18 @@
           <GetClusterDetail :cluster-id="cluster.clusterId" />
         </v-col>
       </v-row>
+      <v-row>
+        <v-col>
+          <h1>getNodeList</h1>
+          <GetNodeList :cluster-id="cluster.clusterId" @selected="selectNode"/>
+        </v-col>
+      </v-row>
+      <v-row>
+        <v-col>
+          <h1>getNodeDetail</h1>
+          <GetNodeDetail :cluster-id="cluster.clusterId" :node-name="node.name" />
+        </v-col>
+      </v-row>
     </div>
     
     <div>
@@ -172,6 +184,15 @@
         <v-col>
           <h1>deleteCluster</h1>
           <DeleteCluster :cluster="cluster" />
+        </v-col>
+      </v-row>
+    </div>
+
+    <div>
+      <v-row>
+        <v-col>
+          <h1>getNSList</h1>
+          <GetNSList :cluster-id="cluster.clusterId"/>
         </v-col>
       </v-row>
     </div>
@@ -210,6 +231,9 @@ import GetClusterDetail from '@/components/data/GetClusterDetail.vue';
 import CreateCluster from '@/components/data/CreateCluster.vue';
 import UpdateCluster from '@/components/data/UpdateCluster.vue';
 import DeleteCluster from '@/components/data/DeleteCluster.vue';
+import GetNodeList from '@/components/data/GetNodeList.vue';
+import GetNodeDetail from '@/components/data/GetNodeDetail.vue';
+import GetNSList from '@/components/data/GetNSList.vue';
 
 interface userRef {
   userId: number;
@@ -282,4 +306,12 @@ const selectCluster = (item: any) => {
   cluster.value = item;
 }
 
+interface nodeRef {
+  name: string;
+}
+const node = ref<nodeRef>({} as nodeRef);
+const selectNode = (item: any) => {
+  node.value = item;
+  console.log(node.value.name);
+}
 </script>
