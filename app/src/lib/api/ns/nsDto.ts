@@ -50,3 +50,8 @@ export interface UpdateNSResponseDto {
   annotations: {};
   createAt: Date;
 }
+
+export interface DeleteNSQueryParam {
+  clusterId: number;
+  name: string;
+}

@@ -212,6 +212,10 @@
           <h1>updateNS</h1>
           <UpdateNS :cluster-id="cluster.clusterId" :name="ns.name"/>
         </v-col>
+        <v-col>
+          <h1>deleteNS</h1>
+          <DeleteNS :cluster-id="cluster.clusterId" :name="ns.name"/>
+        </v-col>
       </v-row>
     </div>
     <!-- cluster -->
@@ -255,6 +259,7 @@ import GetNSList from '@/components/data/GetNSList.vue';
 import GetNSDetail from '@/components/data/GetNSDetail.vue';
 import CreateNS from '@/components/data/CreateNS.vue';
 import UpdateNS from '@/components/data/UpdateNS.vue';
+import DeleteNS from '@/components/data/DeleteNS.vue';
 
 interface userRef {
   userId: number;
