@@ -280,6 +280,10 @@
           <h1>updateSvc</h1>
           <UpdateSvc :cluster-id="cluster.clusterId" :ns-name="ns.name" :name="svc.name" />
         </v-col>
+        <v-col>
+          <h1>deleteSvc</h1>
+          <DeleteSvc :cluster-id="cluster.clusterId" :ns-name="ns.name" :name="svc.name" />
+        </v-col>
       </v-row>
     </div>
     <!-- cluster -->
@@ -333,6 +337,7 @@ import GetSvcList from '@/components/data/GetSvcList.vue';
 import GetSvcDetail from '@/components/data/GetSvcDetail.vue';
 import CreateSvc from '@/components/data/CreateSvc.vue';
 import UpdateSvc from '@/components/data/UpdateSvc.vue';
+import DeleteSvc from '@/components/data/DeleteSvc.vue';
 
 /*
 todo

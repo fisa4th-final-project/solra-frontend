@@ -99,3 +99,9 @@ export interface UpdateSvcResponseDto {
     nodePort?: number;
   }[];
 }
+
+export interface DeleteSvcQueryParam {
+  clusterId: number;
+  nsName: string;
+  name: string;
+}
