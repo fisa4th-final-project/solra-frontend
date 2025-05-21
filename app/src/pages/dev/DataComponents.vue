@@ -271,6 +271,12 @@
           <GetSvcDetail :cluster-id="cluster.clusterId" :ns-name="ns.name" :name="svc.name" @selected="selectSvc" />
         </v-col>
       </v-row>
+      <v-row>
+        <v-col>
+          <h1>createSvc</h1>
+          <CreateSvc :cluster-id="cluster.clusterId" :ns-name="ns.name" />
+        </v-col>
+      </v-row>
     </div>
     <!-- cluster -->
   </div>
@@ -321,6 +327,7 @@ import UpdateDeploy from '@/components/data/UpdateDeploy.vue';
 import DeleteDeploy from '@/components/data/DeleteDeploy.vue';
 import GetSvcList from '@/components/data/GetSvcList.vue';
 import GetSvcDetail from '@/components/data/GetSvcDetail.vue';
+import CreateSvc from '@/components/data/CreateSvc.vue';
 
 /*
 todo
