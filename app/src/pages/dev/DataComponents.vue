@@ -294,6 +294,12 @@
           <GetPodList :cluster-id="cluster.clusterId" :ns-name="ns.name" @selected="selectPod"/>
         </v-col>
       </v-row>
+      <v-row>
+        <v-col>
+          <h1>getPodDetail</h1>
+          <GetPodDetail :cluster-id="cluster.clusterId" :ns-name="ns.name" :name="pod.name"/>
+        </v-col>
+      </v-row>
     </div>
     <!-- cluster -->
   </div>
@@ -348,6 +354,7 @@ import CreateSvc from '@/components/data/CreateSvc.vue';
 import UpdateSvc from '@/components/data/UpdateSvc.vue';
 import DeleteSvc from '@/components/data/DeleteSvc.vue';
 import GetPodList from '@/components/data/GetPodList.vue';
+import GetPodDetail from '@/components/data/GetPodDetail.vue';
 
 /*
 todo
