@@ -9,7 +9,12 @@
       xl="4"
     >
       <Card no-text no-gutters @click="selectDeploy(dp)">
-        
+        <!-- 
+        todo
+        1. pb-5 -> py-5
+        2. Card 컴포넌트에 no-title 추가
+        3. 같은 형식의 컴포넌트에 동일 적용
+        -->
         <v-row align="center" class="pb-5">
           <v-col>
             <v-icon>mdi-hexagon-multiple</v-icon>
