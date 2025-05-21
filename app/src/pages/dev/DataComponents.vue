@@ -247,6 +247,10 @@
           <h1>createDeploy</h1>
           <CreateDeploy :cluster-id="cluster.clusterId" :ns-name="ns.name"/>
         </v-col>
+        <v-col>
+          <h1>updateDeploy</h1>
+          <UpdateDeploy :cluster-id="cluster.clusterId" :ns-name="ns.name" :name="deploy.name"/>
+        </v-col>
       </v-row>
     </div>
     <!-- cluster -->
@@ -294,11 +298,13 @@ import DeleteNS from '@/components/data/DeleteNS.vue';
 import GetDeployList from '@/components/data/GetDeployList.vue';
 import GetDeployDetail from '@/components/data/GetDeployDetail.vue';
 import CreateDeploy from '@/components/data/CreateDeploy.vue';
+import UpdateDeploy from '@/components/data/UpdateDeploy.vue';
 
 /*
 todo
-1. 컴포넌트별 emit, ref 형식 통일
+1. 컴포넌트별 emit, ref, props 형식 통일
 2. 변수 명 곂치지 않게
+3. 컴포넌트 별 새로고침 함수 expose 생성
 */
 interface userRef {
   userId: number;

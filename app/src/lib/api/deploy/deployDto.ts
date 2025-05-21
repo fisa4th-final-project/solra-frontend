@@ -49,3 +49,20 @@ export interface CreateDeployResponseDto {
   labels: {};
   container: {};
 }
+
+export interface UpdateDeployRequestDto {
+  clusterId: number;
+  nsName: string;
+  name: string;
+  replicas: number;
+}
+
+export interface UpdateDeployResponseDto {
+  name: string;
+  replicas: number,
+  readyReplicas: number,
+  selector: {
+    app: string;
+  },
+  images: string[]
+}
