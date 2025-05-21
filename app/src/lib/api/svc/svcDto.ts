@@ -69,3 +69,33 @@ export interface CreateSvcResponseDto {
     targetPort: number;
   } [];
 }
+
+export interface UpdateSvcRequestDto {
+  clusterId: number;
+  nsName: string;
+  name: string;
+  type: string;
+  selector: {
+    app: string;
+  };
+  ports: {
+    protocol: string;
+    port: number;
+    targetPort: number;
+    nodePort?: number;
+  }[];
+}
+
+export interface UpdateSvcResponseDto {
+  name: string;
+  type: string;
+  selector: {
+    app: string;
+  };
+  ports: {
+    protocol: string;
+    port: number;
+    targetPort: number;
+    nodePort?: number;
+  }[];
+}
