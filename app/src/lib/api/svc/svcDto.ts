@@ -15,7 +15,30 @@ export interface GetSvcListResponseDto {
       protocol: string;
       nodePort?: number;
       port: number;
-      targetPort: number
+      targetPort: number;
+    }
+  ]
+}
+
+export interface GetSvcDetailRequestParam {
+  clusterId: number;
+  nsName: string;
+  name: string;
+}
+
+export interface GetSvcDetailResponseDto {
+  name: string;
+  type: string;
+  clusterIP: string;
+  selector: {
+    app: string;
+  };
+  ports: [
+    {
+      protocol: string;
+      nodePort?: number;
+      port: number;
+      targetPort: number;
     }
   ]
 }
