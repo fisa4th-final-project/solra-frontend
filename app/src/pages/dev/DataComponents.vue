@@ -251,6 +251,10 @@
           <h1>updateDeploy</h1>
           <UpdateDeploy :cluster-id="cluster.clusterId" :ns-name="ns.name" :name="deploy.name"/>
         </v-col>
+        <v-col>
+          <h1>deleteDeploy</h1>
+          <DeleteDeploy :cluster-id="cluster.clusterId" :ns-name="ns.name" :name="deploy.name"/>
+        </v-col>
       </v-row>
     </div>
     <!-- cluster -->
@@ -299,13 +303,16 @@ import GetDeployList from '@/components/data/GetDeployList.vue';
 import GetDeployDetail from '@/components/data/GetDeployDetail.vue';
 import CreateDeploy from '@/components/data/CreateDeploy.vue';
 import UpdateDeploy from '@/components/data/UpdateDeploy.vue';
+import DeleteDeploy from '@/components/data/DeleteDeploy.vue';
 
 /*
 todo
 1. 컴포넌트별 emit, ref, props 형식 통일
 2. 변수 명 곂치지 않게
 3. 컴포넌트 별 새로고침 함수 expose 생성
+4. props가 제공되지 않으면 dialog 노출되지 않게 컴포넌트 수정
 */
+
 interface userRef {
   userId: number;
   userLoginId: string;

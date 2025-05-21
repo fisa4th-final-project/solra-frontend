@@ -66,3 +66,9 @@ export interface UpdateDeployResponseDto {
   },
   images: string[]
 }
+
+export interface DeleteDeployQueryParam {
+  clusterId: number;
+  nsName: string;
+  name: string;
+}
