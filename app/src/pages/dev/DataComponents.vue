@@ -286,6 +286,15 @@
         </v-col>
       </v-row>
     </div>
+
+    <div>
+      <v-row>
+        <v-col>
+          <h1>getPodList</h1>
+          <GetPodList :cluster-id="cluster.clusterId" :ns-name="ns.name" @selected="selectPod"/>
+        </v-col>
+      </v-row>
+    </div>
     <!-- cluster -->
   </div>
 </template>
@@ -338,6 +347,7 @@ import GetSvcDetail from '@/components/data/GetSvcDetail.vue';
 import CreateSvc from '@/components/data/CreateSvc.vue';
 import UpdateSvc from '@/components/data/UpdateSvc.vue';
 import DeleteSvc from '@/components/data/DeleteSvc.vue';
+import GetPodList from '@/components/data/GetPodList.vue';
 
 /*
 todo
@@ -447,5 +457,14 @@ interface SvcRef {
 const svc = ref<SvcRef>({} as SvcRef);
 const selectSvc = (item: any) => {
   svc.value = item;
+}
+
+interface PodRef {
+  name: string
+}
+const pod = ref<PodRef>({} as PodRef);
+const selectPod = (item: any) => {
+  pod.value = item;
+  console.log(item);
 }
 </script>
