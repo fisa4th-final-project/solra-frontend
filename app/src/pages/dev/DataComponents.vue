@@ -147,6 +147,10 @@
     <div>
       <v-row>
         <v-col>
+          <!-- 
+          todo
+          1. clusterList를 선택하는 select 컴포넌트 제작
+          -->
           <h1>getClusterList</h1>
           <GetClusterList @selected="selectCluster"/>
         </v-col>
@@ -191,6 +195,10 @@
     <div>
       <v-row>
         <v-col>
+          <!-- 
+          todo
+          1. nsList 선택하는 select 컴포넌트 제작
+          -->
           <h1>getNSList</h1>
           <GetNSList :cluster-id="cluster.clusterId" @selected="selectNS"/>
         </v-col>
@@ -230,6 +238,14 @@
         <v-col>
           <h1>getDeployDetail</h1>
           <GetDeployDetail :cluster-id="cluster.clusterId" :ns-name="ns.name" :deploy-name="deploy.name"/>
+        </v-col>
+      </v-row>
+    </div>
+    <div>
+      <v-row>
+        <v-col>
+          <h1>createDeploy</h1>
+          <CreateDeploy :cluster-id="cluster.clusterId" :ns-name="ns.name"/>
         </v-col>
       </v-row>
     </div>
@@ -277,7 +293,13 @@ import UpdateNS from '@/components/data/UpdateNS.vue';
 import DeleteNS from '@/components/data/DeleteNS.vue';
 import GetDeployList from '@/components/data/GetDeployList.vue';
 import GetDeployDetail from '@/components/data/GetDeployDetail.vue';
+import CreateDeploy from '@/components/data/CreateDeploy.vue';
 
+/*
+todo
+1. 컴포넌트별 emit, ref 형식 통일
+2. 변수 명 곂치지 않게
+*/
 interface userRef {
   userId: number;
   userLoginId: string;
