@@ -257,6 +257,15 @@
         </v-col>
       </v-row>
     </div>
+
+    <div>
+      <v-row>
+        <v-col>
+          <h1>getSvcList</h1>
+          <GetSvcList :cluster-id="cluster.clusterId" :ns-name="ns.name" @selected="selectSvc" />
+        </v-col>
+      </v-row>
+    </div>
     <!-- cluster -->
   </div>
 </template>
@@ -304,6 +313,7 @@ import GetDeployDetail from '@/components/data/GetDeployDetail.vue';
 import CreateDeploy from '@/components/data/CreateDeploy.vue';
 import UpdateDeploy from '@/components/data/UpdateDeploy.vue';
 import DeleteDeploy from '@/components/data/DeleteDeploy.vue';
+import GetSvcList from '@/components/data/GetSvcList.vue';
 
 /*
 todo
@@ -405,5 +415,13 @@ interface deployRef {
 const deploy = ref<deployRef>({} as deployRef);
 const selectDeploy = (item: any) => {
   deploy.value = item;
+}
+
+interface SvcRef {
+  name: string
+}
+const svc = ref<SvcRef>({} as SvcRef);
+const selectSvc = (item: any) => {
+  svc.value = item;
 }
 </script>
