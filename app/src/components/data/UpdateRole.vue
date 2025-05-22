@@ -29,52 +29,46 @@
 </template>
 <script lang="ts" setup>
 
-  import { onMounted, ref, watch } from 'vue';
-
-  import SideContents from '@/components/layout/SideContents.vue';
+import { onMounted, ref, watch } from 'vue';
+import SideContents from '@/components/layout/SideContents.vue';
+import { rules } from '@/lib/global/inputRules';
 import { getRoleDetailApi } from '@/lib/api/role/getRoleDetailApi';
 import { updateRoleApi } from '@/lib/api/role/updateRoleApi';
 
 
-  const props = defineProps<{
-    roleId: number;
-  }>();
+const props = defineProps<{
+  roleId: number;
+}>();
 
-  const valid = ref(false)
+const valid = ref(false)
 
-  const form = ref({
-    description: ''
+const form = ref({
+  description: ''
+})
+
+const submitForm = () => {
+  updateRoleApi({
+    roleId: props.roleId,
+    description: form.value.description
+  });
+}
+
+const getRoleDetail = () => {
+  getRoleDetailApi({
+    roleId: props.roleId
+  }).then((res) => {
+    if (!res) return;
+    form.value.description = res.description;
   })
+}
 
-  const rules = {
-    required: (v: string) => !!v || '필수 입력 항목입니다.',
-    email: (v: string) =>
-      /.+@.+\..+/.test(v) || '올바른 이메일 형식을 입력하세요.'
-  }
+onMounted(() => {
+  if (!props.roleId) return;
+  getRoleDetail();
+});
 
-  const submitForm = () => {
-    updateRoleApi({
-      roleId: props.roleId,
-      description: form.value.description
-    });
-  }
-
-  const getRoleDetail = () => {
-    getRoleDetailApi({
-      roleId: props.roleId
-    }).then((res) => {
-      if (!res) return;
-      form.value.description = res.description;
-    })
-  }
-
-  onMounted(() => {
-    if (!props.roleId) return;
-    getRoleDetail();
-  });
-
-  watch(() => props.roleId, () => {
-    getRoleDetail();
-  });
+watch(() => props.roleId, () => {
+  getRoleDetail();
+});
 
 </script>

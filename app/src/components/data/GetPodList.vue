@@ -1,11 +1,11 @@
 <template>
   <DataCardList
     :api="{req, dataHandler}"
-    :header="{titleKey: 'name', icon: 'mdi-scan-helper'}"
+    :header="{titleKey: 'name', icon: 'mdi-cube'}"
     @selected="selected"
   >
     <template v-slot:item="{ item }">
-      <tr>
+      <tr >
         <th>{{ item.field }}</th>
         <td class="text-right">{{ item.value }}</td>
       </tr>
@@ -14,24 +14,25 @@
 </template>
 
 <script lang="ts" setup>
+
 import DataCardList from '@/components/common/DataCardList.vue';
-import { getNSListApi } from '@/lib/api/ns/getNSListApi';
-import type { GetNSListRequestParam, GetNSListResponseDto } from '@/lib/api/ns/nsDto';
+import type { GetPodListRequestParam, GetPodListResponseDto } from '@/lib/api/pod/podDto';
+import { getPodListApi } from '@/lib/api/pod/getPodListApi';
 
 defineProps<{
-  req: GetNSListRequestParam
+  req: GetPodListRequestParam
 }>();
 
 const emit = defineEmits<{
-  (e: 'selected', item: GetNSListResponseDto): void
+  (e: 'selected', item: GetPodListResponseDto): void
 }>()
 
-const selected = (item: GetNSListResponseDto) => {
+const selected = (item: GetPodListResponseDto) => {
   emit('selected', item)
 }
 
-const dataHandler = async (req: GetNSListRequestParam) => {
-  return await getNSListApi(req);
+const dataHandler = async (req: GetPodListRequestParam) => {
+  return await getPodListApi(req);
 };
 
 </script>

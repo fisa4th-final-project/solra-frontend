@@ -1,5 +1,5 @@
 <template>
-  <v-card rounded="lg" flat :class="`${noGutters ? 'pa-0' : 'py-5'}`">
+  <v-card :min-height="minheight" rounded="lg" flat :class="`${noGutters ? 'pa-0' : 'py-5'}`">
     <v-card-title v-if="!noTitle">
       <slot name="title"></slot>
     </v-card-title>
@@ -19,6 +19,7 @@
 <script lang="ts" setup>
 
   defineProps<{
+    minheight?: string;
     noTitle?: boolean;
     noText?: boolean;
     noGutters?: boolean;

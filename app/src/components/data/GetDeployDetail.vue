@@ -1,6 +1,6 @@
 <template>
-  <DataCard
-    :header="{title, icon: 'mdi-kubernetes'}"
+  <DataCard 
+    :header="{title, icon: 'mdi-hexagon-multiple'}"
     :api="{req, dataHandler}"
   >
     <template v-slot:item="{ item }">
@@ -33,16 +33,16 @@
 <script lang="ts" setup>
 
 import DataCard from '@/components/common/DataCard.vue';
-import { getClusterDetailApi } from '@/lib/api/cluster/getClusterDetailApi';
-import type { GetClusterDetailRequestParam } from '@/lib/api/cluster/clusterDto';
+import type { GetDeployDetailRequestParam } from '@/lib/api/deploy/deployDto';
+import { getDeployDetailApi } from '@/lib/api/deploy/getDeployDetail.Api';
 
 defineProps<{
   title: string;
-  req: GetClusterDetailRequestParam;
+  req: GetDeployDetailRequestParam;
 }>();
 
-const dataHandler = async (req: GetClusterDetailRequestParam) => {
-  if (req.clusterId) return await getClusterDetailApi(req);
+const dataHandler = async (req: GetDeployDetailRequestParam) => {
+  if (req.clusterId && req.nsName && req.deployName) return await getDeployDetailApi(req);
 };
 
 </script>

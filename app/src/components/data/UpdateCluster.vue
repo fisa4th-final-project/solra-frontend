@@ -61,67 +61,60 @@
 </template>
 <script lang="ts" setup>
 
-  import { onMounted, ref, watch } from 'vue';
-
-  import SideContents from '@/components/layout/SideContents.vue';
-
-  import { getClusterDetailApi } from '@/lib/api/cluster/getClusterDetailApi';
+import { onMounted, ref, watch } from 'vue';
+import SideContents from '@/components/layout/SideContents.vue';
+import { rules } from '@/lib/global/inputRules';
+import { getClusterDetailApi } from '@/lib/api/cluster/getClusterDetailApi';
 import { updateClusterApi } from '@/lib/api/cluster/updateClusterApi';
 
-  const props = defineProps<{
-    clusterId: number;
-  }>();
+const props = defineProps<{
+  clusterId: number;
+}>();
 
-  const valid = ref(false)
+const valid = ref(false)
 
-  interface Form {
-    name: string;
-    env: string;
-    caCert: string;
-    saToken: string;
-    apiServerUrl: string;
-  }
-  const form = ref<Form>({} as Form);
+interface Form {
+  name: string;
+  env: string;
+  caCert: string;
+  saToken: string;
+  apiServerUrl: string;
+}
+const form = ref<Form>({} as Form);
 
-  const rules = {
-    required: (v: string) => !!v || '필수 입력 항목입니다.',
-    email: (v: string) =>
-      /.+@.+\..+/.test(v) || '올바른 이메일 형식을 입력하세요.'
-  }
-
-  const submitForm = () => {
-    updateClusterApi({
-      clusterId: props.clusterId,
-      name: form.value.name,
-      env: form.value.env,
-      caCert: form.value.caCert,
-      saToken: form.value.saToken,
-      apiServerUrl: form.value.apiServerUrl
-    });
-  }
-
-  const getClusterDetail = () => {
-    getClusterDetailApi({
-      clusterId: props.clusterId
-    }).then((res) => {
-      if (!res) return;
-      form.value = {
-        name: res.name,
-        env: res.env,
-        caCert: res.caCert,
-        saToken: res.saToken,
-        apiServerUrl: res.apiServerUrl
-      };
-    })
-  }
-
-  onMounted(() => {
-    if (!props.clusterId) return;
-    getClusterDetail();
+const submitForm = () => {
+  updateClusterApi({
+    clusterId: props.clusterId,
+    name: form.value.name,
+    env: form.value.env,
+    caCert: form.value.caCert,
+    saToken: form.value.saToken,
+    apiServerUrl: form.value.apiServerUrl
   });
+}
 
-  watch(() => props.clusterId, () => {
-    getClusterDetail();
-  });
+const getClusterDetail = () => {
+  getClusterDetailApi({
+    clusterId: props.clusterId
+  }).then((res) => {
+    if (!res) return;
+    form.value = {
+      name: res.name,
+      env: res.env,
+      caCert: res.caCert,
+      saToken: res.saToken,
+      apiServerUrl: res.apiServerUrl
+    };
+  })
+}
+
+onMounted(() => {
+  if (!props.clusterId) return;
+  getClusterDetail();
+});
+
+watch(() => props.clusterId, () => {
+  getClusterDetail();
+});
 
 </script>

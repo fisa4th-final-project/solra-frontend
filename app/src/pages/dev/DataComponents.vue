@@ -147,6 +147,10 @@
     <div>
       <v-row>
         <v-col>
+          <!-- 
+          todo
+          1. clusterList를 선택하는 select 컴포넌트 제작
+          -->
           <h1>getClusterList</h1>
           <GetClusterList @selected="selectCluster"/>
         </v-col>
@@ -154,19 +158,28 @@
       <v-row>
         <v-col>
           <h1>getClusterDetail</h1>
-          <GetClusterDetail :cluster-id="cluster.clusterId" />
+          <GetClusterDetail 
+            :title="cluster.ref.name" 
+            :req="cluster.req"
+          />
         </v-col>
       </v-row>
       <v-row>
         <v-col>
           <h1>getNodeList</h1>
-          <GetNodeList :cluster-id="cluster.clusterId" @selected="selectNode"/>
+          <GetNodeList 
+            :req="{clusterId: cluster.ref.id ?? 0}"
+            @selected="selectNode"
+          />
         </v-col>
       </v-row>
       <v-row>
         <v-col>
           <h1>getNodeDetail</h1>
-          <GetNodeDetail :cluster-id="cluster.clusterId" :node-name="node.name" />
+          <GetNodeDetail 
+            :title="node.ref.name" 
+            :req="node.req"
+          />
         </v-col>
       </v-row>
     </div>
@@ -179,11 +192,13 @@
         </v-col>
         <v-col>
           <h1>updateCluster</h1>
-          <UpdateCluster :cluster-id="cluster.clusterId" />
+          <UpdateCluster :cluster-id="cluster.ref.id ?? 0" />
         </v-col>
         <v-col>
           <h1>deleteCluster</h1>
-          <DeleteCluster :cluster="cluster" />
+          <DeleteCluster 
+            :cluster="{clusterId: cluster.ref.id ?? 0, name: cluster.ref.name}" 
+          />
         </v-col>
       </v-row>
     </div>
@@ -191,30 +206,128 @@
     <div>
       <v-row>
         <v-col>
+          <!-- 
+          todo
+          1. nsList 선택하는 select 컴포넌트 제작
+          -->
           <h1>getNSList</h1>
-          <GetNSList :cluster-id="cluster.clusterId" @selected="selectNS"/>
+          <GetNSList 
+            :req="{clusterId: cluster.ref.id ?? 0}" 
+            @selected="selectNS"
+            />
         </v-col>
       </v-row>
 
       <v-row>
         <v-col>
           <h1>getNSDetail</h1>
-          <GetNSDetail :cluster-id="cluster.clusterId" :ns-name="ns.name"/>
+          <GetNSDetail 
+            :title="ns.ref.name"
+            :req="ns.req"
+          />
         </v-col>
       </v-row>
-
       <v-row>
         <v-col>
           <h1>createNS</h1>
-          <CreateNS :cluster-id="cluster.clusterId"/>
+          <CreateNS :cluster-id="cluster.ref.id ?? 0"/>
         </v-col>
         <v-col>
           <h1>updateNS</h1>
-          <UpdateNS :cluster-id="cluster.clusterId" :name="ns.name"/>
+          <UpdateNS :cluster-id="cluster.ref.id ?? 0" :name="ns.ref.name"/>
         </v-col>
         <v-col>
           <h1>deleteNS</h1>
-          <DeleteNS :cluster-id="cluster.clusterId" :name="ns.name"/>
+          <DeleteNS :cluster-id="cluster.ref.id ?? 0" :name="ns.ref.name"/>
+        </v-col>
+      </v-row>
+    </div>
+
+    <div>
+      <v-row>
+        <v-col>
+          <h1>getDeployList</h1>
+          <GetDeployList 
+            :req="{clusterId: cluster.ref.id ?? 0, nsName: ns.ref.name}"
+            @selected="selectDeploy"
+          />
+        </v-col>
+      </v-row>
+      <v-row>
+        <v-col>
+          <h1>getDeployDetail</h1>
+          <GetDeployDetail 
+            :title="deploy.ref.name" 
+            :req="deploy.req"
+          />
+        </v-col>
+      </v-row>
+    </div>
+    <div>
+      <v-row>
+        <v-col>
+          <h1>createDeploy</h1>
+          <CreateDeploy :cluster-id="cluster.ref.id ?? 0" :ns-name="ns.ref.name"/>
+        </v-col>
+        <v-col>
+          <h1>updateDeploy</h1>
+          <UpdateDeploy :cluster-id="cluster.ref.id ?? 0" :ns-name="ns.ref.name" :name="deploy.ref.name"/>
+        </v-col>
+        <v-col>
+          <h1>deleteDeploy</h1>
+          <DeleteDeploy :cluster-id="cluster.ref.id ?? 0" :ns-name="ns.ref.name" :name="deploy.ref.name"/>
+        </v-col>
+      </v-row>
+    </div>
+
+    <div>
+      <v-row>
+        <v-col>
+          <h1>getSvcList</h1>
+          <GetSvcList :cluster-id="cluster.ref.id ?? 0" :ns-name="ns.ref.name" @selected="selectSvc" />
+        </v-col>
+      </v-row>
+      <v-row>
+        <v-col>
+          <h1>getSvcDetail</h1>
+          <GetSvcDetail
+            :title="svc.ref.name"
+            :req="svc.req"
+          />
+        </v-col>
+      </v-row>
+      <v-row>
+        <v-col>
+          <h1>createSvc</h1>
+          <CreateSvc :cluster-id="cluster.ref.id ?? 0" :ns-name="ns.ref.name" />
+        </v-col>
+        <v-col>
+          <h1>updateSvc</h1>
+          <UpdateSvc :cluster-id="cluster.ref.id ?? 0" :ns-name="ns.ref.name" :name="svc.ref.name" />
+        </v-col>
+        <v-col>
+          <h1>deleteSvc</h1>
+          <DeleteSvc :cluster-id="cluster.ref.id ?? 0" :ns-name="ns.ref.name" :name="svc.ref.name" />
+        </v-col>
+      </v-row>
+    </div>
+
+    <div>
+      <v-row>
+        <v-col>
+          <h1>getPodList</h1>
+          <GetPodList 
+            :req="{clusterId: cluster.ref.id ?? 0, nsName: ns.ref.name}" 
+            @selected="selectPod"/>
+        </v-col>
+      </v-row>
+      <v-row>
+        <v-col>
+          <h1>getPodDetail</h1>
+          <GetPodDetail 
+            :title="pod.ref.name"
+            :req="pod.req"
+          />
         </v-col>
       </v-row>
     </div>
@@ -260,6 +373,32 @@ import GetNSDetail from '@/components/data/GetNSDetail.vue';
 import CreateNS from '@/components/data/CreateNS.vue';
 import UpdateNS from '@/components/data/UpdateNS.vue';
 import DeleteNS from '@/components/data/DeleteNS.vue';
+import GetDeployList from '@/components/data/GetDeployList.vue';
+import GetDeployDetail from '@/components/data/GetDeployDetail.vue';
+import CreateDeploy from '@/components/data/CreateDeploy.vue';
+import UpdateDeploy from '@/components/data/UpdateDeploy.vue';
+import DeleteDeploy from '@/components/data/DeleteDeploy.vue';
+import GetSvcList from '@/components/data/GetSvcList.vue';
+import GetSvcDetail from '@/components/data/GetSvcDetail.vue';
+import CreateSvc from '@/components/data/CreateSvc.vue';
+import UpdateSvc from '@/components/data/UpdateSvc.vue';
+import DeleteSvc from '@/components/data/DeleteSvc.vue';
+import GetPodList from '@/components/data/GetPodList.vue';
+import GetPodDetail from '@/components/data/GetPodDetail.vue';
+import type { GetClusterDetailRequestParam, GetClusterDetailResponseDto } from '@/lib/api/cluster/clusterDto';
+import type { GetNodeDetailRequestParam, GetNodeDetailResponseDto } from '@/lib/api/node/nodeDto';
+import type { GetDeployDetailRequestParam, GetDeployDetailResponseDto } from '@/lib/api/deploy/deployDto';
+import type { GetNSDetailRequestParam, GetNSDetailResponseDto } from '@/lib/api/ns/nsDto';
+import type { GetSvcDetailRequestParam, GetSvcDetailResponseDto } from '@/lib/api/svc/svcDto';
+import type { GetPodDetailRequestParam, GetPodDetailResponseDto } from '@/lib/api/pod/podDto';
+
+/*
+todo
+1. 컴포넌트별 emit, ref, props 형식 통일
+2. 변수 명 곂치지 않게
+3. 컴포넌트 별 새로고침 함수 expose 생성
+4. props가 제공되지 않으면 dialog 노출되지 않게 컴포넌트 수정
+*/
 
 interface userRef {
   userId: number;
@@ -314,38 +453,82 @@ const selectedPerm = ref<{
   description: string;
 }[]>([]);
 
-interface clusterRef {
-  clusterId: number;
-  orgId: number;
+
+interface EntityRef {
+  id?: number;
   name: string;
-  env: string;
-  caCert: string;
-  saToken: string;
-  apiServerUrl: string;
-  createdAt: Date;
-  updatedAt: Date;
-}
-const cluster = ref<clusterRef>({} as clusterRef);
-const selectCluster = (item: any) => {
-  cluster.value = item;
 }
 
-interface nodeRef {
-  name: string;
-}
-const node = ref<nodeRef>({} as nodeRef);
-const selectNode = (item: any) => {
-  node.value = item;
-  console.log(node.value.name);
+const cluster = ref({
+  req: {} as GetClusterDetailRequestParam,
+  ref: {} as EntityRef
+});
+const selectCluster = (item: GetClusterDetailResponseDto) => {
+  cluster.value.ref = {id: item.clusterId, name: item.name};
+  cluster.value.req = item;
 }
 
-interface nsRef {
-  clusterId: number;
-  name: string;
+const node = ref({
+  req: {} as GetNodeDetailRequestParam,
+  ref: {} as EntityRef
+});
+const selectNode = (item: GetNodeDetailResponseDto) => {
+  node.value.ref = {name: item.name};
+  node.value.req = {
+    clusterId: cluster.value.ref.id ?? 0,
+    nodeName: node.value.ref.name
+  };
 }
-const ns = ref<nsRef>({} as nsRef);
-const selectNS = (item: any) => {
-  ns.value = item;
-  console.log(item);
+
+const ns = ref({
+  req: {} as GetNSDetailRequestParam,
+  ref: {} as EntityRef
+});
+const selectNS = (item: GetNSDetailResponseDto) => {
+  ns.value.ref = {name: item.name};
+  ns.value.req = {
+    clusterId: cluster.value.ref.id ?? 0,
+    name: ns.value.ref.name,
+  };
 }
+
+const deploy = ref({
+  req: {} as GetDeployDetailRequestParam,
+  ref: {} as EntityRef
+});
+const selectDeploy = (item: GetDeployDetailResponseDto) => {
+  deploy.value.ref = {name: item.name};
+  deploy.value.req = {
+    clusterId: cluster.value.ref.id ?? 0,
+    nsName: ns.value.ref.name,
+    deployName: deploy.value.ref.name
+  };
+}
+
+const svc = ref({
+  req: {} as GetSvcDetailRequestParam,
+  ref: {} as EntityRef
+});
+const selectSvc = (item: GetSvcDetailResponseDto) => {
+  svc.value.ref = {name: item.name};
+  svc.value.req = {
+    clusterId: cluster.value.ref.id ?? 0,
+    nsName: ns.value.ref.name,
+    name: svc.value.ref.name
+  };
+}
+
+const pod = ref({
+  req: {} as GetPodDetailRequestParam,
+  ref: {} as EntityRef
+});
+const selectPod = (item: GetPodDetailResponseDto) => {
+  pod.value.ref = {name: item.name};
+  pod.value.req = {
+    clusterId: cluster.value.ref.id ?? 0,
+    nsName: ns.value.ref.name,
+    name: pod.value.ref.name
+  };
+}
+
 </script>

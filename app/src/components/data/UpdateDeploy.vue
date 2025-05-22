@@ -2,22 +2,16 @@
   <SideContents>
     <template v-slot:activator="{ props }">
       <slot name="activator">
-        <v-btn v-bind="props">UpdateNS</v-btn>
+        <v-btn v-bind="props">UpdateDeploy</v-btn>
       </slot>
     </template>
-    <template v-slot:title>네임스페이스 정보 수정</template>
+    <template v-slot:title>디플로이먼트 수정</template>
     <v-form v-model="valid" @submit.prevent="submitForm">
-      <v-textarea
-        v-model="form.labels"
+      <v-text-field
+        v-model="form.replicas"
+        :rules="[rules.required]"
         variant="underlined"
-        label="네임스페이스 labels"
-        color="primary"
-        clearable
-      />
-      <v-textarea
-        v-model="form.annotations"
-        variant="underlined"
-        label="네임스페이스 annotaions"
+        label="Replica Set"
         color="primary"
         clearable
       />
@@ -37,51 +31,50 @@
 
 import { onMounted, ref, watch } from 'vue';
 import SideContents from '@/components/layout/SideContents.vue';
-import { getNSDetailApi } from '@/lib/api/ns/getNSDetail.Api';
-import { updateNSApi } from '@/lib/api/ns/updateNSApi';
+import { rules } from '@/lib/global/inputRules';
+import { updateDeployApi } from '@/lib/api/deploy/updateDeployApi';
+import { getDeployDetailApi } from '@/lib/api/deploy/getDeployDetail.Api';
 
 const props = defineProps<{
   clusterId: number;
+  nsName: string;
   name: string;
 }>();
 
-const valid = ref(false)
+const valid = ref(false);
 
 interface Form {
-  labels: string;
-  annotations: string;
+  replicas: number;
 }
 
 const form = ref<Form>({} as Form);
 
 const submitForm = () => {
-  updateNSApi({
+  updateDeployApi({
     clusterId: props.clusterId,
+    nsName: props.nsName,
     name: props.name,
-    labels: JSON.parse(form.value.labels),
-    annotations: JSON.parse(form.value.annotations)
+    replicas: form.value.replicas
   });
 }
 
 const getNSDetail = () => {
-  getNSDetailApi({
+  getDeployDetailApi({
     clusterId: props.clusterId,
-    name: props.name
+    nsName: props.nsName,
+    deployName: props.name
   }).then((res) => {
-    if (!res) return;
-    form.value = {
-      annotations: JSON.stringify(res.annotations),
-      labels: JSON.stringify(res.labels)
+    if (res) form.value = {
+      replicas: res.replicas
     }
   });
 }
 
 onMounted(() => {
-  if (!props.clusterId || !props.name) return;
-  getNSDetail();
+  if (props.clusterId && props.nsName && props.name) getNSDetail();
 });
 
-watch(() => [props.clusterId, props.name], () => {
+watch(() => [props.clusterId, props.nsName, props.name], () => {
   getNSDetail();
 });
 

@@ -73,6 +73,8 @@ import SelectOrgList from '@/components/data/SelectOrgList.vue';
 
 import { createClusterApi } from '@/lib/api/cluster/createClusterApi';
 
+import { rules } from '@/lib/global/inputRules';
+
 const valid = ref(false)
 
 interface ClusterRef {
@@ -87,16 +89,9 @@ interface ClusterRef {
   endpoints: string;
 }
 
-const form = ref<ClusterRef>({} as ClusterRef)
-
-const rules = {
-  required: (v: string) => !!v || '필수 입력 항목입니다.',
-  email: (v: string) =>
-    /.+@.+\..+/.test(v) || '올바른 이메일 형식을 입력하세요.'
-}
+const form = ref<ClusterRef>({} as ClusterRef);
 
 const submitForm = () => {
-  console.log(form.value);
   createClusterApi({
     orgId: form.value.org.orgId,
     name: form.value.name,

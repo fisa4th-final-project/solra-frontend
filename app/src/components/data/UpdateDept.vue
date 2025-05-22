@@ -29,52 +29,45 @@
 </template>
 <script lang="ts" setup>
 
-  import { onMounted, ref, watch } from 'vue';
+import { onMounted, ref, watch } from 'vue';
+import SideContents from '@/components/layout/SideContents.vue';
+import { rules } from '@/lib/global/inputRules';
+import { updateDeptApi } from '@/lib/api/dept/updateDeptApi';
+import { getDeptDetailApi } from '@/lib/api/dept/getDeptDetailApi';
 
-  import SideContents from '@/components/layout/SideContents.vue';
+const props = defineProps<{
+  deptId: number;
+}>();
 
-  import { updateDeptApi } from '@/lib/api/dept/updateDeptApi';
-  import { getDeptDetailApi } from '@/lib/api/dept/getDeptDetailApi';
+const valid = ref(false)
 
-  const props = defineProps<{
-    deptId: number;
-  }>();
+const form = ref({
+  deptName: ''
+})
 
-  const valid = ref(false)
+const submitForm = () => {
+  updateDeptApi({
+    deptId: props.deptId,
+    deptName: form.value.deptName
+  });
+}
 
-  const form = ref({
-    deptName: ''
+const getDeptDetail = () => {
+  getDeptDetailApi({
+    deptId: props.deptId
+  }).then((res) => {
+    if (!res) return;
+    form.value.deptName = res.deptName;
   })
+}
 
-  const rules = {
-    required: (v: string) => !!v || '필수 입력 항목입니다.',
-    email: (v: string) =>
-      /.+@.+\..+/.test(v) || '올바른 이메일 형식을 입력하세요.'
-  }
+onMounted(() => {
+  if (!props.deptId) return;
+  getDeptDetail();
+});
 
-  const submitForm = () => {
-    updateDeptApi({
-      deptId: props.deptId,
-      deptName: form.value.deptName
-    });
-  }
-
-  const getDeptDetail = () => {
-    getDeptDetailApi({
-      deptId: props.deptId
-    }).then((res) => {
-      if (!res) return;
-      form.value.deptName = res.deptName;
-    })
-  }
-
-  onMounted(() => {
-    if (!props.deptId) return;
-    getDeptDetail();
-  });
-
-  watch(() => props.deptId, () => {
-    getDeptDetail();
-  });
+watch(() => props.deptId, () => {
+  getDeptDetail();
+});
 
 </script>
