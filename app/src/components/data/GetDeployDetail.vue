@@ -1,74 +1,48 @@
 <template>
-  <Card no-title no-text no-gutters @click="selectDeploy(deploy)">
-    <v-row align="center" class="py-5">
-      <v-col>
-        <v-icon>mdi-hexagon-multiple</v-icon>
-        <span class="text-h6 pl-5">
-          {{ props.deployName }}
-        </span>
-      </v-col>
-    </v-row>
-    <v-data-table
-      :headers="deployHeader"
-      :items="mapToTableRows(deploy)"
-      hide-default-header
-      hide-default-footer
-    >
-    </v-data-table>
-  </Card>
+  <DataCard 
+    :header="{title, icon: 'mdi-hexagon-multiple'}"
+    :api="{req, dataHandler}"
+  >
+    <template v-slot:item="{ item }">
+      <tr v-if="item.field === 'caCert' || item.field === 'saToken'">
+        <th>
+          {{ item.field }}
+        </th>
+        <td class="text-right">
+          ••••••••••••
+        </td>
+      </tr>
+      <tr v-else>
+        <th>{{ item.field }}</th>
+        <td class="text-right">{{ item.value }}</td>
+      </tr>
+    </template>
+    <template v-slot:skeleton>
+      <v-container height="504px" class="d-flex justify-center align-center">
+        <v-progress-circular
+          indeterminate
+          color="primary"
+          size="60"
+          width="6"
+        />
+      </v-container>
+    </template>
+  </DataCard>
 </template>
 
 <script lang="ts" setup>
-import { onMounted, ref, watch } from 'vue';
-import Card from '@/components/common/Card.vue';
-import type { DataTableHeader } from 'vuetify';
-import type { GetDeployDetailResponseDto } from '@/lib/api/deploy/deployDto';
+
+import DataCard from '@/components/common/DataCard.vue';
+import type { GetDeployDetailRequestParam } from '@/lib/api/deploy/deployDto';
 import { getDeployDetailApi } from '@/lib/api/deploy/getDeployDetail.Api';
 
-const emit = defineEmits<{
-  (e: 'selected', item: GetDeployDetailResponseDto): void
-}>()
-
-const selectDeploy = (item: GetDeployDetailResponseDto) => {
-  emit('selected', item);
-}
-
-
-const props = defineProps<{
-  clusterId: number;
-  nsName: string;
-  deployName: string;
+defineProps<{
+  title: string;
+  req: GetDeployDetailRequestParam;
 }>();
 
-const deploy = ref<GetDeployDetailResponseDto>({} as GetDeployDetailResponseDto);
-
-const loadDeploy = () => {
-  getDeployDetailApi({
-    clusterId: props.clusterId,
-    nsName: props.nsName,
-    deployName: props.deployName
-  }).then((res) => {
-    if (res) deploy.value = res
-  });
+const dataHandler = async (req: GetDeployDetailRequestParam) => {
+  if (req.clusterId && req.nsName && req.deployName) return await getDeployDetailApi(req);
 };
 
-const mapToTableRows = (cluster: Record<string, any>) => {
-  return Object.entries(cluster).map(([key, value]) => ({
-    field: key,
-    value: value,
-  }));
-};
-
-const deployHeader: readonly DataTableHeader[] = [
-  { key: 'field', title: '항목', align: 'start' },
-  { key: 'value', title: '값', align: 'end' },
-];
-
-onMounted(() => {
-  if (props.clusterId && props.nsName && props.deployName) loadDeploy();
-});
-
-watch(() => [props.clusterId, props.deployName, props.nsName], () => {
-  loadDeploy();
-});
 </script>

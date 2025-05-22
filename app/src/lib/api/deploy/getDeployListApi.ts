@@ -10,7 +10,7 @@ export async function getDeployListApi(reqDto: GetDeployListRequestParam):Promis
 
   return await apiRequest({
     method: "GET",
-    path: `api/clusters/${reqDto.clusterId}/namespaces/${reqDto.name}/deployments`,
+    path: `api/clusters/${reqDto.clusterId}/namespaces/${reqDto.nsName}/deployments`,
     auth: true
   }).then(async (res: ApiResponse<GetDeployListResponseDto[]>) => {
     if (!res.data) return null;

@@ -1,6 +1,6 @@
 export interface GetDeployListRequestParam {
   clusterId: number;
-  name: string;
+  nsName: string;
 }
 
 export interface GetDeployListResponseDto {

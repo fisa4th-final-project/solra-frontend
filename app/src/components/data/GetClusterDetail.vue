@@ -1,69 +1,48 @@
 <template>
-  <Card no-title no-text no-gutters>
-    <v-data-table
-      :headers="clusterHeader"
-      :items="mapClusterToTableRows(cluster)"
-      hide-default-footer
-      ripple
-      hover
-    >
-      <template v-slot:item.value="{ item }">
-        <span v-if="item.field === 'caCert' || item.field === 'saToken'">••••••••••••</span>
-        <span v-else>{{ item.value }}</span>
-      </template>
-    </v-data-table>
-  </Card>
+  <DataCard
+    :header="{title, icon: 'mdi-kubernetes'}"
+    :api="{req, dataHandler}"
+  >
+    <template v-slot:item="{ item }">
+      <tr v-if="item.field === 'caCert' || item.field === 'saToken'">
+        <th>
+          {{ item.field }}
+        </th>
+        <td class="text-right">
+          ••••••••••••
+        </td>
+      </tr>
+      <tr v-else>
+        <th>{{ item.field }}</th>
+        <td class="text-right">{{ item.value }}</td>
+      </tr>
+    </template>
+    <template v-slot:skeleton>
+      <v-container height="504px" class="d-flex justify-center align-center">
+        <v-progress-circular
+          indeterminate
+          color="primary"
+          size="60"
+          width="6"
+        />
+      </v-container>
+    </template>
+  </DataCard>
 </template>
 
 <script lang="ts" setup>
-import { onMounted, ref, watch } from 'vue';
-import Card from '@/components/common/Card.vue';
-import type { DataTableHeader } from 'vuetify';
+
+import DataCard from '@/components/common/DataCard.vue';
 import { getClusterDetailApi } from '@/lib/api/cluster/getClusterDetailApi';
+import type { GetClusterDetailRequestParam } from '@/lib/api/cluster/clusterDto';
 
-const props = defineProps<{
-  clusterId: number;
-}>()
+defineProps<{
+  title: string;
+  req: GetClusterDetailRequestParam;
+}>();
 
-interface clusterRef {
-  clusterId: number;
-  orgId: number;
-  name: string;
-  env: string;
-  caCert: string;
-  saToken: string;
-  apiServerUrl: string;
-  createdAt: Date;
-  updatedAt: Date;
-}
-
-const cluster = ref<clusterRef>({} as clusterRef);
-
-const loadCluster = () => {
-  getClusterDetailApi({
-    clusterId: props.clusterId
-  }).then((res) => {
-    if (res) cluster.value = res
-  });
+const dataHandler = async (req: GetClusterDetailRequestParam) => {
+  if (req.clusterId) return await getClusterDetailApi(req);
 };
 
-const mapClusterToTableRows = (cluster: Record<string, any>) => {
-  return Object.entries(cluster).map(([key, value]) => ({
-    field: key,
-    value: value,
-  }));
-};
-
-const clusterHeader: readonly DataTableHeader[] = [
-  { key: 'field', title: '항목', align: 'start' },
-  { key: 'value', title: '값', align: 'end' },
-];
-
-onMounted(() => {
-  if (props.clusterId) loadCluster();
-});
-
-watch(() => props.clusterId, () => {
-  loadCluster();
-});
 </script>
