@@ -35,55 +35,54 @@
 </template>
 <script lang="ts" setup>
 
-  import { onMounted, ref, watch } from 'vue';
+import { onMounted, ref, watch } from 'vue';
+import SideContents from '@/components/layout/SideContents.vue';
+import { getNSDetailApi } from '@/lib/api/ns/getNSDetail.Api';
+import { updateNSApi } from '@/lib/api/ns/updateNSApi';
 
-  import SideContents from '@/components/layout/SideContents.vue';
-  import { getNSDetailApi } from '@/lib/api/ns/getNSDetail.Api';
-  import { updateNSApi } from '@/lib/api/ns/updateNSApi';
+const props = defineProps<{
+  clusterId: number;
+  name: string;
+}>();
 
-  const props = defineProps<{
-    clusterId: number;
-    name: string;
-  }>();
+const valid = ref(false)
 
-  const valid = ref(false)
+interface Form {
+  labels: string;
+  annotations: string;
+}
 
-  interface Form {
-    labels: string;
-    annotations: string;
-  }
+const form = ref<Form>({} as Form);
 
-  const form = ref<Form>({} as Form);
-
-  const submitForm = () => {
-    updateNSApi({
-      clusterId: props.clusterId,
-      name: props.name,
-      labels: JSON.parse(form.value.labels),
-      annotations: JSON.parse(form.value.annotations)
-    });
-  }
-
-  const getNSDetail = () => {
-    getNSDetailApi({
-      clusterId: props.clusterId,
-      name: props.name
-    }).then((res) => {
-      if (!res) return;
-      form.value = {
-        annotations: JSON.stringify(res.annotations),
-        labels: JSON.stringify(res.labels)
-      }
-    });
-  }
-
-  onMounted(() => {
-    if (!props.clusterId || !props.name) return;
-    getNSDetail();
+const submitForm = () => {
+  updateNSApi({
+    clusterId: props.clusterId,
+    name: props.name,
+    labels: JSON.parse(form.value.labels),
+    annotations: JSON.parse(form.value.annotations)
   });
+}
 
-  watch(() => [props.clusterId, props.name], () => {
-    getNSDetail();
+const getNSDetail = () => {
+  getNSDetailApi({
+    clusterId: props.clusterId,
+    name: props.name
+  }).then((res) => {
+    if (!res) return;
+    form.value = {
+      annotations: JSON.stringify(res.annotations),
+      labels: JSON.stringify(res.labels)
+    }
   });
+}
+
+onMounted(() => {
+  if (!props.clusterId || !props.name) return;
+  getNSDetail();
+});
+
+watch(() => [props.clusterId, props.name], () => {
+  getNSDetail();
+});
 
 </script>

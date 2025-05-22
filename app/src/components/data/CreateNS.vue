@@ -32,38 +32,27 @@
   </SideContents>
 </template>
 <script lang="ts" setup>
-  
-  import { ref } from 'vue'
-  
-  import SideContents from '@/components/layout/SideContents.vue';
-  import { createNSApi } from '@/lib/api/ns/createNSApi';
-  
-  const props = defineProps<{
-    clusterId: number;
-  }>();
 
-  const valid = ref(false);
+import { ref } from 'vue'
+import SideContents from '@/components/layout/SideContents.vue';
+import { rules } from '@/lib/global/inputRules';
+import { createNSApi } from '@/lib/api/ns/createNSApi';
 
-  const form = ref({
-    name: '',
-  });
+const props = defineProps<{
+  clusterId: number;
+}>();
 
-  /*
-  todo:
-  1. inputRules.ts 에 rules 공통 로직으로 추가
-  */
- 
- const rules = {
-   required: (v: string) => !!v || '필수 입력 항목입니다.',
-   email: (v: string) =>
-   /.+@.+\..+/.test(v) || '올바른 이메일 형식을 입력하세요.'
-  }
+const valid = ref(false);
 
-  const submitForm = () => {
-    createNSApi({
-      clusterId: props.clusterId,
-      name: form.value.name
-    })
-  }
+const form = ref({
+  name: '',
+});
+
+const submitForm = () => {
+  createNSApi({
+    clusterId: props.clusterId,
+    name: form.value.name
+  })
+}
 
 </script>

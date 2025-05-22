@@ -30,33 +30,25 @@
 <script lang="ts" setup>
 
 import { ref } from 'vue';
-
 import SideContents from '@/components/layout/SideContents.vue';
-
+import { rules } from '@/lib/global/inputRules';
 import { updatePermApi } from '@/lib/api/perm/updatePermApi';
 
+const props = defineProps<{
+  permId: number;
+}>();
 
-  const props = defineProps<{
-    permId: number;
-  }>();
+const valid = ref(false)
 
-  const valid = ref(false)
+const form = ref({
+  description: ''
+})
 
-  const form = ref({
-    description: ''
-  })
-
-  const rules = {
-    required: (v: string) => !!v || '필수 입력 항목입니다.',
-    email: (v: string) =>
-      /.+@.+\..+/.test(v) || '올바른 이메일 형식을 입력하세요.'
-  }
-
-  const submitForm = () => {
-    updatePermApi({
-      permId: props.permId,
-      description: form.value.description
-    });
-  }
+const submitForm = () => {
+  updatePermApi({
+    permId: props.permId,
+    description: form.value.description
+  });
+}
 
 </script>

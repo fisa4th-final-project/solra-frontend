@@ -29,52 +29,45 @@
 </template>
 <script lang="ts" setup>
 
-  import { onMounted, ref, watch } from 'vue';
-
-  import SideContents from '@/components/layout/SideContents.vue';
-
-  import { updateOrgApi } from '@/lib/api/org/updateOrgApi';
+import { onMounted, ref, watch } from 'vue';
+import SideContents from '@/components/layout/SideContents.vue';
+import { rules } from '@/lib/global/inputRules';
+import { updateOrgApi } from '@/lib/api/org/updateOrgApi';
 import { getOrgDetailApi } from '@/lib/api/org/getOrgDetailApi';
 
-  const props = defineProps<{
-    orgId: number;
-  }>();
+const props = defineProps<{
+  orgId: number;
+}>();
 
-  const valid = ref(false)
+const valid = ref(false)
 
-  const form = ref({
-    orgName: ''
+const form = ref({
+  orgName: ''
+})
+
+const submitForm = () => {
+  updateOrgApi({
+    orgId: props.orgId,
+    orgName: form.value.orgName
+  });
+}
+
+const getOrgDetail = () => {
+  getOrgDetailApi({
+    orgId: props.orgId
+  }).then((res) => {
+    if (!res) return;
+    form.value.orgName = res.orgName;
   })
+}
 
-  const rules = {
-    required: (v: string) => !!v || '필수 입력 항목입니다.',
-    email: (v: string) =>
-      /.+@.+\..+/.test(v) || '올바른 이메일 형식을 입력하세요.'
-  }
+onMounted(() => {
+  if (!props.orgId) return;
+  getOrgDetail();
+});
 
-  const submitForm = () => {
-    updateOrgApi({
-      orgId: props.orgId,
-      orgName: form.value.orgName
-    });
-  }
-
-  const getOrgDetail = () => {
-    getOrgDetailApi({
-      orgId: props.orgId
-    }).then((res) => {
-      if (!res) return;
-      form.value.orgName = res.orgName;
-    })
-  }
-
-  onMounted(() => {
-    if (!props.orgId) return;
-    getOrgDetail();
-  });
-
-  watch(() => props.orgId, () => {
-    getOrgDetail();
-  });
+watch(() => props.orgId, () => {
+  getOrgDetail();
+});
 
 </script>

@@ -83,70 +83,59 @@
   </SideContents>
 </template>
 <script lang="ts" setup>
-  
-  import { ref } from 'vue'
-  
-  import SideContents from '@/components/layout/SideContents.vue';
+
+import { ref } from 'vue'
+import SideContents from '@/components/layout/SideContents.vue';
+import { rules } from '@/lib/global/inputRules';
 import { createSvcApi } from '@/lib/api/svc/createSvcApi';
-  
-  const props = defineProps<{
-    clusterId: number;
-    nsName: string;
-  }>();
 
-  const valid = ref(false);
+const props = defineProps<{
+  clusterId: number;
+  nsName: string;
+}>();
 
-  interface Form {
-    name: string;
-    type: string;
-    selector: {
-      app: string;
-    };
-    ports: {
-      protocol: string;
-      port: number;
-      targetPort: number;
-      nodePort?: number;
-    }[];
-  }
-  const form = ref<Form>({
-    name: '',
-    type: '',
-    selector: {
-      app: ''
-    },
-    ports: []
+const valid = ref(false);
+
+interface Form {
+  name: string;
+  type: string;
+  selector: {
+    app: string;
+  };
+  ports: {
+    protocol: string;
+    port: number;
+    targetPort: number;
+    nodePort?: number;
+  }[];
+}
+const form = ref<Form>({
+  name: '',
+  type: '',
+  selector: {
+    app: ''
+  },
+  ports: []
+});
+
+const addPort = () => {
+  form.value.ports.push({
+    protocol: '',
+    port: 0,
+    targetPort: 0
+  })
+}
+
+const removePort = (index: number) => {
+  form.value.ports.splice(index,1);
+}
+
+const submitForm = () => {
+  createSvcApi({
+    clusterId: props.clusterId,
+    nsName: props.nsName,
+    ...form.value
   });
-
-  /*
-  todo:
-  1. inputRules.ts 에 rules 공통 로직으로 추가
-  */
- 
- const rules = {
-   required: (v: string) => !!v || '필수 입력 항목입니다.',
-   email: (v: string) =>
-   /.+@.+\..+/.test(v) || '올바른 이메일 형식을 입력하세요.'
-  }
-
-  const addPort = () => {
-    form.value.ports.push({
-      protocol: '',
-      port: 0,
-      targetPort: 0
-    })
-  }
-
-  const removePort = (index: number) => {
-    form.value.ports.splice(index,1);
-  }
-
-  const submitForm = () => {
-    createSvcApi({
-      clusterId: props.clusterId,
-      nsName: props.nsName,
-      ...form.value
-    });
-  }
+}
 
 </script>

@@ -9,6 +9,7 @@
     <v-form v-model="valid" @submit.prevent="submitForm">
       <v-text-field
         v-model="form.replicas"
+        :rules="[rules.required]"
         variant="underlined"
         label="Replica Set"
         color="primary"
@@ -28,53 +29,53 @@
 </template>
 <script lang="ts" setup>
 
-  import { onMounted, ref, watch } from 'vue';
+import { onMounted, ref, watch } from 'vue';
+import SideContents from '@/components/layout/SideContents.vue';
+import { rules } from '@/lib/global/inputRules';
+import { updateDeployApi } from '@/lib/api/deploy/updateDeployApi';
+import { getDeployDetailApi } from '@/lib/api/deploy/getDeployDetail.Api';
 
-  import SideContents from '@/components/layout/SideContents.vue';
-  import { updateDeployApi } from '@/lib/api/deploy/updateDeployApi';
-  import { getDeployDetailApi } from '@/lib/api/deploy/getDeployDetail.Api';
+const props = defineProps<{
+  clusterId: number;
+  nsName: string;
+  name: string;
+}>();
 
-  const props = defineProps<{
-    clusterId: number;
-    nsName: string;
-    name: string;
-  }>();
+const valid = ref(false);
 
-  const valid = ref(false);
+interface Form {
+  replicas: number;
+}
 
-  interface Form {
-    replicas: number;
-  }
+const form = ref<Form>({} as Form);
 
-  const form = ref<Form>({} as Form);
-
-  const submitForm = () => {
-    updateDeployApi({
-      clusterId: props.clusterId,
-      nsName: props.nsName,
-      name: props.name,
-      replicas: form.value.replicas
-    });
-  }
-
-  const getNSDetail = () => {
-    getDeployDetailApi({
-      clusterId: props.clusterId,
-      nsName: props.nsName,
-      deployName: props.name
-    }).then((res) => {
-      if (res) form.value = {
-        replicas: res.replicas
-      }
-    });
-  }
-
-  onMounted(() => {
-    if (props.clusterId && props.nsName && props.name) getNSDetail();
+const submitForm = () => {
+  updateDeployApi({
+    clusterId: props.clusterId,
+    nsName: props.nsName,
+    name: props.name,
+    replicas: form.value.replicas
   });
+}
 
-  watch(() => [props.clusterId, props.nsName, props.name], () => {
-    getNSDetail();
+const getNSDetail = () => {
+  getDeployDetailApi({
+    clusterId: props.clusterId,
+    nsName: props.nsName,
+    deployName: props.name
+  }).then((res) => {
+    if (res) form.value = {
+      replicas: res.replicas
+    }
   });
+}
+
+onMounted(() => {
+  if (props.clusterId && props.nsName && props.name) getNSDetail();
+});
+
+watch(() => [props.clusterId, props.nsName, props.name], () => {
+  getNSDetail();
+});
 
 </script>

@@ -29,28 +29,21 @@
 </template>
 <script lang="ts" setup>
 
-  import { ref } from 'vue';
+import { ref } from 'vue';
+import SideContents from '@/components/layout/SideContents.vue';
+import { rules } from '@/lib/global/inputRules';
+import { createOrgApi } from '@/lib/api/org/createOrgApi';
 
-  import SideContents from '@/components/layout/SideContents.vue';
+const valid = ref(false)
 
-  import { createOrgApi } from '@/lib/api/org/createOrgApi';
+const form = ref({
+  orgName: ''
+})
 
-  const valid = ref(false)
-
-  const form = ref({
-    orgName: ''
-  })
-
-  const rules = {
-    required: (v: string) => !!v || '필수 입력 항목입니다.',
-    email: (v: string) =>
-      /.+@.+\..+/.test(v) || '올바른 이메일 형식을 입력하세요.'
-  }
-
-  const submitForm = () => {
-    createOrgApi({
-      orgName: form.value.orgName
-    });
-  }
+const submitForm = () => {
+  createOrgApi({
+    orgName: form.value.orgName
+  });
+}
 
 </script>

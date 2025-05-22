@@ -72,88 +72,82 @@
 </template>
 <script lang="ts" setup>
 
-  import { onMounted, ref, watch } from 'vue';
+import { onMounted, ref, watch } from 'vue';
+import SideContents from '@/components/layout/SideContents.vue';
+import { rules } from '@/lib/global/inputRules';
+import { updateSvcApi } from '@/lib/api/svc/updateSvcApi';
+import { getSvcDetailApi } from '@/lib/api/svc/getSvcDetail.Api';
 
-  import SideContents from '@/components/layout/SideContents.vue';
-  import { updateSvcApi } from '@/lib/api/svc/updateSvcApi';
-  import { getSvcDetailApi } from '@/lib/api/svc/getSvcDetail.Api';
+const props = defineProps<{
+  clusterId: number;
+  nsName: string;
+  name: string;
+}>();
 
-  const props = defineProps<{
-    clusterId: number;
-    nsName: string;
-    name: string;
-  }>();
+const valid = ref(false);
 
-  const valid = ref(false);
+interface Form {
+  type: string;
+  selector: {
+    app: string;
+  };
+  ports: {
+    protocol: string;
+    port: number;
+    targetPort: number;
+    nodePort?: number;
+  }[]
+}
 
-  interface Form {
-    type: string;
-    selector: {
-      app: string;
-    };
-    ports: {
-      protocol: string;
-      port: number;
-      targetPort: number;
-      nodePort?: number;
-    }[]
-  }
+const form = ref<Form>({
+  type: '',
+  selector: {
+    app: ''
+  },
+  ports: []
+});
 
-  const form = ref<Form>({
-    type: '',
-    selector: {
-      app: ''
-    },
-    ports: []
+const submitForm = () => {
+  updateSvcApi({
+    clusterId: props.clusterId,
+    nsName: props.nsName,
+    name: props.name,
+    ...form.value
   });
+}
 
-  const rules = {
-   required: (v: string) => !!v || '필수 입력 항목입니다.',
-   email: (v: string) =>
-   /.+@.+\..+/.test(v) || '올바른 이메일 형식을 입력하세요.'
-  }
+const addPort = () => {
+  form.value.ports.push({
+    protocol: '',
+    port: 0,
+    targetPort: 0
+  })
+}
 
-  const submitForm = () => {
-    updateSvcApi({
-      clusterId: props.clusterId,
-      nsName: props.nsName,
-      name: props.name,
-      ...form.value
-    });
-  }
+const removePort = (index: number) => {
+  form.value.ports.splice(index,1);
+}
 
-  const addPort = () => {
-    form.value.ports.push({
-      protocol: '',
-      port: 0,
-      targetPort: 0
-    })
-  }
-
-  const removePort = (index: number) => {
-    form.value.ports.splice(index,1);
-  }
-
-  const getSvcDetail = () => {
-    getSvcDetailApi({
-      clusterId: props.clusterId,
-      nsName: props.nsName,
-      name: props.name
-    }).then((res) => {
-      if (res) form.value = {
-        type: res.type,
-        selector: res.selector,
-        ports: res.ports
-      }
-    });
-  }
-
-  onMounted(() => {
-    if (props.clusterId && props.nsName && props.name) getSvcDetail();
+const getSvcDetail = () => {
+  getSvcDetailApi({
+    clusterId: props.clusterId,
+    nsName: props.nsName,
+    name: props.name
+  }).then((res) => {
+    if (res) form.value = {
+      type: res.type,
+      selector: res.selector,
+      ports: res.ports
+    }
   });
+}
 
-  watch(() => [props.clusterId, props.nsName, props.name], () => {
-    getSvcDetail();
-  });
+onMounted(() => {
+  if (props.clusterId && props.nsName && props.name) getSvcDetail();
+});
+
+watch(() => [props.clusterId, props.nsName, props.name], () => {
+  getSvcDetail();
+});
 
 </script>
