@@ -7,10 +7,14 @@
     </template>
     <template v-slot:title>디플로이먼트 추가</template>
     <v-form v-model="valid" @submit.prevent="submitForm">
-      <!-- 
-      todo:
-      1. 생성될 클러스터 선택용 select input 추가
-      -->
+      <v-row>
+        <v-col>
+          <SelectClusterList :form="form" />
+        </v-col>
+        <v-col>
+          <SelectNSList :form="form" />
+        </v-col>
+      </v-row>
       <v-text-field
         v-model="form.name"
         :rules="[rules.required]"
@@ -57,40 +61,44 @@
   </SideContents>
 </template>
 <script lang="ts" setup>
-  
-  import { ref } from 'vue'
-  import { rules } from '@/lib/global/inputRules';
-  import SideContents from '@/components/layout/SideContents.vue';
-  import { createDeployApi } from '@/lib/api/deploy/createDeployApi';
-  
-  const props = defineProps<{
-    clusterId: number;
-    nsName: string;
-  }>();
 
-  const valid = ref(false);
+import { ref } from 'vue'
+import { rules } from '@/lib/global/inputRules';
+import SideContents from '@/components/layout/SideContents.vue';
+import { createDeployApi } from '@/lib/api/deploy/createDeployApi';
+import SelectClusterList from '@/components/data/SelectClusterList.vue';
+import SelectNSList from '@/components/data/SelectNSList.vue';
 
-  const form = ref({
-    name: '',
-    appName: '',
-    image: '',
-    port: 0,
+const valid = ref(false);
+
+const form = ref({
+  cluster: {
+    clusterId: 0,
+    name: ''
+  },
+  ns: {
+    name: ''
+  },
+  name: '',
+  appName: '',
+  image: '',
+  port: 0,
+});
+
+const submitForm = () => {
+  createDeployApi({
+    clusterId: form.value.cluster.clusterId,
+    nsName: form.value.ns.name,
+    name: form.value.name,
+    labels: {
+      app: form.value.appName
+    },
+    container: {
+      name: form.value.appName,
+      image: form.value.image,
+      port: form.value.port
+    }
   });
-
-  const submitForm = () => {
-    createDeployApi({
-      clusterId: props.clusterId,
-      nsName: props.nsName,
-      name: form.value.name,
-      labels: {
-        app: form.value.appName
-      },
-      container: {
-        name: form.value.appName,
-        image: form.value.image,
-        port: form.value.port
-      }
-    })
-  }
+}
 
 </script>

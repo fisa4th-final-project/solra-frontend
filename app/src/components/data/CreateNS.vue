@@ -7,10 +7,7 @@
     </template>
     <template v-slot:title>네임스페이스 추가</template>
     <v-form v-model="valid" @submit.prevent="submitForm">
-      <!-- 
-      todo:
-      1. 생성될 클러스터 선택용 select input 추가
-      -->
+      <SelectClusterList :form="form"/>
       <v-text-field
         v-model="form.name"
         :rules="[rules.required]"
@@ -37,22 +34,23 @@ import { ref } from 'vue'
 import SideContents from '@/components/layout/SideContents.vue';
 import { rules } from '@/lib/global/inputRules';
 import { createNSApi } from '@/lib/api/ns/createNSApi';
-
-const props = defineProps<{
-  clusterId: number;
-}>();
+import SelectClusterList from '@/components/data/SelectClusterList.vue';
 
 const valid = ref(false);
 
 const form = ref({
   name: '',
+  cluster: {
+    clusterId: 0,
+    name: ''
+  }
 });
 
-const submitForm = () => {
-  createNSApi({
-    clusterId: props.clusterId,
+const submitForm = async () => {
+  await createNSApi({
+    clusterId: form.value.cluster.clusterId,
     name: form.value.name
-  })
+  });
 }
 
 </script>

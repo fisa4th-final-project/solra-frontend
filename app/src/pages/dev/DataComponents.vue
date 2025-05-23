@@ -89,7 +89,7 @@
       </v-col>
       <v-col cols="6">
         <h2>getRole</h2>
-        <GetRoleDetail :role-id="role.roleId" />
+        <GetRoleDetail :req="{roleId: role.roleId}" />
       </v-col>
       <v-col cols="6">
         <h2>getPermList</h2>

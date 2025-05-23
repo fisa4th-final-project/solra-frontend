@@ -7,13 +7,17 @@
     </template>
     <template v-slot:title>서비스 추가</template>
     <v-form v-model="valid" @submit.prevent="submitForm">
-      <!-- 
-      todo:
-      1. 생성될 클러스터 선택용 select input 추가
-      -->
       <v-card-subtitle>
         기본 정보
       </v-card-subtitle>
+      <v-row>
+        <v-col>
+          <SelectClusterList :form="form" />
+        </v-col>
+        <v-col>
+          <SelectNSList :form="form" />
+        </v-col>
+      </v-row>
       <v-text-field
         v-model="form.name"
         :rules="[rules.required]"
@@ -88,6 +92,8 @@ import { ref } from 'vue'
 import SideContents from '@/components/layout/SideContents.vue';
 import { rules } from '@/lib/global/inputRules';
 import { createSvcApi } from '@/lib/api/svc/createSvcApi';
+import SelectClusterList from '@/components/data/SelectClusterList.vue';
+import SelectNSList from '@/components/data/SelectNSList.vue';
 
 const props = defineProps<{
   clusterId: number;
@@ -96,26 +102,26 @@ const props = defineProps<{
 
 const valid = ref(false);
 
-interface Form {
-  name: string;
-  type: string;
-  selector: {
-    app: string;
-  };
-  ports: {
-    protocol: string;
-    port: number;
-    targetPort: number;
-    nodePort?: number;
-  }[];
+interface Port {
+  protocol: string;
+  port: number;
+  targetPort: number;
+  nodePort?: number;
 }
-const form = ref<Form>({
+const form = ref({
+  cluster: {
+    clusterId: 0,
+    name: ''
+  },
+  ns: {
+    name: ''
+  },
   name: '',
   type: '',
   selector: {
     app: ''
   },
-  ports: []
+  ports: [] as Port[]
 });
 
 const addPort = () => {
