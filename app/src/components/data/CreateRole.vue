@@ -68,10 +68,6 @@ const submitForm = async () => {
         roleId: res.roleId,
         permissionId: perm.permissionId
       });
-      /*
-      todo:
-      1.RolePerm 생성 후 action (예: 특정 페이지로 라우팅, error 처리)
-      */
     })
   })
 }

@@ -22,10 +22,6 @@
         color="primary"
         clearable
       />
-      <!-- 
-      todo:
-      1. 역할 - 권한 연결 추가
-      -->
       <v-btn
         :disabled="!valid"
         class="mt-4"
