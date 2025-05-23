@@ -5,11 +5,7 @@ import Dashboard from '@/pages/Dashboard.vue'
 import User from '@/pages/admin/User.vue'
 import Workload from '@/pages/Workload.vue'
 import UserGroup from '@/pages/admin/UserGroup.vue'
-import Register from '@/pages/admin/Register.vue'
-
-import MainFrame from '@/frames/MainFrame.vue'
 import UserDetail from '@/pages/admin/UserDetail.vue'
-import PatchUser from '@/pages/admin/PatchUser.vue'
 import DataComponents from '@/pages/dev/DataComponents.vue'
 
 const routes = [
@@ -73,28 +69,6 @@ const routes = [
           breadcrumb: [
             { title: '관리자', href: '/admin', disabled: false },
             { title: '사용자', href: '/admin/users', disabled: false }
-          ]
-        }
-      },
-      {
-        path: 'users/:userId/profile-edit',
-        name: 'PatchUser',
-        component: PatchUser,
-        meta: {
-          breadcrumb: [
-            { title: '관리자', href: '/admin', disabled: false },
-            { title: '사용자', href: '/admin/users', disabled: false }
-          ]
-        }
-      },
-      {
-        path: 'users/register',
-        component: Register,
-        meta: {
-          breadcrumb: [
-            { title: '관리자', href: '/admin', disabled: false },
-            { title: '사용자', href: '/admin/users', disabled: false },
-            { title: '등록', href: '/admin/users/register', disabled: false }
           ]
         }
       },
