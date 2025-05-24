@@ -4,7 +4,7 @@
       <Sidebar/>
       <v-main>
         <Dialog v-if="dialog.getType === 'mainframe'"></Dialog>
-        <v-container>
+        <v-container height="100%">
           <PageHeader 
             :items="routeStore.getBreadcrumbs"
           />

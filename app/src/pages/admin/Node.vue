@@ -44,15 +44,14 @@
       </v-col>
     </v-row>
   </v-container>
-  <v-main v-else>
-    {{ clusterList.length }}
-    {{ clusterList[0] }}
+  <v-container v-else  height="100%" class="d-flex justify-center align-center">
     <v-progress-circular
-      :width="3"
-      color="primary"
-      indeterminate
+    :width="3"
+    size="50"
+    color="primary"
+    indeterminate
     />
-  </v-main>
+  </v-container>
 </template>
 <script lang="ts" setup>
 
