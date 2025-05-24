@@ -3,6 +3,7 @@ export interface GetNodesRequestParam {
 }
 
 export interface GetNodesResponseDto {
+  clusterId: string;
   name: string;
   status: string;
   capacity: {

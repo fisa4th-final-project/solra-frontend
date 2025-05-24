@@ -38,16 +38,28 @@ const props = defineProps<{
 
 const emit = defineEmits<{
   (e: 'selected', item: any): void
+  (e: 'isEmpty', item: boolean): void
 }>()
 
 const selected = (item: any) => {
   emit('selected', item);
 }
 
+const isEmpty = (item: boolean) => {
+  emit('isEmpty', item);
+}
+
 const datas = ref();
 
 const loadData = async (req: Object | null, dataHandler: Function) => {
-  datas.value = await dataHandler(req);
+  datas.value = await dataHandler(req).then((res: any) => {
+    if (!res || res.length === 0) {
+      isEmpty(false);
+    } else {
+      isEmpty(true);
+      return res;
+    }
+  });
 };
 
 onMounted(() => {

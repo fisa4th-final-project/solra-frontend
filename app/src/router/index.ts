@@ -7,6 +7,8 @@ import Workload from '@/pages/Workload.vue'
 import UserGroup from '@/pages/admin/UserGroup.vue'
 import UserDetail from '@/pages/admin/UserDetail.vue'
 import DataComponents from '@/pages/dev/DataComponents.vue'
+import MainFrame from '@/frames/MainFrame.vue'
+import Node from '@/pages/admin/Node.vue'
 
 const routes = [
   {
@@ -89,6 +91,16 @@ const routes = [
           breadcrumb: [
             { title: '관리자', href: '/admin', disabled: false },
             { title: '사용자 그룹', href: '/admin/userGroup', disabled: false },
+          ]
+        }
+      },
+      {
+        path: 'resource/node',
+        component: Node,
+        meta: {
+          breadcrumb: [
+            { title: '관리자', href: '/admin', disabled: false },
+            { title: '노드', href: '/admin/userGroup', disabled: false },
           ]
         }
       }
