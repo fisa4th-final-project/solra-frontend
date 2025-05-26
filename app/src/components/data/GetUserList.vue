@@ -20,6 +20,13 @@
   import { getUsersApi } from '@/lib/api/user/getUsersApi';
   import { ref } from 'vue';
 
+  const props = defineProps<{
+    req?: {
+      orgId?: number;
+      deptId?: number;
+    }
+  }>();
+
   const emit = defineEmits<{
     (e: 'selected', item: typeof userItems.value[number]): void
   }>();
@@ -34,21 +41,23 @@
     }
   }
 
-  const userItems = ref<{
-    userId: number,
-    orgName: string,
-    deptName: string,
-    userName: string,
-    userLoginId: string,
-    email: string,
-  }[]>([]);
+  interface UserRef {
+    userId: number;
+    orgName: string;
+    deptName: string;
+    userName: string;
+    userLoginId: string;
+    email: string;
+  }
+  const userItems = ref<UserRef[]>([] as UserRef[]);
 
   const userItemsTotal = ref<number>(0);
 
   const loadUser = () => {
     getUsersApi({
+      ...props.req,
       page: 0,
-      size: 0
+      size: 0,
     }).then((res) => {
       if (!res) return;
       userItems.value = res.content.map((user) => {
