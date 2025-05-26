@@ -3,6 +3,7 @@
     :api="{req, dataHandler}"
     :header="{titleKey: 'name', icon: 'mdi-cube'}"
     @selected="selected"
+    @is-empty="isEmpty"
   >
     <template v-slot:item="{ item }">
       <tr >
@@ -25,10 +26,14 @@ defineProps<{
 
 const emit = defineEmits<{
   (e: 'selected', item: GetPodListResponseDto): void
+  (e: 'isEmpty', item: boolean): void
 }>()
 
 const selected = (item: GetPodListResponseDto) => {
   emit('selected', item)
+}
+const isEmpty = (item: boolean) => {
+  emit('isEmpty', item)
 }
 
 const dataHandler = async (req: GetPodListRequestParam) => {
