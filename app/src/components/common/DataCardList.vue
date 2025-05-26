@@ -1,5 +1,5 @@
 <template>
-  <v-row>
+  <v-row v-if="!isEmptyList">
     <v-col
       v-for="(data, index) in datas"
       :key="index"
@@ -19,9 +19,23 @@
       </DataCard>
     </v-col>
   </v-row>
+  <v-row v-if="!isEmptyList">
+    <v-col>
+      <Card>
+        <v-row align="center">
+          <v-col align="center">
+            <v-spacer class="ma-15" />
+            정보를 불러올 수 없습니다.
+            <v-spacer class="ma-15" />
+          </v-col>
+        </v-row>
+      </Card>
+    </v-col>
+  </v-row>
 </template>
 
 <script lang="ts" setup>
+import Card from '@/components/common/Card.vue';
 import DataCard from '@/components/common/DataCard.vue';
 import { onMounted, ref, watch } from 'vue';
 
@@ -48,6 +62,8 @@ const selected = (item: any) => {
 const isEmpty = (item: boolean) => {
   emit('isEmpty', item);
 }
+
+const isEmptyList = ref(false);
 
 const datas = ref();
 

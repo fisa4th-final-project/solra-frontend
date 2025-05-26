@@ -27,19 +27,6 @@
           @selected="select"
           @is-empty="(empty) => isEmpty(cluster.clusterId, empty)"
         />
-        <v-row v-if="!isEmptyList[cluster.clusterId]">
-          <v-col>
-            <Card>
-              <v-row align="center">
-                <v-col align="center">
-                  <v-spacer class="ma-15" />
-                  노드 정보를 불러올 수 없습니다.
-                  <v-spacer class="ma-15" />
-                </v-col>
-              </v-row>
-            </Card>
-          </v-col>
-        </v-row>
         <v-spacer v-if="i + 1 < clusterList.length" class="ma-15" />
       </v-col>
     </v-row>
