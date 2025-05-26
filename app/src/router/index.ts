@@ -9,6 +9,7 @@ import UserDetail from '@/pages/admin/UserDetail.vue'
 import DataComponents from '@/pages/dev/DataComponents.vue'
 import MainFrame from '@/frames/MainFrame.vue'
 import Node from '@/pages/admin/Node.vue'
+import Workspace from '@/pages/Workspace.vue'
 
 const routes = [
   {
@@ -114,8 +115,24 @@ const routes = [
     },
     children: [
       { path: 'dashboard', component: Dashboard },
-      { path: 'workload', component: Workload },
-
+      {
+        path: 'workload', component: Workload,
+        meta: {
+          breadcrumb: [
+            { title: '홈', href: '/', disabled: false },
+            { title: '워크로드', href: '/workload', disabled: false },
+          ]
+        } 
+      }, 
+      {
+        path: 'workspace', component: Workspace,
+        meta: {
+          breadcrumb: [
+            { title: '홈', href: '/', disabled: false },
+            { title: '작업영역', href: '/workspace', disabled: false },
+          ]
+        }
+      },
     ]
   }
 ]

@@ -46,6 +46,6 @@ export const useAuthStore = defineStore('auth', {
     : [{
       roleName:'ANONYMOUS'
     }],
-    getMe: (state) => state.user
+    getMe: (state) => { return {user: state.user, auth: state.auth} }
   }
 })
