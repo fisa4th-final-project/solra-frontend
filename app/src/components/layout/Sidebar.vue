@@ -101,10 +101,10 @@
         "
       >
         <v-list-item-title>
-          {{ auth.getMe.orgName }} / {{ auth.getMe.deptName }}
+          {{ auth.getMe.user.orgName }} / {{ auth.getMe.user.deptName }}
         </v-list-item-title>
         <v-list-item-title>
-          {{ auth.getMe.userName }}
+          {{ auth.getMe.user.userName }}
         </v-list-item-title>
       </v-list-item>
 
