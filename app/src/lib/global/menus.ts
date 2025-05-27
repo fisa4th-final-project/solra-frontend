@@ -54,6 +54,11 @@ export const sidebarMenus = [
     to: '/workspace'
   },
   {
+    title: '워크로드',
+    icon: 'mdi-apps',
+    to: '/workload'
+  },
+  {
     title: '개발자',
     icon: 'mdi-xml',
     to: '/dev/components/data',
