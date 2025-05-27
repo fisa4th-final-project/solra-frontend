@@ -8,11 +8,13 @@ export async function getUsersApi(reqParam: GetUsersQueryParam):Promise<GetUsers
 
   const dialog = useDialogStore();
 
+  const orgId = reqParam.orgId ? `orgId=${reqParam.orgId}` : null
+  const deptId = reqParam.deptId ? `deptId=${reqParam.deptId}` : null
   const page = reqParam.page > 0 ? `page=${reqParam.page}` : null
   const size = reqParam.size > 0 ? `size=${reqParam.size}` : null
 
   let query = '';
-  const params = [page, size].filter(Boolean).join('&');
+  const params = [orgId, deptId, page, size].filter(Boolean).join('&');
 
   if (params) {
     query = `?${params}`;

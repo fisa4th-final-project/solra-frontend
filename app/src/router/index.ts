@@ -5,12 +5,11 @@ import Dashboard from '@/pages/Dashboard.vue'
 import User from '@/pages/admin/User.vue'
 import Workload from '@/pages/Workload.vue'
 import UserGroup from '@/pages/admin/UserGroup.vue'
-import Register from '@/pages/admin/Register.vue'
-
-import MainFrame from '@/frames/MainFrame.vue'
 import UserDetail from '@/pages/admin/UserDetail.vue'
-import PatchUser from '@/pages/admin/PatchUser.vue'
 import DataComponents from '@/pages/dev/DataComponents.vue'
+import MainFrame from '@/frames/MainFrame.vue'
+import Node from '@/pages/admin/Node.vue'
+import Workspace from '@/pages/Workspace.vue'
 
 const routes = [
   {
@@ -76,28 +75,6 @@ const routes = [
           ]
         }
       },
-      {
-        path: 'users/:userId/profile-edit',
-        name: 'PatchUser',
-        component: PatchUser,
-        meta: {
-          breadcrumb: [
-            { title: '관리자', href: '/admin', disabled: false },
-            { title: '사용자', href: '/admin/users', disabled: false }
-          ]
-        }
-      },
-      {
-        path: 'users/register',
-        component: Register,
-        meta: {
-          breadcrumb: [
-            { title: '관리자', href: '/admin', disabled: false },
-            { title: '사용자', href: '/admin/users', disabled: false },
-            { title: '등록', href: '/admin/users/register', disabled: false }
-          ]
-        }
-      },
       { 
         path: 'userGroup', 
         component: UserGroup,
@@ -117,6 +94,16 @@ const routes = [
             { title: '사용자 그룹', href: '/admin/userGroup', disabled: false },
           ]
         }
+      },
+      {
+        path: 'resource/node',
+        component: Node,
+        meta: {
+          breadcrumb: [
+            { title: '관리자', href: '/admin', disabled: false },
+            { title: '노드', href: '/admin/userGroup', disabled: false },
+          ]
+        }
       }
     ]
   },
@@ -128,8 +115,24 @@ const routes = [
     },
     children: [
       { path: 'dashboard', component: Dashboard },
-      { path: 'workload', component: Workload },
-
+      {
+        path: 'workload', component: Workload,
+        meta: {
+          breadcrumb: [
+            { title: '홈', href: '/', disabled: false },
+            { title: '워크로드', href: '/workload', disabled: false },
+          ]
+        } 
+      }, 
+      {
+        path: 'workspace', component: Workspace,
+        meta: {
+          breadcrumb: [
+            { title: '홈', href: '/', disabled: false },
+            { title: '작업영역', href: '/workspace', disabled: false },
+          ]
+        }
+      },
     ]
   }
 ]

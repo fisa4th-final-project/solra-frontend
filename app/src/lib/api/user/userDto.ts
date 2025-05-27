@@ -64,8 +64,10 @@ export interface UpdateUserResponseDto {
 }
 
 export interface GetUsersQueryParam {
-  page: number,
-  size: number
+  orgId?: number;
+  deptId?: number;
+  page: number;
+  size: number;
 }
 
 export interface GetUsersResponseDto {

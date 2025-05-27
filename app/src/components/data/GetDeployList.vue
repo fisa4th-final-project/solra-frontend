@@ -3,6 +3,7 @@
     :api="{req, dataHandler}"
     :header="{titleKey: 'name', icon: 'mdi-hexagon-multiple'}"
     @selected="selected"
+    @is-empty="isEmpty"
   >
     <template v-slot:item="{ item }">
       <tr>
@@ -24,7 +25,12 @@ defineProps<{
 
 const emit = defineEmits<{
   (e: 'selected', item: GetDeployListResponseDto): void
-}>()
+  (e: 'isEmpty', item: boolean): void
+}>();
+
+const isEmpty = (item: boolean) => {
+  emit('isEmpty', item)
+}
 
 const selected = (item: GetDeployListResponseDto) => {
   emit('selected', item)

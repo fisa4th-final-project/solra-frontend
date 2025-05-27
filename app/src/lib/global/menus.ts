@@ -44,6 +44,21 @@ export const sidebarMenus = [
     ],
   },
   {
+    title: '노드',
+    icon: 'mdi-server',
+    to: '/admin/resource/node'
+  },
+  {
+    title: '작업영역',
+    icon: 'mdi-aspect-ratio',
+    to: '/workspace'
+  },
+  {
+    title: '워크로드',
+    icon: 'mdi-apps',
+    to: '/workload'
+  },
+  {
     title: '개발자',
     icon: 'mdi-xml',
     to: '/dev/components/data',

@@ -3,6 +3,7 @@
     :api="{req, dataHandler}"
     :header="{titleKey: 'name', icon: 'mdi-server'}"
     @selected="selected"
+    @isEmpty="isEmpty"
   >
     <template v-slot:item="{ item }">
       <tr v-if="item.field === 'capacity' || item.field === 'allocatable'">
@@ -41,14 +42,20 @@ defineProps<{
 
 const emit = defineEmits<{
   (e: 'selected', item: GetNodesResponseDto): void
+  (e: 'isEmpty', item: boolean,): void
 }>()
 
 const selected = (item: GetNodesResponseDto) => {
-  emit('selected', item)
+  emit('selected', item);
+}
+
+const isEmpty = (item: boolean) => {
+  emit('isEmpty', item);
 }
 
 const dataHandler = async (req: GetNodesRequestParam) => {
-  return await getNodesApi(req);
-};
+  const res = await getNodesApi(req);
+  if (res) return res.map(({ clusterId, ...rest }) => rest);
+}
 
 </script>

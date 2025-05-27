@@ -118,6 +118,9 @@
         </Card>
       </v-col>
     </v-row>
+    <!-- 
+    TODO: 조직-부서 별 namespace 리스트 출력
+    -->
   </v-container>
   
 </template>

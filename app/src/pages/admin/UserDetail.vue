@@ -125,6 +125,10 @@
         </Dialog>
       </v-col>
     </v-row>
+
+    <!-- 
+    TODO: 사용자 권한, 역할 출력
+    -->
   </v-container>
 </template>
 <script lang="ts" setup>

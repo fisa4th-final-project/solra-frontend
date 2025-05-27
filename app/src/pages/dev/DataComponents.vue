@@ -284,7 +284,7 @@
       <v-row>
         <v-col>
           <h1>getSvcList</h1>
-          <GetSvcList :cluster-id="cluster.ref.id ?? 0" :ns-name="ns.ref.name" @selected="selectSvc" />
+          <GetSvcList :req="{clusterId: cluster.ref.id ?? 0, nsName: ns.ref.name}" @selected="selectSvc" />
         </v-col>
       </v-row>
       <v-row>
