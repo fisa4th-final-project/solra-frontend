@@ -1,9 +1,9 @@
 <template>
   <v-dialog 
     transition="slide-x-reverse-transition"
-    v-model="dialog"
+    v-model="isOpen"
     height="100%"
-    width="50%"
+    width="700px"
     opacity=".05"
     class="side-dialog"
     elevation-24
@@ -16,7 +16,7 @@
       <template v-slot:title>
         <v-row no-gutters class="ga-5" align="center">
           <v-btn 
-            @click="dialog=false"
+            @click="isOpen=false"
             icon="mdi-chevron-right" 
             flat 
           />
@@ -30,11 +30,18 @@
 </template>
 <script lang="ts" setup>
 
-  import Card from '@/components/common/Card.vue';
+import Card from '@/components/common/Card.vue';
 import { ref } from 'vue';
 
-  const dialog = ref(false);
+defineProps<{
+  activator?: string;
+}>();
 
+const isOpen = ref(false);
+
+defineExpose({
+  isOpen
+})
 </script>
 
 <style scoped>
