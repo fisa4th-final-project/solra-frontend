@@ -7,7 +7,7 @@
               {{ cluster.name }}
             </span>
             <v-col>
-              <v-row v-if="!isEmptyList[cluster.clusterId]">
+              <v-row v-if="isEmptyList[cluster.clusterId]">
                 <v-col>
                   <v-progress-linear 
                     height="1"
@@ -47,7 +47,6 @@ import GetNodeList from '@/components/data/GetNodeList.vue';
 import { getClustersApi } from '@/lib/api/cluster/getClustersApi';
 import type { GetClustersResponseDto } from '@/lib/api/cluster/clusterDto';
 import type { GetNodeDetailResponseDto } from '@/lib/api/node/nodeDto';
-import Card from '@/components/common/Card.vue';
 
 const clusterList = ref<GetClustersResponseDto[]>([]);
 const selectedNode = ref<GetNodeDetailResponseDto>();

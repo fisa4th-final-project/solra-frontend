@@ -35,7 +35,7 @@
             pod
           </span>
           <v-col>
-            <v-row v-if="!isEmptyList['pod']">
+            <v-row v-if="isEmptyList['pod']">
               <v-col>
                 <v-progress-linear 
                   height="1"
@@ -61,7 +61,7 @@
             SVC
           </span>
           <v-col>
-            <v-row v-if="!isEmptyList['pod']">
+            <v-row v-if="isEmptyList['deploy']">
               <v-col>
                 <v-progress-linear 
                   height="1"
@@ -86,7 +86,7 @@
             Deploy
           </span>
           <v-col>
-            <v-row v-if="!isEmptyList['pod']">
+            <v-row v-if="isEmptyList['svc']">
               <v-col>
                 <v-progress-linear 
                   height="1"
