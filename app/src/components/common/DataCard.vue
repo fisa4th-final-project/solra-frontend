@@ -1,6 +1,7 @@
 <template>
   <Card no-text no-gutters @click="selected(entity)">
     <template v-slot:title>
+      <v-container>
       <v-row align="center" class="py-5">
         <v-col>
           <v-icon>{{ header?.icon }}</v-icon>
@@ -8,7 +9,8 @@
             {{ header?.title }}
           </span>
         </v-col>
-      </v-row>
+        </v-row>
+      </v-container>
     </template>
     <v-data-table
       v-if="entity"
