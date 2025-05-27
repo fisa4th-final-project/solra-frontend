@@ -1,5 +1,8 @@
 <template>
   <v-container>
+    <!-- 
+    TODO: 전체 유저 관리를 위해 조직, 부서 필터 추가
+    -->
     <v-row no-gutters class="ga-5">
       <v-col>
         <GetUserList></GetUserList>
