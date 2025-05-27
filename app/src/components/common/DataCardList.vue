@@ -1,4 +1,13 @@
 <template>
+  <SideContents
+    v-if="detail?.enable"
+    ref="$clickedItem"
+  >
+    <template v-slot:title>
+      <slot name="detailTitle" />
+    </template>
+    <slot name="detail" />
+  </SideContents>
   <v-row v-if="!isEmptyList">
     <v-col
       v-for="(data, index) in datas"
@@ -12,6 +21,7 @@
         :header="{title: data.name, icon: header.icon}"
         :data="data"
         @selected="selected(data)"
+        @click="onClickItem"
       >
         <template v-for="(_, name) in $slots" v-slot:[name]="slotProps">
           <slot :name="name" v-bind="slotProps" />
@@ -19,7 +29,7 @@
       </DataCard>
     </v-col>
   </v-row>
-  <v-row v-if="!isEmptyList">
+  <v-row v-else>
     <v-col>
       <Card>
         <v-row align="center">
@@ -37,6 +47,7 @@
 <script lang="ts" setup>
 import Card from '@/components/common/Card.vue';
 import DataCard from '@/components/common/DataCard.vue';
+import SideContents from '@/components/layout/SideContents.vue';
 import { onMounted, ref, watch } from 'vue';
 
 const props = defineProps<{
@@ -47,6 +58,9 @@ const props = defineProps<{
   header: {
     titleKey: string;
     icon: string;
+  },
+  detail?: {
+    enable: boolean;
   }
 }>();
 
@@ -60,23 +74,29 @@ const selected = (item: any) => {
 }
 
 const isEmpty = (item: boolean) => {
+  isEmptyList.value = item;
   emit('isEmpty', item);
 }
 
-const isEmptyList = ref(false);
+const isEmptyList = ref(true);
 
 const datas = ref();
 
 const loadData = async (req: Object | null, dataHandler: Function) => {
-  datas.value = await dataHandler(req).then((res: any) => {
-    if (!res || res.length === 0) {
-      isEmpty(false);
-    } else {
-      isEmpty(true);
-      return res;
-    }
-  });
+  const res = await dataHandler(req);
+  if (!res || res.length === 0) {
+    isEmpty(true);
+  } else {
+    datas.value = res;
+    isEmpty(false);
+  }
 };
+
+const $clickedItem = ref();
+
+const onClickItem = () => {
+  $clickedItem.value.isOpen = true;
+}
 
 onMounted(() => {
   loadData(props.api.req ?? null, props.api.dataHandler);
