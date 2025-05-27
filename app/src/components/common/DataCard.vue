@@ -2,13 +2,13 @@
   <Card no-text no-gutters @click="selected(entity)">
     <template v-slot:title>
       <v-container>
-      <v-row align="center" class="py-5">
-        <v-col>
-          <v-icon>{{ header?.icon }}</v-icon>
-          <span class="text-h6 pl-5">
-            {{ header?.title }}
-          </span>
-        </v-col>
+        <v-row align="center" class="py-5">
+          <v-col>
+            <v-icon>{{ header?.icon }}</v-icon>
+            <span class="text-h6 pl-5">
+              {{ header?.title }}
+            </span>
+          </v-col>
         </v-row>
       </v-container>
     </template>
@@ -48,7 +48,7 @@ const props = defineProps<{
     req: Object;
   }
   data?: Object;
-  header: {
+  header?: {
     title: string;
     icon: string;
   }
@@ -104,7 +104,7 @@ watch(() => props.api?.req, () => {
   }
 });
 
-watch(() => props.data, () => {
+watch(() => [props.data, props.header], () => {
   if (props.data) { 
     isLoading.value = false;
     entity.value = props.data;
