@@ -5,8 +5,15 @@
         <v-btn v-bind="props">updateUser</v-btn>
       </slot>
     </template>
-    <template v-slot:title>사용자 편집</template>
-    <Card>
+    <template v-slot:title>
+      <span>
+        사용자 편집
+      </span>
+      <v-col align="end">
+        <DeleteUser v-if="user" :user="{userId: user.userId, userLoginId: user.userLoginId}"/>
+      </v-col>
+    </template>
+    <Card no-text no-title>
 
       <v-form v-model="valid" @submit.prevent="submitForm">
         <v-text-field
@@ -54,7 +61,6 @@
         </v-btn>
       </v-form>
     </Card>
-
   </SideContents>
 </template>
 <script lang="ts" setup>
@@ -66,6 +72,7 @@ import { updateUserApi } from '@/lib/api/user/updateUserApi';
 import { getUserDetailApi } from '@/lib/api/user/getUserDetailApi';
 import type { GetUserDetailResponseDto } from '@/lib/api/user/userDto';
 import Card from '@/components/common/Card.vue';
+import DeleteUser from '@/components/data/DeleteUser.vue';
 
 const props = defineProps<{
   userId: number;
@@ -76,6 +83,8 @@ const valid = ref(false);
 type ExtendedUserDetail = GetUserDetailResponseDto & {
   password: string;
 };
+
+const user = ref<GetUserDetailResponseDto>();
 
 const form = ref<ExtendedUserDetail>({
   userId: 0,
@@ -99,7 +108,9 @@ const getuserDetail = () => {
   getUserDetailApi({
     userId: props.userId
   }).then((res) => {
-    if (res) form.value = {...res, password: ''};
+    if (!res) return;
+    form.value = {...res, password: ''};
+    user.value = res;
   });
 }
 

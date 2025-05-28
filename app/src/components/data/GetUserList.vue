@@ -35,7 +35,13 @@
         </v-col>
       </v-row>
     </template>
-    <GetUserDetail v-if="selectedUser && selectedUser.userId" :user-id="selectedUser.userId"/>
+    <v-row>
+      <v-col>
+
+        <GetUserDetail v-if="selectedUser && selectedUser.userId" :user-id="selectedUser.userId"/>
+      </v-col>
+    </v-row>
+  
   </SideContents>
   
 </template>
