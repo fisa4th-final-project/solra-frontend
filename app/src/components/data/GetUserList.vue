@@ -14,7 +14,7 @@
      
     </v-data-table-server>
   </Card>
-  <SideContents ref="$userDetail">
+  <SideContents v-model="isOpenUserDetail">
     <template v-slot:title>
       <v-row justify="space-between" align="center">
         <v-col>
@@ -63,7 +63,7 @@ const emit = defineEmits<{
 
 const handleRowClick = (item: typeof userItems.value[number]) => {
   selectedUser.value = item;
-  $userDetail.value.isOpen = true;
+  isOpenUserDetail.value = true;
   console.log(item);
   emit('selected', item);
 }
@@ -76,7 +76,7 @@ const getRowProps = (row: any) => {
 
 const selectedUser = ref();
 
-const $userDetail = ref();
+const isOpenUserDetail = ref(false);
 
 const userItems = ref<GetUsersResContent[]>([] as GetUsersResContent[]);
 
@@ -108,7 +108,6 @@ const loadUser = (options?: any) => {
     userItemsTotal.value = res.totalElements;
   });
 }
-
 
 const headers: {
   title: string;
@@ -143,7 +142,6 @@ const headers: {
 ]
 
 watch(() => [props.req?.deptId, props.req?.orgId], () => {
-  console.log(props.req);
   loadUser();
 })
 </script>

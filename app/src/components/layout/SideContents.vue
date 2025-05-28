@@ -31,17 +31,13 @@
 <script lang="ts" setup>
 
 import Card from '@/components/common/Card.vue';
-import { ref } from 'vue';
 
 defineProps<{
   activator?: string;
 }>();
 
-const isOpen = ref(false);
+const isOpen = defineModel<boolean>();
 
-defineExpose({
-  isOpen
-})
 </script>
 
 <style scoped>
