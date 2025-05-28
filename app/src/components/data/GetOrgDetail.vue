@@ -1,10 +1,10 @@
 <template>
   <DataCard
-    :header="{title, icon: 'mdi-briefcase'}"
+    :header="{title, icon: 'mdi-office-building'}"
     :api="{req, dataHandler}"
   >      
     <template v-slot:item="{ item }">
-      <tr v-if="item.field !== 'orgId' && item.field !== 'deptId'">
+      <tr>
         <th>{{ item.field }}</th>
         <td class="text-right">{{ item.value }}</td>
       </tr>
@@ -24,16 +24,16 @@
 <script lang="ts" setup>
 
 import DataCard from '@/components/common/DataCard.vue';
-import { getDeptDetailApi } from '@/lib/api/dept/getDeptDetailApi';
-import type { GetDeptDetailRequestParam } from '@/lib/api/dept/deptDto';
+import { getOrgDetailApi } from '@/lib/api/org/getOrgDetailApi';
+import type { GetOrgDetailRequestDto } from '@/lib/api/org/orgDto';
 
 defineProps<{
   title: string;
-  req: GetDeptDetailRequestParam;
+  req: GetOrgDetailRequestDto;
 }>();
 
-const dataHandler = async (req: GetDeptDetailRequestParam) => {
-  if (req.deptId) return await getDeptDetailApi(req);
+const dataHandler = async (req: GetOrgDetailRequestDto) => {
+  return await getOrgDetailApi(req);
 };
 
 </script>

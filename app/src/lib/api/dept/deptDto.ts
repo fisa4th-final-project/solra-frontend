@@ -15,7 +15,7 @@ export interface GetDeptsRequestParam {
 
 export interface GetDeptsResponseDto {
   deptId: number,
-  organizationId: number,
+  orgId: number,
   deptName: string
 }
 
