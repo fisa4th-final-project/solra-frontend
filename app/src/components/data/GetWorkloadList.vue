@@ -98,7 +98,6 @@ const emit = defineEmits<{
 
 const selected = (item: GetPodListResponseDto) => {
   selectedItem.value = item;
-  console.log(item);
   emit('selected', item);
 }
 const isEmpty = (item: boolean) => {
