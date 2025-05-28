@@ -6,104 +6,144 @@
       :items-length="userItemsTotal"
       @update:options="loadUser"
       :row-props="getRowProps"
+      :page="page"
+      :items-per-page="size"
       ripple
       hover
     >
-
+     
     </v-data-table-server>
   </Card>
+  <SideContents ref="$userDetail">
+    <template v-slot:title>
+      <v-row justify="space-between" align="center">
+        <v-col>
+          {{ `${selectedUser.organizationName} / ${selectedUser.departmentName} - ${selectedUser.userName}` }}
+        </v-col>
+        <v-col align="end">
+          <UpdateUser v-if="selectedUser && selectedUser.userId" :user-id="selectedUser.userId">
+            <template v-slot:activator="{props}">
+              <v-btn 
+              v-bind="props"
+              color="primary"
+              variant="plain"
+              >
+                Edit
+              </v-btn>
+            </template>
+          </UpdateUser>
+        </v-col>
+      </v-row>
+    </template>
+    <GetUserDetail v-if="selectedUser && selectedUser.userId" :user-id="selectedUser.userId"/>
+  </SideContents>
+  
 </template>
 
 <script lang="ts" setup>
 
-  import Card from '@/components/common/Card.vue';
-  import { getUsersApi } from '@/lib/api/user/getUsersApi';
-  import { ref } from 'vue';
+import Card from '@/components/common/Card.vue';
+import GetUserDetail from '@/components/data/GetUserDetail.vue';
+import UpdateUser from '@/components/data/UpdateUser.vue';
+import SideContents from '@/components/layout/SideContents.vue';
+import { getUsersApi } from '@/lib/api/user/getUsersApi';
+import type { GetUsersResContent } from '@/lib/api/user/userDto';
+import { ref, watch } from 'vue';
 
-  const props = defineProps<{
-    req?: {
-      orgId?: number;
-      deptId?: number;
-    }
-  }>();
-
-  const emit = defineEmits<{
-    (e: 'selected', item: typeof userItems.value[number]): void
-  }>();
-
-  const handleRowClick = (item: typeof userItems.value[number]) => {
-    emit('selected', item);
+const props = defineProps<{
+  req?: {
+    orgId?: number;
+    deptId?: number;
   }
+}>();
 
-  const getRowProps = (row: any) => {
-    return {
-      onClick: () => handleRowClick(row.item),
-    }
+const emit = defineEmits<{
+  (e: 'selected', item: typeof userItems.value[number]): void
+}>();
+
+const handleRowClick = (item: typeof userItems.value[number]) => {
+  selectedUser.value = item;
+  $userDetail.value.isOpen = true;
+  console.log(item);
+  emit('selected', item);
+}
+
+const getRowProps = (row: any) => {
+  return {
+    onClick: () => handleRowClick(row.item),
   }
+}
 
-  interface UserRef {
-    userId: number;
-    orgName: string;
-    deptName: string;
-    userName: string;
-    userLoginId: string;
-    email: string;
+const selectedUser = ref();
+
+const $userDetail = ref();
+
+const userItems = ref<GetUsersResContent[]>([] as GetUsersResContent[]);
+
+const userItemsTotal = ref<number>(0);
+
+const size = ref(3);
+const page = ref(1);
+
+const loadUser = (options?: any) => {
+  if (options) {
+    page.value = options.page;
+    size.value = options.itemsPerPage;
   }
-  const userItems = ref<UserRef[]>([] as UserRef[]);
-
-  const userItemsTotal = ref<number>(0);
-
-  const loadUser = () => {
-    getUsersApi({
-      ...props.req,
-      page: 0,
-      size: 0,
-    }).then((res) => {
-      if (!res) return;
-      userItems.value = res.content.map((user) => {
-        return {
-          userId: user.userId,
-          orgName: user.organizationId ? user.organizationId.toString(): '우리카드',
-          deptName: user.departmentId ? user.departmentId.toString() : '인프라 통합',
-          userName: user.userName,
-          userLoginId: user.userLoginId,
-          email: user.email,
-        }
-      });
-      userItemsTotal.value = res.totalElements;
+  getUsersApi({
+    ...props.req,
+    page: page.value - 1,
+    size: size.value,
+  }).then((res) => {
+    if (!res) return;
+    userItems.value = res.content.map((user) => {
+      if (!user.organizationName) {
+        user.organizationName = '무소속';
+      }
+      if (!user.departmentName) {
+        user.departmentName = '미배정';
+      }
+      return user;
     });
-  }
+    userItemsTotal.value = res.totalElements;
+  });
+}
 
-  
-  const headers: {
-    title: string;
-    key: string;
-    align: 'start' | 'end';
-  }[] = [
-    { 
-      title: '조직',
-      key: 'orgName',
-      align: 'start'
-    },
-    { 
-      title: '부서',
-      key: 'deptName',
-      align: 'start'
-    },
-    { 
-      title: '성명',
-      key: 'userName',
-      align: 'start'
-    },
-    { 
-      title: '사용자 id',
-      key: 'userLoginId',
-      align: 'start'
-    },
-    { 
-      title: 'email',
-      key: 'email',
-      align: 'start'
-    }
-  ]
+
+const headers: {
+  title: string;
+  key: string;
+  align: 'start' | 'end';
+}[] = [
+  { 
+    title: '조직',
+    key: 'organizationName',
+    align: 'start'
+  },
+  { 
+    title: '부서',
+    key: 'departmentName',
+    align: 'start'
+  },
+  { 
+    title: '성명',
+    key: 'userName',
+    align: 'start'
+  },
+  { 
+    title: '사용자 id',
+    key: 'userLoginId',
+    align: 'start'
+  },
+  { 
+    title: 'email',
+    key: 'email',
+    align: 'start'
+  }
+]
+
+watch(() => [props.req?.deptId, props.req?.orgId], () => {
+  console.log(props.req);
+  loadUser();
+})
 </script>
