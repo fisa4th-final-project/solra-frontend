@@ -7,9 +7,10 @@
     @is-empty="isEmpty"
   >
     <template v-slot:detailTitle>
+      <!-- TODO: dept 삭제 버튼 추가 -->
       <v-row justify="space-between" align="center">
         <v-col>
-          {{ selectedItem.name }}
+          부서 상세
         </v-col>
         <v-col align="end">
           <UpdateDept
@@ -29,7 +30,7 @@
       </v-row>
     </template>
     <template v-slot:detail>
-      <GetDeptDetail title="부서 상세" :req="{deptId: selectedItem.deptId}" />
+      <GetDeptDetail :title="selectedItem.deptName" :req="{deptId: selectedItem.deptId}" />
     </template>
     <template v-slot:item="{ item }">
       <tr v-if="item.field !== 'orgId' && item.field !== 'deptId'">

@@ -5,7 +5,14 @@
         <v-btn v-bind="props">UpdateDept</v-btn>
       </slot>
     </template>
-    <template v-slot:title>부서 수정</template>
+    <template v-slot:title>
+      <span>
+        부서 수정
+      </span>
+      <v-col align="end">
+        <DeleteDept v-if="dept" :dept="{deptId: dept.deptId, deptName: dept.deptName}"/>
+      </v-col>
+    </template>
     <v-form v-model="valid" @submit.prevent="submitForm">
       <v-text-field
         v-model="form.deptName"
@@ -34,12 +41,16 @@ import SideContents from '@/components/layout/SideContents.vue';
 import { rules } from '@/lib/global/inputRules';
 import { updateDeptApi } from '@/lib/api/dept/updateDeptApi';
 import { getDeptDetailApi } from '@/lib/api/dept/getDeptDetailApi';
+import DeleteDept from '@/components/data/DeleteDept.vue';
+import type { GetDeptDetailResponseDto } from '@/lib/api/dept/deptDto';
 
 const props = defineProps<{
   deptId: number;
 }>();
 
 const valid = ref(false)
+
+const dept = ref<GetDeptDetailResponseDto>();
 
 const form = ref({
   deptName: ''
@@ -58,6 +69,7 @@ const getDeptDetail = () => {
   }).then((res) => {
     if (!res) return;
     form.value.deptName = res.deptName;
+    dept.value = res;
   })
 }
 

@@ -5,7 +5,14 @@
         <v-btn v-bind="props">UpdateOrg</v-btn>
       </slot>
     </template>
-    <template v-slot:title>조직 수정</template>
+    <template v-slot:title>
+      <span>
+        조직 수정
+      </span>
+      <v-col align="end">
+        <DeleteOrg v-if="org" :org="{orgId: org.orgId, orgName: org.orgName}"/>
+      </v-col>
+    </template>
     <v-form v-model="valid" @submit.prevent="submitForm">
       <v-text-field
         v-model="form.orgName"
@@ -34,12 +41,16 @@ import SideContents from '@/components/layout/SideContents.vue';
 import { rules } from '@/lib/global/inputRules';
 import { updateOrgApi } from '@/lib/api/org/updateOrgApi';
 import { getOrgDetailApi } from '@/lib/api/org/getOrgDetailApi';
+import DeleteOrg from '@/components/data/DeleteOrg.vue';
+import type { GetOrgDetailResponseDto } from '@/lib/api/org/orgDto';
 
 const props = defineProps<{
   orgId: number;
 }>();
 
 const valid = ref(false)
+
+const org = ref<GetOrgDetailResponseDto>();
 
 const form = ref({
   orgName: ''
@@ -58,6 +69,7 @@ const getOrgDetail = () => {
   }).then((res) => {
     if (!res) return;
     form.value.orgName = res.orgName;
+    org.value = res;
   })
 }
 

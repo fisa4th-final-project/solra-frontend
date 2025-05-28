@@ -6,6 +6,19 @@
           사용자 그룹
         </span>
       </v-col>
+      <v-col align="end">
+        <CreateUserGroup>
+          <template v-slot:activator="{props}">
+            <v-btn 
+              v-bind="props"
+              color="primary"
+              variant="plain"
+            >
+              Add
+            </v-btn>
+          </template>
+        </CreateUserGroup>
+      </v-col>
     </v-row>
     <v-row v-if="orgList.length" v-for="(org, i) in orgList" :key="i">
       <v-col>
@@ -13,6 +26,7 @@
           <span class="text-h5 text-uppercase pa-0">
             {{ org.orgName }}
           </span>
+          
           <v-col>
             <v-row v-if="isEmptyList[org.orgId]">
               <v-col>
@@ -59,7 +73,6 @@
             :org-id="selectedOrg.orgId"
           >
             <template v-slot:activator="{props}">
-              {{ console.log(selectedOrg) }}
               <v-btn 
                 v-bind="props"
                 color="primary"
@@ -85,6 +98,7 @@ import type { GetDeptDetailResponseDto } from '@/lib/api/dept/deptDto';
 import SideContents from '@/components/layout/SideContents.vue';
 import UpdateOrg from '@/components/data/UpdateOrg.vue';
 import GetOrgDetail from '@/components/data/GetOrgDetail.vue';
+import CreateUserGroup from '@/components/data/CreateUserGroup.vue';
 
 const orgList = ref<GetOrgsResponseDto[]>([]);
 const selectedDept = ref<GetDeptDetailResponseDto>();
