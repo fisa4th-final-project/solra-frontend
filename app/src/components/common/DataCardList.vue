@@ -19,7 +19,7 @@
       xl="4"
     >
       <DataCard
-        :header="{title: data.name, icon: header.icon}"
+        :header="{title: data[header.titleKey], icon: header.icon}"
         :data="data"
         @selected="selected(data)"
         @click="onClickItem"
