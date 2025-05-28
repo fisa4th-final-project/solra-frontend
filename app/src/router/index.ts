@@ -10,6 +10,7 @@ import DataComponents from '@/pages/dev/DataComponents.vue'
 import MainFrame from '@/frames/MainFrame.vue'
 import Node from '@/pages/admin/Node.vue'
 import Workspace from '@/pages/Workspace.vue'
+import Cluster from '@/pages/admin/Cluster.vue'
 
 const routes = [
   {
@@ -101,7 +102,17 @@ const routes = [
         meta: {
           breadcrumb: [
             { title: '관리자', href: '/admin', disabled: false },
-            { title: '노드', href: '/admin/userGroup', disabled: false },
+            { title: '노드', href: '/admin/resource/node', disabled: false },
+          ]
+        }
+      },
+      {
+        path: 'resource/cluster',
+        component: Cluster,
+        meta: {
+          breadcrumb: [
+            { title: '관리자', href: '/admin', disabled: false },
+            { title: '클러스터', href: '/admin/resource/cluster', disabled: false },
           ]
         }
       }

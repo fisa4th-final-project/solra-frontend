@@ -44,6 +44,11 @@ export const sidebarMenus = [
     ],
   },
   {
+    title: '클러스터',
+    icon: 'mdi-kubernetes',
+    to: '/admin/resource/cluster'
+  },
+  {
     title: '노드',
     icon: 'mdi-server',
     to: '/admin/resource/node'

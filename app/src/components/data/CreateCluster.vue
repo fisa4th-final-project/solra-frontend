@@ -1,7 +1,7 @@
 <template>
   <SideContents>
     <template v-slot:activator="{ props }">
-      <slot name="activator">
+      <slot name="activator" v-bind:props>
         <v-btn v-bind="props">createCluster</v-btn>
       </slot>
     </template>
@@ -57,6 +57,7 @@
         type="submit"
         color="primary"
         alignself="end"
+        block
       >
         등록
       </v-btn>
