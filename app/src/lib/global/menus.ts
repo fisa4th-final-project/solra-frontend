@@ -1,23 +1,3 @@
-// <v-list - item
-// to = "/dashboard" exact
-// prepend - icon="mdi-view-dashboard"
-// title = "대시보드"
-// color = "primary" >
-//   </v-list-item>
-//   < v - list - item
-// to = "/user" exact
-// prepend - icon="mdi-account-group"
-// title = "사용자"
-// color = "primary" >
-//   </v-list-item>
-//   < v - list - item
-// to = "/workload" exact
-// prepend - icon="mdi-cube"
-// title = "워크로드"
-// color = "primary" >
-//   </v-list-item>
-//   </v-list>
-
 export const sidebarMenus = [
   {
     title: '대쉬보드',
@@ -28,6 +8,14 @@ export const sidebarMenus = [
     ]
   },
   {
+    title: '역할 및 권한',
+    icon: 'mdi-card-account-details',
+    to: '/admin/privilege',
+    roles: [
+      'root', 'org-admin'
+    ]
+  },
+  {
     title: '사용자 그룹',
     icon: 'mdi-office-building',
     to: '/admin/userGroup',
@@ -35,6 +23,7 @@ export const sidebarMenus = [
       'root', 'org-admin', 'dept-admin', 'proj-admin'
     ]
   },
+
   {
     title: '사용자',
     icon: 'mdi-account-group',
