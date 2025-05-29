@@ -123,7 +123,7 @@
         </v-col>
         <v-col cols="4">
           <h2>updatePerm</h2>
-          <UpdatePerm :perm-id="selectedPerm[0]?.permissionId"/>
+          <UpdatePerm :perm-id="selectedPerm[0]?.permissionId" :perm-name="selectedPerm[0]?.permissionName" />
         </v-col>
         <v-col cols="4">
           <h2>deletePerm</h2>
@@ -152,7 +152,7 @@
           1. clusterList를 선택하는 select 컴포넌트 제작
           -->
           <h1>getClusterList</h1>
-          <GetClusterList @selected="selectCluster"/>
+          <GetClusterList :req="{orgId: userGroupForm.org.orgId}" @selected="selectCluster"/>
         </v-col>
       </v-row>
       <v-row>
