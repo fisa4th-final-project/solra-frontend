@@ -15,7 +15,7 @@
   import { onMounted, ref } from 'vue';
 
   import type { GetOrgListResponseDto } from '@/lib/api/org/orgDto';
-  import { getOrgsApi } from '@/lib/api/org/getOrgsApi';
+  import { getOrgListApi } from '@/lib/api/org/getOrgListApi';
 
 
   const orgs = ref<GetOrgListResponseDto[]>();
@@ -30,7 +30,7 @@
   }>()
 
   onMounted(async () => {
-    await getOrgsApi().then((resOrgs) => {
+    await getOrgListApi().then((resOrgs) => {
       if (!resOrgs) return;
       orgs.value = resOrgs;
     });

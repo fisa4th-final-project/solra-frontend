@@ -2,23 +2,26 @@ import { apiRequest } from "@/lib/global/apiHandler";
 import { ApiError } from "@/lib/global/customError";
 import { useDialogStore } from "@/store/dialog";
 import type { ApiResponse } from "@/lib/global/ApiResponse";
-import type { GetRolePermListRequestParam, GetRolePermListResponseDto } from "@/lib/api/rolePerm/rolePermDto";
+import type { GetOrgListResponseDto } from "@/lib/api/org/orgDto";
 
-export async function getRolePermsApi(reqDto: GetRolePermListRequestParam):Promise<GetRolePermListResponseDto[] | null> {
+
+export async function getOrgListApi():Promise<GetOrgListResponseDto[] | null> {
 
   const dialog = useDialogStore();
 
   return await apiRequest({
     method: "GET",
-    path: `api/role-permissions/${reqDto.roleId}`,
+    path: `api/organizations`,
     auth: true
-  }).then(async (res: ApiResponse<GetRolePermListResponseDto[]>) => {
-    if (!res.data) return null;
+  }).then(async (res: ApiResponse<GetOrgListResponseDto[]>) => {
+    if (res.data) {
       return res.data;
+    }
+    return null;
   }).catch(async (e: ApiError) => {
     console.error(e.res);
     dialog.open({
-      title: '역할 권한 조회 실패',
+      title: '조직 리스트 조회 실패',
       message: e.res.message,
       type: 'mainframe'
     });

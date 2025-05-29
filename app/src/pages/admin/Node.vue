@@ -80,7 +80,7 @@
 
 import { onMounted, ref } from 'vue';
 import GetNodeList from '@/components/data/GetNodeList.vue';
-import { getClustersApi } from '@/lib/api/cluster/getClustersApi';
+import { getClusterListApi } from '@/lib/api/cluster/getClusterListApi';
 import type { GetClusterListResponseDto } from '@/lib/api/cluster/clusterDto';
 import type { GetNodeDetailResponseDto } from '@/lib/api/node/nodeDto';
 import SideContents from '@/components/layout/SideContents.vue';
@@ -109,7 +109,7 @@ const openClusterDetail = (cluster: any) => {
 }
 
 onMounted(async() => {
-  await getClustersApi().then((res) => {
+  await getClusterListApi().then((res) => {
     if (res) clusterList.value = res;
   });
 });

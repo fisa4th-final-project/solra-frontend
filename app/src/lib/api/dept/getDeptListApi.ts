@@ -2,18 +2,20 @@ import { apiRequest } from "@/lib/global/apiHandler";
 import { ApiError } from "@/lib/global/customError";
 import { useDialogStore } from "@/store/dialog";
 import type { ApiResponse } from "@/lib/global/ApiResponse";
-import type { GetOrgListResponseDto } from "@/lib/api/org/orgDto";
+import type { GetDeptListRequestParam, GetDeptListResponseDto } from "@/lib/api/dept/deptDto";
 
 
-export async function getOrgsApi():Promise<GetOrgListResponseDto[] | null> {
+
+export async function getDeptListApi(reqParam: GetDeptListRequestParam):Promise<GetDeptListResponseDto[] | null> {
 
   const dialog = useDialogStore();
 
+  const query = `orgId=${reqParam.org_id}`
   return await apiRequest({
     method: "GET",
-    path: `api/organizations`,
+    path: `api/departments?${query}`,
     auth: true
-  }).then(async (res: ApiResponse<GetOrgListResponseDto[]>) => {
+  }).then(async (res: ApiResponse<GetDeptListResponseDto[]>) => {
     if (res.data) {
       return res.data;
     }
@@ -21,7 +23,7 @@ export async function getOrgsApi():Promise<GetOrgListResponseDto[] | null> {
   }).catch(async (e: ApiError) => {
     console.error(e.res);
     dialog.open({
-      title: '조직 리스트 조회 실패',
+      title: '부서 리스트 조회 실패',
       message: e.res.message,
       type: 'mainframe'
     });
