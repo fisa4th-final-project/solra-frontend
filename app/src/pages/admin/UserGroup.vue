@@ -91,7 +91,7 @@
 <script lang="ts" setup>
 
 import { onMounted, ref } from 'vue';
-import type { GetOrgsResponseDto } from '@/lib/api/org/orgDto';
+import type { GetOrgListResponseDto } from '@/lib/api/org/orgDto';
 import { getOrgsApi } from '@/lib/api/org/getOrgsApi';
 import GetDeptList from '@/components/data/GetDeptList.vue';
 import type { GetDeptDetailResponseDto } from '@/lib/api/dept/deptDto';
@@ -100,7 +100,7 @@ import UpdateOrg from '@/components/data/UpdateOrg.vue';
 import GetOrgDetail from '@/components/data/GetOrgDetail.vue';
 import CreateUserGroup from '@/components/data/CreateUserGroup.vue';
 
-const orgList = ref<GetOrgsResponseDto[]>([]);
+const orgList = ref<GetOrgListResponseDto[]>([]);
 const selectedDept = ref<GetDeptDetailResponseDto>();
 const isEmptyList = ref<Record<number, boolean>>({});
 

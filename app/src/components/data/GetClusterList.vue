@@ -14,19 +14,19 @@
 <script lang="ts" setup>
 
 import DataCardList from '@/components/common/DataCardList.vue';
-import type { GetClustersRequestParam, GetClustersResponseDto } from '@/lib/api/cluster/clusterDto';
+import type { GetClusterListRequestParam, GetClusterListResponseDto } from '@/lib/api/cluster/clusterDto';
 import { getClustersApi } from '@/lib/api/cluster/getClustersApi';
 
 defineProps<{
-  req: GetClustersRequestParam;
+  req: GetClusterListRequestParam;
 }>();
 
 const emit = defineEmits<{
-  (e: 'selected', item: GetClustersResponseDto): void
+  (e: 'selected', item: GetClusterListResponseDto): void
   (e: 'isEmpty', item: boolean): void
 }>()
 
-const selected = (item: GetClustersResponseDto) => {
+const selected = (item: GetClusterListResponseDto) => {
   emit('selected', item)
 }
 
@@ -34,7 +34,7 @@ const isEmpty = (item: boolean) => {
   emit('isEmpty', item);
 }
 
-const dataHandler = async (req: GetClustersRequestParam) => {
+const dataHandler = async (req: GetClusterListRequestParam) => {
   return await getClustersApi(req);
 };
 

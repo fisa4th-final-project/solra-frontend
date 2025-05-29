@@ -2,10 +2,10 @@ import { apiRequest } from "@/lib/global/apiHandler";
 import { ApiError } from "@/lib/global/customError";
 import { useDialogStore } from "@/store/dialog";
 import type { ApiResponse } from "@/lib/global/ApiResponse";
-import type { GetOrgsResponseDto } from "@/lib/api/org/orgDto";
+import type { GetOrgListResponseDto } from "@/lib/api/org/orgDto";
 
 
-export async function getOrgsApi():Promise<GetOrgsResponseDto[] | null> {
+export async function getOrgsApi():Promise<GetOrgListResponseDto[] | null> {
 
   const dialog = useDialogStore();
 
@@ -13,7 +13,7 @@ export async function getOrgsApi():Promise<GetOrgsResponseDto[] | null> {
     method: "GET",
     path: `api/organizations`,
     auth: true
-  }).then(async (res: ApiResponse<GetOrgsResponseDto[]>) => {
+  }).then(async (res: ApiResponse<GetOrgListResponseDto[]>) => {
     if (res.data) {
       return res.data;
     }

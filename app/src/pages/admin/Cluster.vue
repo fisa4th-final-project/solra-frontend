@@ -67,10 +67,10 @@ import CreateCluster from '@/components/data/CreateCluster.vue';
 import GetClusterList from '@/components/data/GetClusterList.vue';
 import type { GetClusterDetailResponseDto } from '@/lib/api/cluster/clusterDto';
 import { getOrgsApi } from '@/lib/api/org/getOrgsApi';
-import type { GetOrgsResponseDto } from '@/lib/api/org/orgDto';
+import type { GetOrgListResponseDto } from '@/lib/api/org/orgDto';
 import { onMounted, ref } from 'vue';
 
-const orgList = ref<GetOrgsResponseDto[]>([]);
+const orgList = ref<GetOrgListResponseDto[]>([]);
 const selectedCluster = ref<GetClusterDetailResponseDto>();
 const isEmptyList = ref<Record<number,boolean>>({});
 

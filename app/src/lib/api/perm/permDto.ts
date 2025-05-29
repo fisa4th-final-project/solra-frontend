@@ -15,7 +15,7 @@ export interface GetPermDetailResponseDto {
   description: string;
 }
 
-export interface GetPermsResponseDto {
+export interface GetPermListResponseDto {
   permissionId: number;
   permissionName: string;
   description: string;

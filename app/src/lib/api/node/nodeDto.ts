@@ -1,8 +1,8 @@
-export interface GetNodesRequestParam {
+export interface GetNodeListRequestParam {
   clusterId: number;
 }
 
-export interface GetNodesResponseDto {
+export interface GetNodeListResponseDto {
   clusterId: string;
   name: string;
   status: string;

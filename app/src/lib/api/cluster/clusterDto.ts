@@ -1,8 +1,8 @@
-export interface GetClustersRequestParam {
+export interface GetClusterListRequestParam {
   orgId: number;
 }
 
-export interface GetClustersResponseDto {
+export interface GetClusterListResponseDto {
   clusterId: number;
   orgId: number;
   name: string;

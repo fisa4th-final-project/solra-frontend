@@ -45,12 +45,12 @@
 import DataCardList from '@/components/common/DataCardList.vue';
 import GetDeptDetail from '@/components/data/GetDeptDetail.vue';
 import UpdateDept from '@/components/data/UpdateDept.vue';
-import type { GetDeptDetailResponseDto, GetDeptsRequestParam } from '@/lib/api/dept/deptDto';
+import type { GetDeptDetailResponseDto, GetDeptListRequestParam } from '@/lib/api/dept/deptDto';
 import { getDeptsApi } from '@/lib/api/dept/getDeptsApi';
 import { ref } from 'vue';
 
 defineProps<{
-  req: GetDeptsRequestParam
+  req: GetDeptListRequestParam
 }>();
 
 const emit = defineEmits<{
@@ -69,7 +69,7 @@ const selected = (item: GetDeptDetailResponseDto) => {
 
 const selectedItem = ref();
 
-const dataHandler = async (req: GetDeptsRequestParam) => {
+const dataHandler = async (req: GetDeptListRequestParam) => {
   const res = await getDeptsApi(req);
   if (!res) return
   return res

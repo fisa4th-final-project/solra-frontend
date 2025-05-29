@@ -6,7 +6,7 @@
 </template>
 <script lang="ts" setup>
 
-import type { GetRoleDetailRequestParam, GetRolesResponseDto } from '@/lib/api/role/roleDto';
+import type { GetRoleDetailRequestParam, GetRoleListResponseDto } from '@/lib/api/role/roleDto';
 import { getRoleDetailApi } from '@/lib/api/role/getRoleDetailApi';
 import DataCard from '@/components/common/DataCard.vue';
 
@@ -14,7 +14,7 @@ import DataCard from '@/components/common/DataCard.vue';
     req: GetRoleDetailRequestParam
   }>();
 
-  const dataHandler = async (req: GetRolesResponseDto) => {
+  const dataHandler = async (req: GetRoleListResponseDto) => {
     const items = await getRoleDetailApi(req);
     return {'Role Name': items?.roleName, 'Description': items?.description}
   }

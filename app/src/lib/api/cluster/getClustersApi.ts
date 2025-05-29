@@ -2,9 +2,9 @@ import { apiRequest } from "@/lib/global/apiHandler";
 import { ApiError } from "@/lib/global/customError";
 import { useDialogStore } from "@/store/dialog";
 import type { ApiResponse } from "@/lib/global/ApiResponse";
-import type { GetClustersRequestParam, GetClustersResponseDto } from "@/lib/api/cluster/clusterDto";
+import type { GetClusterListRequestParam, GetClusterListResponseDto } from "@/lib/api/cluster/clusterDto";
 
-export async function getClustersApi(reqParam?: GetClustersRequestParam):Promise<GetClustersResponseDto[] | null> {
+export async function getClustersApi(reqParam?: GetClusterListRequestParam):Promise<GetClusterListResponseDto[] | null> {
 
   const query = reqParam ? `?orgId=${reqParam.orgId}` : '';
 
@@ -14,7 +14,7 @@ export async function getClustersApi(reqParam?: GetClustersRequestParam):Promise
     method: "GET",
     path: `api/clusters${query}`,
     auth: true
-  }).then(async (res: ApiResponse<GetClustersResponseDto[]>) => {
+  }).then(async (res: ApiResponse<GetClusterListResponseDto[]>) => {
     if (!res.data) return null;
     return res.data;
   }).catch(async (e: ApiError) => {

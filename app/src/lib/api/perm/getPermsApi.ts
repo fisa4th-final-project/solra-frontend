@@ -2,9 +2,9 @@ import { apiRequest } from "@/lib/global/apiHandler";
 import { ApiError } from "@/lib/global/customError";
 import { useDialogStore } from "@/store/dialog";
 import type { ApiResponse } from "@/lib/global/ApiResponse";
-import type { GetPermsResponseDto } from "@/lib/api/perm/permDto";
+import type { GetPermListResponseDto } from "@/lib/api/perm/permDto";
 
-export async function getPermsApi():Promise<GetPermsResponseDto[] | null> {
+export async function getPermsApi():Promise<GetPermListResponseDto[] | null> {
 
   const dialog = useDialogStore();
 
@@ -12,7 +12,7 @@ export async function getPermsApi():Promise<GetPermsResponseDto[] | null> {
     method: "GET",
     path: `api/permissions`,
     auth: true
-  }).then(async (res: ApiResponse<GetPermsResponseDto[]>) => {
+  }).then(async (res: ApiResponse<GetPermListResponseDto[]>) => {
     if (res.data) {
       return res.data;
     }

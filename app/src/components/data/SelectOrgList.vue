@@ -14,11 +14,11 @@
 
   import { onMounted, ref } from 'vue';
 
-  import type { GetOrgsResponseDto } from '@/lib/api/org/orgDto';
+  import type { GetOrgListResponseDto } from '@/lib/api/org/orgDto';
   import { getOrgsApi } from '@/lib/api/org/getOrgsApi';
 
 
-  const orgs = ref<GetOrgsResponseDto[]>();
+  const orgs = ref<GetOrgListResponseDto[]>();
 
   defineProps<{
     form: {

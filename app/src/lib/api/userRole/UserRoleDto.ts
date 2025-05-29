@@ -1,9 +1,9 @@
 export interface GetUserRoleByUserIdQueryParam {
-  userId: number
+  userId: number;
 }
 
 export interface GetUserRoleByUserIdResponseDto {
-  userId: number,
-  roleId: number,
-  roleName: string  
+  userId: number;
+  roleId: number;
+  roleName: string;  
 }
