@@ -48,24 +48,11 @@ import CreateRole from '@/components/data/CreateRole.vue';
 
 const roleList = ref<GetRolesResponseDto[]>([]);
 const selectedPerm = ref<GetPermDetailResponseDto & {roleId: number, roleName: string}>();
-const isEmptyList = ref<Record<number, boolean>>({});
-
-const selectedRole = ref();
-
-const isPermDetailOpen = ref(false);
 
 const select = (item: GetPermDetailResponseDto & {roleId: number, roleName: string}) => {
   selectedPerm.value = item;
 }
-const isEmpty = (deptId: number, empty: boolean) => {
-  isEmptyList.value[deptId] = empty;
-}
 
-const openRoleDetail = (org: any) => {
-  selectedRole.value = org;
-  console.log(selectedRole.value);
-  isPermDetailOpen.value = true;
-}
 onMounted(async () => {
   const res = await getRolesApi();
   if (res) roleList.value = res;
