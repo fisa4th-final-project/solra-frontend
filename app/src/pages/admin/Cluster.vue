@@ -66,7 +66,7 @@
 import CreateCluster from '@/components/data/CreateCluster.vue';
 import GetClusterList from '@/components/data/GetClusterList.vue';
 import type { GetClusterDetailResponseDto } from '@/lib/api/cluster/clusterDto';
-import { getOrgsApi } from '@/lib/api/org/getOrgsApi';
+import { getOrgListApi } from '@/lib/api/org/getOrgListApi';
 import type { GetOrgListResponseDto } from '@/lib/api/org/orgDto';
 import { onMounted, ref } from 'vue';
 
@@ -82,7 +82,7 @@ const isEmpty = (orgId: number, empty: boolean) => {
 }
 
 onMounted(async () => {
-  await getOrgsApi().then((res) => {
+  await getOrgListApi().then((res) => {
     if (res) orgList.value = res;
   });
 });

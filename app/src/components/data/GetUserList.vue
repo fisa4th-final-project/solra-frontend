@@ -52,7 +52,7 @@ import Card from '@/components/common/Card.vue';
 import GetUserDetail from '@/components/data/GetUserDetail.vue';
 import UpdateUser from '@/components/data/UpdateUser.vue';
 import SideContents from '@/components/layout/SideContents.vue';
-import { getUsersApi } from '@/lib/api/user/getUsersApi';
+import { getUserListApi } from '@/lib/api/user/getUserListApi';
 import type { GetUserListResContent } from '@/lib/api/user/userDto';
 import { ref, watch } from 'vue';
 
@@ -96,7 +96,7 @@ const loadUser = (options?: any) => {
     page.value = options.page;
     size.value = options.itemsPerPage;
   }
-  getUsersApi({
+  getUserListApi({
     ...props.req,
     page: page.value - 1,
     size: size.value,

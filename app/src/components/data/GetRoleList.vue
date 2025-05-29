@@ -67,8 +67,8 @@ import Card from '@/components/common/Card.vue';
 import DataCard from '@/components/common/DataCard.vue';
 import UpdatePerm from '@/components/data/UpdatePerm.vue';
 import SideContents from '@/components/layout/SideContents.vue';
-import { getRolesApi } from '@/lib/api/role/getRolesApi';
-import { getRolePermsApi } from '@/lib/api/rolePerm/getRolePermsApi';
+import { getRoleListApi } from '@/lib/api/role/getRoleListApi';
+import { getRolePermListApi } from '@/lib/api/rolePerm/getRolePermListApi';
 import { nextTick, onMounted, ref } from 'vue';
 
 const groupBy = [{ key: 'roleName' }]
@@ -113,12 +113,12 @@ interface Perm {
 const permRows = ref<(Perm & { roleId: number; roleName: string })[]>([]);
 
 const loadRoles = async () => {
-  const res = await getRolesApi();
+  const res = await getRoleListApi();
   if (!res) return;
 
   const rolePermRows = await Promise.all(
     res.map(async (role) => {
-      const perms = await getRolePermsApi({ roleId: role.roleId }) ?? [];
+      const perms = await getRolePermListApi({ roleId: role.roleId }) ?? [];
 
       if (perms.length === 0) {
         // 권한이 없는 경우 기본 row 생성

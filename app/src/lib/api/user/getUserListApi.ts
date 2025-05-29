@@ -4,7 +4,7 @@ import { useDialogStore } from "@/store/dialog";
 import type { ApiResponse } from "@/lib/global/ApiResponse";
 import type { GetUserListQueryParam, GetUserListResponseDto } from "@/lib/api/user/userDto";
 
-export async function getUsersApi(reqParam: GetUserListQueryParam):Promise<GetUserListResponseDto | null> {
+export async function getUserListApi(reqParam: GetUserListQueryParam):Promise<GetUserListResponseDto | null> {
 
   const dialog = useDialogStore();
 

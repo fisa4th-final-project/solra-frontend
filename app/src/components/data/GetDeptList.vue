@@ -46,7 +46,7 @@ import DataCardList from '@/components/common/DataCardList.vue';
 import GetDeptDetail from '@/components/data/GetDeptDetail.vue';
 import UpdateDept from '@/components/data/UpdateDept.vue';
 import type { GetDeptDetailResponseDto, GetDeptListRequestParam } from '@/lib/api/dept/deptDto';
-import { getDeptsApi } from '@/lib/api/dept/getDeptsApi';
+import { getDeptListApi } from '@/lib/api/dept/getDeptListApi';
 import { ref } from 'vue';
 
 defineProps<{
@@ -70,7 +70,7 @@ const selected = (item: GetDeptDetailResponseDto) => {
 const selectedItem = ref();
 
 const dataHandler = async (req: GetDeptListRequestParam) => {
-  const res = await getDeptsApi(req);
+  const res = await getDeptListApi(req);
   if (!res) return
   return res
 };

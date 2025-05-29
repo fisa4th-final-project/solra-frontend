@@ -2,25 +2,23 @@ import { apiRequest } from "@/lib/global/apiHandler";
 import { ApiError } from "@/lib/global/customError";
 import { useDialogStore } from "@/store/dialog";
 import type { ApiResponse } from "@/lib/global/ApiResponse";
-import type { GetPermListResponseDto } from "@/lib/api/perm/permDto";
+import type { GetNodeListRequestParam, GetNodeListResponseDto } from "@/lib/api/node/nodeDto";
 
-export async function getPermsApi():Promise<GetPermListResponseDto[] | null> {
+export async function getNodeListApi(reqDto: GetNodeListRequestParam):Promise<GetNodeListResponseDto[] | null> {
 
   const dialog = useDialogStore();
 
   return await apiRequest({
     method: "GET",
-    path: `api/permissions`,
+    path: `api/clusters/${reqDto.clusterId}/nodes`,
     auth: true
-  }).then(async (res: ApiResponse<GetPermListResponseDto[]>) => {
-    if (res.data) {
-      return res.data;
-    }
-    return null;
+  }).then(async (res: ApiResponse<GetNodeListResponseDto[]>) => {
+    if (!res.data) return null;
+    return res.data;
   }).catch(async (e: ApiError) => {
     console.error(e.res);
     dialog.open({
-      title: '권한 리스트 조회 실패',
+      title: '노드 리스트 조회 실패',
       message: e.res.message,
       type: 'mainframe'
     });

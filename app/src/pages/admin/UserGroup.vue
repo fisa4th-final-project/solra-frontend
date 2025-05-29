@@ -92,7 +92,7 @@
 
 import { onMounted, ref } from 'vue';
 import type { GetOrgListResponseDto } from '@/lib/api/org/orgDto';
-import { getOrgsApi } from '@/lib/api/org/getOrgsApi';
+import { getOrgListApi } from '@/lib/api/org/getOrgListApi';
 import GetDeptList from '@/components/data/GetDeptList.vue';
 import type { GetDeptDetailResponseDto } from '@/lib/api/dept/deptDto';
 import SideContents from '@/components/layout/SideContents.vue';
@@ -121,7 +121,7 @@ const openOrgDetail = (org: any) => {
   isOrgDetailOpen.value = true;
 }
 onMounted(async () => {
-  const res = await getOrgsApi();
+  const res = await getOrgListApi();
   if (res) orgList.value = res;
 });
 

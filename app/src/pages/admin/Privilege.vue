@@ -41,7 +41,7 @@
 
 import { onMounted, ref } from 'vue';
 import GetRoleList from '@/components/data/GetRoleList.vue';
-import { getRolesApi } from '@/lib/api/role/getRolesApi';
+import { getRoleListApi } from '@/lib/api/role/getRoleListApi';
 import type { GetRoleListResponseDto } from '@/lib/api/role/roleDto';
 import type { GetPermDetailResponseDto } from '@/lib/api/perm/permDto';
 import CreateRole from '@/components/data/CreateRole.vue';
@@ -54,7 +54,7 @@ const select = (item: GetPermDetailResponseDto & {roleId: number, roleName: stri
 }
 
 onMounted(async () => {
-  const res = await getRolesApi();
+  const res = await getRoleListApi();
   if (res) roleList.value = res;
 });
 

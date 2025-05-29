@@ -14,7 +14,7 @@
 
   import { onMounted, ref, watch } from 'vue';
 
-  import { getDeptsApi } from '@/lib/api/dept/getDeptsApi';
+  import { getDeptListApi } from '@/lib/api/dept/getDeptListApi';
 
   const depts = ref<{
     deptId: number;
@@ -32,7 +32,7 @@
   }>();
 
   const getDepts = () => {
-    getDeptsApi({
+    getDeptListApi({
       org_id: props.orgId
     }).then((res) => {
       if (!res) return;
