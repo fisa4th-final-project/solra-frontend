@@ -1,10 +1,13 @@
 <template>
   <v-btn
     flat
+    variant="plain"
     color="red"
     class="font-weight-bold"
     @click="deleteOrg"
-  >삭제</v-btn>
+  >
+    Delete
+  </v-btn>
   <Dialog v-if="dialog.getType === 'deleteOrg'">
     <template v-slot:title>
       조직을 삭제하시겠습니까?
@@ -26,27 +29,25 @@
 </template>
 <script lang="ts" setup>
 
-  import Dialog from '@/components/common/Dialog.vue';
-  
-  import { useDialogStore } from '@/store/dialog';
+import Dialog from '@/components/common/Dialog.vue';
+import { useDialogStore } from '@/store/dialog';
+import { deleteOrgApi } from '@/lib/api/org/deleteOrgApi';
 
-  import { deleteOrgApi } from '@/lib/api/org/deleteOrgApi';
+defineProps<{
+  org: {
+    orgId: number,
+    orgName: string
+  };
+}>();
 
-  defineProps<{
-    org: {
-      orgId: number,
-      orgName: string
-    };
-  }>();
+const dialog = useDialogStore();
 
-  const dialog = useDialogStore();
-
-  function deleteOrg() {
-    dialog.open({
-      title: '',
-      message: '',
-      type: 'deleteUser'
-    });
-  }
+function deleteOrg() {
+  dialog.open({
+    title: '',
+    message: '',
+    type: 'deleteOrg'
+  });
+}
   
 </script>

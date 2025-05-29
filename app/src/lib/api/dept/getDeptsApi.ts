@@ -10,7 +10,7 @@ export async function getDeptsApi(reqParam: GetDeptsRequestParam):Promise<GetDep
 
   const dialog = useDialogStore();
 
-  const query = `ord_id=${reqParam.org_id}`
+  const query = `orgId=${reqParam.org_id}`
   return await apiRequest({
     method: "GET",
     path: `api/departments?${query}`,

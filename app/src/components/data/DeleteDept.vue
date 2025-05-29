@@ -1,10 +1,13 @@
 <template>
   <v-btn
     flat
+    variant="plain"
     color="red"
     class="font-weight-bold"
     @click="deleteDept"
-  >삭제</v-btn>
+  >
+    Delete
+  </v-btn>
   <Dialog v-if="dialog.getType === 'deleteDept'">
     <template v-slot:title>
       부서를 삭제하시겠습니까?

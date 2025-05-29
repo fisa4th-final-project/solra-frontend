@@ -1,3 +1,7 @@
+export interface GetClustersRequestParam {
+  orgId: number;
+}
+
 export interface GetClustersResponseDto {
   clusterId: number;
   orgId: number;

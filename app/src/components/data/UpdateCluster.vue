@@ -1,7 +1,7 @@
 <template>
   <SideContents>
     <template v-slot:activator="{ props }">
-      <slot name="activator">
+      <slot name="activator" v-bind:props>
         <v-btn v-bind="props">UpdateCluster</v-btn>
       </slot>
     </template>

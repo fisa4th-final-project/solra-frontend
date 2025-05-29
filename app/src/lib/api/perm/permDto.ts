@@ -9,6 +9,12 @@ export interface CreatePermResponseDto {
   description: string;
 }
 
+export interface GetPermDetailResponseDto {
+  permissionId: number;
+  permissionName: string;
+  description: string;
+}
+
 export interface GetPermsResponseDto {
   permissionId: number;
   permissionName: string;

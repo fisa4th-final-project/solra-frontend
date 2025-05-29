@@ -6,7 +6,6 @@
       :items="permItems"
       item-value="permissionId"
       return-object
-      hide-default-footer
       show-select
       ripple
       hover

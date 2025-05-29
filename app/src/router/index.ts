@@ -5,11 +5,12 @@ import Dashboard from '@/pages/Dashboard.vue'
 import User from '@/pages/admin/User.vue'
 import Workload from '@/pages/Workload.vue'
 import UserGroup from '@/pages/admin/UserGroup.vue'
-import UserDetail from '@/pages/admin/UserDetail.vue'
 import DataComponents from '@/pages/dev/DataComponents.vue'
 import MainFrame from '@/frames/MainFrame.vue'
 import Node from '@/pages/admin/Node.vue'
 import Workspace from '@/pages/Workspace.vue'
+import Cluster from '@/pages/admin/Cluster.vue'
+import Privilege from '@/pages/admin/Privilege.vue'
 
 const routes = [
   {
@@ -21,7 +22,7 @@ const routes = [
         component: DataComponents,
         meta: {
           breadcrumb: [
-            { title: '개발자', href: '/dev', disabled: false },
+            { title: '개발자', href: '/dev', disabled: true },
             { title: '데이터 컴포넌트', href: '/components/data', disabled: false },
           ]
         }
@@ -42,7 +43,7 @@ const routes = [
     path: '/admin',
     component: MainFrame,
     meta: {
-      breadcrumb: [{ title: '관리자', href: '/admin', disabled: false }]
+      breadcrumb: [{ title: '관리자', href: '/admin', disabled: true }]
     },
     children: [
       { 
@@ -50,7 +51,7 @@ const routes = [
         component: Dashboard,
         meta: {
           breadcrumb: [
-            { title: '관리자', href: '/admin', disabled: false},
+            { title: '관리자', href: '/admin', disabled: true},
             { title: '대시보드', href: '/admin/dashboard', disabled: false }
           ]
         }
@@ -60,17 +61,7 @@ const routes = [
         component: User,
         meta: {
           breadcrumb: [
-            { title: '관리자', href: '/admin', disabled: false},
-            { title: '사용자', href: '/admin/users', disabled: false }
-          ]
-        }
-      },
-      {
-        path: 'users/:userId',
-        component: UserDetail,
-        meta: {
-          breadcrumb: [
-            { title: '관리자', href: '/admin', disabled: false },
+            { title: '관리자', href: '/admin', disabled: true},
             { title: '사용자', href: '/admin/users', disabled: false }
           ]
         }
@@ -80,18 +71,18 @@ const routes = [
         component: UserGroup,
         meta: {
           breadcrumb: [
-            { title: '관리자', href: '/admin', disabled: false},
+            { title: '관리자', href: '/admin', disabled: true},
             { title: '사용자 그룹', href: '/admin/userGroup', disabled: false }
           ]
         }
       },
-      {
-        path: 'userGroup/depts/:deptId',
-        component: UserGroup,
+      { 
+        path: 'privilege', 
+        component: Privilege,
         meta: {
           breadcrumb: [
-            { title: '관리자', href: '/admin', disabled: false },
-            { title: '사용자 그룹', href: '/admin/userGroup', disabled: false },
+            { title: '관리자', href: '/admin', disabled: true},
+            { title: '역할 및 권한', href: '/admin/privilege', disabled: false }
           ]
         }
       },
@@ -100,8 +91,18 @@ const routes = [
         component: Node,
         meta: {
           breadcrumb: [
-            { title: '관리자', href: '/admin', disabled: false },
-            { title: '노드', href: '/admin/userGroup', disabled: false },
+            { title: '관리자', href: '/admin', disabled: true },
+            { title: '노드', href: '/admin/resource/node', disabled: false },
+          ]
+        }
+      },
+      {
+        path: 'resource/cluster',
+        component: Cluster,
+        meta: {
+          breadcrumb: [
+            { title: '관리자', href: '/admin', disabled: true },
+            { title: '클러스터', href: '/admin/resource/cluster', disabled: false },
           ]
         }
       }
@@ -119,7 +120,7 @@ const routes = [
         path: 'workload', component: Workload,
         meta: {
           breadcrumb: [
-            { title: '홈', href: '/', disabled: false },
+            { title: '홈', href: '/', disabled: true },
             { title: '워크로드', href: '/workload', disabled: false },
           ]
         } 
@@ -128,7 +129,7 @@ const routes = [
         path: 'workspace', component: Workspace,
         meta: {
           breadcrumb: [
-            { title: '홈', href: '/', disabled: false },
+            { title: '홈', href: '/', disabled: true },
             { title: '작업영역', href: '/workspace', disabled: false },
           ]
         }

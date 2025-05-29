@@ -1,12 +1,16 @@
 <template>
   <SideContents>
     <template v-slot:activator="{ props }">
-      <slot name="activator">
+      <slot name="activator" v-bind:props>
         <v-btn v-bind="props">createRole</v-btn>
       </slot>
     </template>
     <template v-slot:title>역할 추가</template>
+    
     <v-form v-model="valid" @submit.prevent="submitForm">
+      <v-card-title>
+        역할 정보
+      </v-card-title>
       <v-text-field
         v-model="form.roleName"
         :rules="[rules.required]"
@@ -22,6 +26,11 @@
         color="primary"
         clearable
       />
+      <v-spacer class="pt-5"/>
+      <v-card-title>
+        부여 권한
+      </v-card-title>
+      <v-spacer class="pt-5"/>
       <GetPermList v-model="perms" />
       <v-btn
         :disabled="!valid"
@@ -57,6 +66,7 @@ const perms = ref<{
   description: string;
 }[]>();
 
+// TODO: 권한 별 요청이 아닌 1회 요청 시 권한 리스트를 전송 하게 로직 수정
 const submitForm = async () => {
   createRoleApi({
     roleName: form.value.roleName,

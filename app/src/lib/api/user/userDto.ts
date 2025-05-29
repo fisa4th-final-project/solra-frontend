@@ -106,6 +106,8 @@ export interface GetUsersResContent {
   email: string,
   departmentId?: number,
   organizationId?: number
+  departmentName?: string,
+  organizationName?: string
 }
 
 export interface GetUserDetailQueryParam {

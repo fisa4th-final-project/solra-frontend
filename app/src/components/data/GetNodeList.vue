@@ -42,7 +42,7 @@ defineProps<{
 
 const emit = defineEmits<{
   (e: 'selected', item: GetNodesResponseDto): void
-  (e: 'isEmpty', item: boolean,): void
+  (e: 'isEmpty', item: boolean): void
 }>()
 
 const selected = (item: GetNodesResponseDto) => {

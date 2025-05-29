@@ -1,6 +1,7 @@
 <template>
   <SideContents
     v-if="detail?.enable"
+    v-model="isItemDetailOpen"
     ref="$clickedItem"
   >
     <template v-slot:title>
@@ -18,7 +19,7 @@
       xl="4"
     >
       <DataCard
-        :header="{title: data.name, icon: header.icon}"
+        :header="{title: data[header.titleKey], icon: header.icon}"
         :data="data"
         @selected="selected(data)"
         @click="onClickItem"
@@ -80,6 +81,8 @@ const isEmpty = (item: boolean) => {
 
 const isEmptyList = ref(true);
 
+const isItemDetailOpen = ref();
+
 const datas = ref();
 
 const loadData = async (req: Object | null, dataHandler: Function) => {
@@ -95,7 +98,7 @@ const loadData = async (req: Object | null, dataHandler: Function) => {
 const $clickedItem = ref();
 
 const onClickItem = () => {
-  $clickedItem.value.isOpen = true;
+  isItemDetailOpen.value = true;
 }
 
 onMounted(() => {
