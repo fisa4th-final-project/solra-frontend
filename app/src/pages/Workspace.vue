@@ -120,7 +120,7 @@ import GetUserList from '@/components/data/GetUserList.vue';
 import SelectClusterList from '@/components/data/SelectClusterList.vue';
 import SelectNSList from '@/components/data/SelectNSList.vue';
 import type { GetDeptDetailRequestParam } from '@/lib/api/dept/deptDto';
-import type { GetUsersQueryParam } from '@/lib/api/user/userDto';
+import type { GetUserListQueryParam } from '@/lib/api/user/userDto';
 import { useAuthStore } from '@/store/auth';
 import { onMounted, ref, watch } from 'vue';
 
@@ -130,7 +130,7 @@ const valid = ref(false);
 
 const deptReq = ref<GetDeptDetailRequestParam>({} as GetDeptDetailRequestParam);
 
-const userReq = ref<GetUsersQueryParam>({} as GetUsersQueryParam);
+const userReq = ref<GetUserListQueryParam>({} as GetUserListQueryParam);
 
 const form = ref<{
   cluster: {

@@ -2,11 +2,11 @@ import { apiRequest } from "@/lib/global/apiHandler";
 import { ApiError } from "@/lib/global/customError";
 import { useDialogStore } from "@/store/dialog";
 import type { ApiResponse } from "@/lib/global/ApiResponse";
-import type { GetDeptsRequestParam, GetDeptsResponseDto } from "@/lib/api/dept/deptDto";
+import type { GetDeptListRequestParam, GetDeptListResponseDto } from "@/lib/api/dept/deptDto";
 
 
 
-export async function getDeptsApi(reqParam: GetDeptsRequestParam):Promise<GetDeptsResponseDto[] | null> {
+export async function getDeptsApi(reqParam: GetDeptListRequestParam):Promise<GetDeptListResponseDto[] | null> {
 
   const dialog = useDialogStore();
 
@@ -15,7 +15,7 @@ export async function getDeptsApi(reqParam: GetDeptsRequestParam):Promise<GetDep
     method: "GET",
     path: `api/departments?${query}`,
     auth: true
-  }).then(async (res: ApiResponse<GetDeptsResponseDto[]>) => {
+  }).then(async (res: ApiResponse<GetDeptListResponseDto[]>) => {
     if (res.data) {
       return res.data;
     }

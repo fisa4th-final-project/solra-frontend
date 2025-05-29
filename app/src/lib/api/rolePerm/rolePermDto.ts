@@ -9,11 +9,11 @@ export interface CreateRolePermResponseDto {
   permissionId: number;
 }
 
-export interface GetRolePermsRequestParam {
+export interface GetRolePermListRequestParam {
   roleId: number;
 }
 
-export interface GetRolePermsResponseDto {
+export interface GetRolePermListResponseDto {
   permissionId: number;
   permissionName: string;
   description: string;

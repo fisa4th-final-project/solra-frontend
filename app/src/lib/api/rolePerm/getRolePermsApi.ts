@@ -2,9 +2,9 @@ import { apiRequest } from "@/lib/global/apiHandler";
 import { ApiError } from "@/lib/global/customError";
 import { useDialogStore } from "@/store/dialog";
 import type { ApiResponse } from "@/lib/global/ApiResponse";
-import type { GetRolePermsRequestParam, GetRolePermsResponseDto } from "@/lib/api/rolePerm/rolePermDto";
+import type { GetRolePermListRequestParam, GetRolePermListResponseDto } from "@/lib/api/rolePerm/rolePermDto";
 
-export async function getRolePermsApi(reqDto: GetRolePermsRequestParam):Promise<GetRolePermsResponseDto[] | null> {
+export async function getRolePermsApi(reqDto: GetRolePermListRequestParam):Promise<GetRolePermListResponseDto[] | null> {
 
   const dialog = useDialogStore();
 
@@ -12,7 +12,7 @@ export async function getRolePermsApi(reqDto: GetRolePermsRequestParam):Promise<
     method: "GET",
     path: `api/role-permissions/${reqDto.roleId}`,
     auth: true
-  }).then(async (res: ApiResponse<GetRolePermsResponseDto[]>) => {
+  }).then(async (res: ApiResponse<GetRolePermListResponseDto[]>) => {
     if (!res.data) return null;
       return res.data;
   }).catch(async (e: ApiError) => {

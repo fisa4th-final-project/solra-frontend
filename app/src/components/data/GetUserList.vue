@@ -53,7 +53,7 @@ import GetUserDetail from '@/components/data/GetUserDetail.vue';
 import UpdateUser from '@/components/data/UpdateUser.vue';
 import SideContents from '@/components/layout/SideContents.vue';
 import { getUsersApi } from '@/lib/api/user/getUsersApi';
-import type { GetUsersResContent } from '@/lib/api/user/userDto';
+import type { GetUserListResContent } from '@/lib/api/user/userDto';
 import { ref, watch } from 'vue';
 
 const props = defineProps<{
@@ -84,7 +84,7 @@ const selectedUser = ref();
 
 const isOpenUserDetail = ref(false);
 
-const userItems = ref<GetUsersResContent[]>([] as GetUsersResContent[]);
+const userItems = ref<GetUserListResContent[]>([] as GetUserListResContent[]);
 
 const userItemsTotal = ref<number>(0);
 

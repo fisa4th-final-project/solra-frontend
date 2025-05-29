@@ -1,32 +1,32 @@
 export interface CreateDeptRequestDto {
-  organizationId: number,
-  deptName: string
+  organizationId: number;
+  deptName: string;
 }
 
 export interface CreateDeptResponseDto {
-  deptId: number,
-  organizationId: number,
-  deptName: string
+  deptId: number;
+  organizationId: number;
+  deptName: string;
 }
 
-export interface GetDeptsRequestParam {
-  org_id: number
+export interface GetDeptListRequestParam {
+  org_id: number;
 }
 
-export interface GetDeptsResponseDto {
-  deptId: number,
-  orgId: number,
-  deptName: string
+export interface GetDeptListResponseDto {
+  deptId: number;
+  orgId: number;
+  deptName: string;
 }
 
 export interface GetDeptDetailRequestParam {
-  deptId: number
+  deptId: number;
 }
 
 export interface GetDeptDetailResponseDto {
-  deptId: number,
-  organizationId: number,
-  deptName: string
+  deptId: number;
+  organizationId: number;
+  deptName: string;
 }
 
 export interface UpdateDeptRequestDto {
@@ -35,11 +35,11 @@ export interface UpdateDeptRequestDto {
 }
 
 export interface UpdateDeptResponseDto {
-  deptId: number,
-  organizationId: number,
-  deptName: string
+  deptId: number;
+  organizationId: number;
+  deptName: string;
 }
 
 export interface DeleteDeptQueryParam {
-  deptId: number
+  deptId: number;
 }

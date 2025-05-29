@@ -33,19 +33,19 @@
 <script lang="ts" setup>
 
 import DataCardList from '@/components/common/DataCardList.vue';
-import type { GetNodesRequestParam, GetNodesResponseDto } from '@/lib/api/node/nodeDto';
+import type { GetNodeListRequestParam, GetNodeListResponseDto } from '@/lib/api/node/nodeDto';
 import { getNodesApi } from '@/lib/api/node/getNodesApi';
 
 defineProps<{
-  req: GetNodesRequestParam
+  req: GetNodeListRequestParam
 }>();
 
 const emit = defineEmits<{
-  (e: 'selected', item: GetNodesResponseDto): void
+  (e: 'selected', item: GetNodeListResponseDto): void
   (e: 'isEmpty', item: boolean): void
 }>()
 
-const selected = (item: GetNodesResponseDto) => {
+const selected = (item: GetNodeListResponseDto) => {
   emit('selected', item);
 }
 
@@ -53,7 +53,7 @@ const isEmpty = (item: boolean) => {
   emit('isEmpty', item);
 }
 
-const dataHandler = async (req: GetNodesRequestParam) => {
+const dataHandler = async (req: GetNodeListRequestParam) => {
   const res = await getNodesApi(req);
   if (res) return res.map(({ clusterId, ...rest }) => rest);
 }

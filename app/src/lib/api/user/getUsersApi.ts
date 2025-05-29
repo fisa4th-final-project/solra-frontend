@@ -2,9 +2,9 @@ import { apiRequest } from "@/lib/global/apiHandler";
 import { ApiError } from "@/lib/global/customError";
 import { useDialogStore } from "@/store/dialog";
 import type { ApiResponse } from "@/lib/global/ApiResponse";
-import type { GetUsersQueryParam, GetUsersResponseDto } from "@/lib/api/user/userDto";
+import type { GetUserListQueryParam, GetUserListResponseDto } from "@/lib/api/user/userDto";
 
-export async function getUsersApi(reqParam: GetUsersQueryParam):Promise<GetUsersResponseDto | null> {
+export async function getUsersApi(reqParam: GetUserListQueryParam):Promise<GetUserListResponseDto | null> {
 
   const dialog = useDialogStore();
 
@@ -24,7 +24,7 @@ export async function getUsersApi(reqParam: GetUsersQueryParam):Promise<GetUsers
     method: "GET",
     path: `api/users${query}`,
     auth: true
-  }).then(async (res: ApiResponse<GetUsersResponseDto>) => {
+  }).then(async (res: ApiResponse<GetUserListResponseDto>) => {
     if (res.data) {
       return res.data;
     }

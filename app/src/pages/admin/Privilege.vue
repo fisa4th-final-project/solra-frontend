@@ -42,11 +42,11 @@
 import { onMounted, ref } from 'vue';
 import GetRoleList from '@/components/data/GetRoleList.vue';
 import { getRolesApi } from '@/lib/api/role/getRolesApi';
-import type { GetRolesResponseDto } from '@/lib/api/role/roleDto';
+import type { GetRoleListResponseDto } from '@/lib/api/role/roleDto';
 import type { GetPermDetailResponseDto } from '@/lib/api/perm/permDto';
 import CreateRole from '@/components/data/CreateRole.vue';
 
-const roleList = ref<GetRolesResponseDto[]>([]);
+const roleList = ref<GetRoleListResponseDto[]>([]);
 const selectedPerm = ref<GetPermDetailResponseDto & {roleId: number, roleName: string}>();
 
 const select = (item: GetPermDetailResponseDto & {roleId: number, roleName: string}) => {

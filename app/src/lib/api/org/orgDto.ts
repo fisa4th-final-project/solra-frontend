@@ -1,37 +1,37 @@
 export interface CreateOrgRequestDto {
-  orgName: string
+  orgName: string;
 }
 
 export interface CreateOrgResponseDto {
-  orgId: number,
-  orgName: string
+  orgId: number;
+  orgName: string;
 }
 
-export interface GetOrgsResponseDto {
-  orgId: number,
-  orgName: string
+export interface GetOrgListResponseDto {
+  orgId: number;
+  orgName: string;
 }
 
 export interface GetOrgDetailRequestDto {
-  orgId: number
+  orgId: number;
 }
 
 export interface GetOrgDetailResponseDto {
-  orgId: number,
-  orgName: string
+  orgId: number;
+  orgName: string;
 }
 
 export interface UpdateOrgRequestDto {
-  orgId: number,
-  orgName: string
+  orgId: number;
+  orgName: string;
 }
 
 export interface UpdateOrgResponseDto {
-  orgId: number,
-  orgName: string
+  orgId: number;
+  orgName: string;
 }
 
 export interface DeleteOrgQueryParam {
-  orgId: number
+  orgId: number;
 }
 

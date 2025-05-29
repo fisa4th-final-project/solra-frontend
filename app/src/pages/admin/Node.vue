@@ -81,13 +81,13 @@
 import { onMounted, ref } from 'vue';
 import GetNodeList from '@/components/data/GetNodeList.vue';
 import { getClustersApi } from '@/lib/api/cluster/getClustersApi';
-import type { GetClustersResponseDto } from '@/lib/api/cluster/clusterDto';
+import type { GetClusterListResponseDto } from '@/lib/api/cluster/clusterDto';
 import type { GetNodeDetailResponseDto } from '@/lib/api/node/nodeDto';
 import SideContents from '@/components/layout/SideContents.vue';
 import GetClusterDetail from '@/components/data/GetClusterDetail.vue';
 import UpdateCluster from '@/components/data/UpdateCluster.vue';
 
-const clusterList = ref<GetClustersResponseDto[]>([]);
+const clusterList = ref<GetClusterListResponseDto[]>([]);
 const selectedNode = ref<GetNodeDetailResponseDto>();
 const isEmptyList = ref<Record<number, boolean>>({});
 

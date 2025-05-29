@@ -2,9 +2,9 @@ import { apiRequest } from "@/lib/global/apiHandler";
 import { ApiError } from "@/lib/global/customError";
 import { useDialogStore } from "@/store/dialog";
 import type { ApiResponse } from "@/lib/global/ApiResponse";
-import type { GetNodesRequestParam, GetNodesResponseDto } from "@/lib/api/node/nodeDto";
+import type { GetNodeListRequestParam, GetNodeListResponseDto } from "@/lib/api/node/nodeDto";
 
-export async function getNodesApi(reqDto: GetNodesRequestParam):Promise<GetNodesResponseDto[] | null> {
+export async function getNodesApi(reqDto: GetNodeListRequestParam):Promise<GetNodeListResponseDto[] | null> {
 
   const dialog = useDialogStore();
 
@@ -12,7 +12,7 @@ export async function getNodesApi(reqDto: GetNodesRequestParam):Promise<GetNodes
     method: "GET",
     path: `api/clusters/${reqDto.clusterId}/nodes`,
     auth: true
-  }).then(async (res: ApiResponse<GetNodesResponseDto[]>) => {
+  }).then(async (res: ApiResponse<GetNodeListResponseDto[]>) => {
     if (!res.data) return null;
     return res.data;
   }).catch(async (e: ApiError) => {
