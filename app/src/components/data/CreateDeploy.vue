@@ -22,6 +22,7 @@
         label="디플로이먼트 이름"
         color="primary"
         clearable
+        data-test="input-deploy-name"
       />
       <v-text-field
         v-model="form.appName"
@@ -30,6 +31,7 @@
         label="컨테이너 이름"
         color="primary"
         clearable
+        data-test="input-container-name"
       />
       <v-text-field
         v-model="form.image"
@@ -38,6 +40,7 @@
         label="컨테이너 적용 이미지"
         color="primary"
         clearable
+        data-test="input-container-image"
       />
       <v-text-field
         v-model="form.port"
@@ -46,6 +49,7 @@
         label="컨테이너 포트"
         color="primary"
         clearable
+        data-test="input-container-port"
       />
       
       <v-btn
@@ -101,4 +105,7 @@ const submitForm = () => {
   });
 }
 
+defineExpose({
+  form, valid
+})
 </script>
