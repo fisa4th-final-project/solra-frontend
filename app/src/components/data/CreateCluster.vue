@@ -17,6 +17,7 @@
         label="클러스터 이름"
         color="primary"
         clearable
+        data-test="input-name"
       />
       <v-text-field
         v-model="form.env"
@@ -25,6 +26,7 @@
         label="클러스터 목적 (dev, prod 등)"
         color="primary"
         clearable
+        data-test="input-env"
       />
       <v-text-field
         v-model="form.endpoints"
@@ -33,6 +35,7 @@
         label="클러스터 API 서버 엔드포인트"
         color="primary"
         clearable
+        data-test="input-endpoints"
       />
       <v-text-field
         v-model="form.caCert"
@@ -41,6 +44,7 @@
         label="클러스터 ca.cert"
         color="primary"
         clearable
+        data-test="input-cacert"
       />
       <v-text-field
         v-model="form.saToken"
@@ -49,6 +53,7 @@
         label="클러스터 서비스 어카운트 oAuth Token"
         color="primary"
         clearable
+        data-test="input-satoken"
       />
       
       <v-btn
@@ -102,4 +107,6 @@ const submitForm = () => {
     apiServerUrl:form.value.endpoints
   });
 }
+
+defineExpose({ form, valid });
 </script>
