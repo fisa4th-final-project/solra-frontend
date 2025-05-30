@@ -4,7 +4,7 @@ import { nextTick } from 'vue';
 import SideContents from '@/__mocks__/layout/SideContents.vue';
 import CreateDeploy from '@/components/data/CreateDeploy.vue';
 
-const createClusterWrapper = () => {
+const createDeployWrapper = () => {
   return mount(CreateDeploy, {
     global: {
       stubs: {
@@ -64,7 +64,7 @@ describe('CreateDeploy.vue', () => {
 
     requiredFields.forEach((field, idx) => {
       it(`TC_VUE_DEPLOY_02_02_${idx}: ${field} 미입력 시 validate 실패`, async () => {
-        const wrapper = createClusterWrapper();
+        const wrapper = createDeployWrapper();
 
         // 모든 값 설정
         wrapper.vm.form.cluster = baseValues.cluster;
