@@ -6,7 +6,8 @@
   "scripts": {
     "dev": "vite",
     "build": "vue-tsc -b && vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "test": "vitest"
   },
   "dependencies": {
     "@mdi/font": "^7.4.47",
@@ -15,15 +16,19 @@
     "vue-router": "^4.5.1"
   },
   "devDependencies": {
+    "@pinia/testing": "^1.0.1",
     "@types/node": "^22.15.12",
     "@vitejs/plugin-vue": "^5.2.2",
+    "@vue/test-utils": "^2.4.0-alpha.2",
     "@vue/tsconfig": "^0.7.0",
     "deepmerge": "^4.3.1",
+    "jsdom": "^26.1.0",
     "sass": "^1.87.0",
     "sass-loader": "^16.0.5",
     "typescript": "~5.7.2",
     "vite": "^6.3.1",
     "vite-plugin-vuetify": "^2.1.1",
+    "vitest": "^3.1.4",
     "vue-tsc": "^2.2.8",
     "vuetify": "^3.8.3"
   }

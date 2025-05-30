@@ -12,7 +12,7 @@ import Workspace from '@/pages/Workspace.vue'
 import Cluster from '@/pages/admin/Cluster.vue'
 import Privilege from '@/pages/admin/Privilege.vue'
 
-const routes = [
+export const routes = [
   {
     path: '/dev',
     component: MainFrame, 
