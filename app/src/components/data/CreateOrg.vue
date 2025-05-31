@@ -11,7 +11,7 @@
         v-model="form.orgName"
         :rules="[rules.required]"
         variant="underlined"
-        label="생성할 부서 이름"
+        label="생성할 조직 이름"
         color="primary"
         clearable
       />
