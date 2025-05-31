@@ -20,7 +20,7 @@
             </v-row>
           </v-container>
         </template>
-        <CreateOrgInWorkload 
+        <CreateOrgInUserGroup 
           :form="form"
           ref="$createSvcRef"
         />
@@ -52,7 +52,7 @@
 import { ref, watch } from 'vue'
 import SideContents from '@/components/layout/SideContents.vue';
 import Card from '@/components/common/Card.vue';
-import CreateOrgInWorkload from '@/components/data/CreateOrgInWorkload.vue';
+import CreateOrgInUserGroup from '@/components/data/CreateOrgInUserGroup.vue';
 import CreateDeptInUserGroup from '@/components/data/CreateDeptInUserGroup.vue';
 
 const valid = ref(false);
@@ -67,12 +67,5 @@ const form = ref({
 watch(() => [form.value.org], () => {
   console.log(form.value.org);
 });
-// const $createSvcRef = ref()
-// const $createDeployRef = ref()
-
-// const submitForm = async () => {
-//   await $createSvcRef.value.submitSvc();
-//   await $createDeployRef.value.submitDeploy();
-// }
 
 </script>
