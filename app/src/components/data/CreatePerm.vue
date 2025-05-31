@@ -14,13 +14,15 @@
         label="생성할 권한 이름"
         color="primary"
         clearable
-      />
-      <v-text-field
+        data-test="input-perm-name"
+        />
+        <v-text-field
         v-model="form.description"
         variant="underlined"
         label="권한 설명"
         color="primary"
         clearable
+        data-test="input-perm-desc"
       />
       <v-btn
         :disabled="!valid"
@@ -55,4 +57,7 @@ const submitForm = async () => {
   });
 }
 
+defineExpose({
+  form, valid
+})
 </script>
