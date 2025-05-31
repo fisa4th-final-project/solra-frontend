@@ -7,6 +7,7 @@
       label="생성할 부서 이름"
       color="primary"
       clearable
+      data-test="input-dept-name"
     />
     <v-btn
       :disabled="!valid"
@@ -47,4 +48,7 @@
     });
   }
 
+  defineExpose({
+    form, valid
+  })
 </script>
