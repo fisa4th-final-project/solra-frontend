@@ -4,7 +4,7 @@ import { nextTick } from 'vue';
 import SideContents from '@/__mocks__/layout/SideContents.vue';
 import CreatePerm from '@/components/data/CreatePerm.vue';
 
-const createPerCreatePermWrapper = () => {
+const createPermWrapper = () => {
   return mount(CreatePerm, {
     global: {
       stubs: {
@@ -52,7 +52,7 @@ describe('CreatePerm.vue', () => {
 
   requiredFields.forEach((field, idx) => {
     it(`TC_VUE_PERM_01_02_${idx}: ${field} 미입력 시 validate 여부`, async () => {
-      const wrapper = createPerCreatePermWrapper();
+      const wrapper = createPermWrapper();
 
       // 모든 값 설정
       await wrapper.find('[data-test="input-perm-name"] input').setValue(baseValues.permName);
