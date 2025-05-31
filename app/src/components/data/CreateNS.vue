@@ -15,6 +15,7 @@
         label="네임스페이스 이름"
         color="primary"
         clearable
+        data-test="input-namespace-name"
       />
       <v-btn
         :disabled="!valid"
@@ -52,5 +53,9 @@ const submitForm = async () => {
     name: form.value.name
   });
 }
+
+defineExpose({
+  form, valid
+});
 
 </script>
