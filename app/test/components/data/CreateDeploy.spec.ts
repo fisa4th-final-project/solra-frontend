@@ -1,16 +1,17 @@
 import { flushPromises, mount } from '@vue/test-utils'
-import { describe, expect, it } from 'vitest'
+import { describe, expect, it, vi } from 'vitest'
 import { nextTick } from 'vue';
 import SideContents from '@/__mocks__/layout/SideContents.vue';
 import CreateDeploy from '@/components/data/CreateDeploy.vue';
+import Form from '@/__mocks__/common/Form.vue';
 
 const createDeployWrapper = () => {
   return mount(CreateDeploy, {
     global: {
       stubs: {
         SideContents: SideContents,
-        SelectClusterList: true,
-        SelectNSList: true
+        SelectClusterList: Form,
+        SelectNSList: Form
       }
     }
   });
@@ -23,7 +24,13 @@ describe('CreateDeploy.vue', () => {
     document.body.appendChild(el)
 
     const wrapper = mount(CreateDeploy, {
-      attachTo: el // Teleport가 실제 DOM에 붙도록 설정
+      attachTo: el, // Teleport가 실제 DOM에 붙도록 설정
+      global: {
+        stubs: {
+          SelectClusterList: Form,
+          SelectNSList: Form
+        }
+      }
     });
 
     await wrapper.find('button').trigger('click');

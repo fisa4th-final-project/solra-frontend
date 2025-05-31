@@ -3,7 +3,7 @@ import CreateCluster from '@/components/data/CreateCluster.vue'
 import { describe, expect, it, vi } from 'vitest'
 import { nextTick } from 'vue';
 import SideContents from '@/__mocks__/layout/SideContents.vue';
-
+import Form from '@/__mocks__/common/Form.vue';
 
 vi.mock('@/lib/api/cluster/createClusterApi', () => ({
   createClusterApi: vi.fn(),
@@ -14,7 +14,7 @@ const createClusterWrapper = () => {
     global: {
       stubs: {
         SideContents: SideContents,
-        SelectOrgList: true
+        SelectOrgList: Form
       }
     }
   });
@@ -27,7 +27,12 @@ describe('CreateCluster.vue', () => {
     document.body.appendChild(el)
 
     const wrapper = mount(CreateCluster, {
-      attachTo: el // Teleport가 실제 DOM에 붙도록 설정
+      attachTo: el, // Teleport가 실제 DOM에 붙도록 설정
+      global: {
+        stubs: {
+          SelectOrgList: Form
+        }
+      }
     });
 
     await wrapper.find('button').trigger('click');

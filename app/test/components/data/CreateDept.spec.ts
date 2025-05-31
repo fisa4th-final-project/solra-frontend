@@ -1,15 +1,16 @@
 import { flushPromises, mount } from '@vue/test-utils'
-import { describe, expect, it } from 'vitest'
+import { describe, expect, it, vi } from 'vitest'
 import { nextTick } from 'vue';
 import SideContents from '@/__mocks__/layout/SideContents.vue';
 import CreateDept from '@/components/data/CreateDept.vue';
+import Form from '@/__mocks__/common/Form.vue';
 
 const createDeptWrapper = () => {
   return mount(CreateDept, {
     global: {
       stubs: {
         SideContents: SideContents,
-        SelectOrgList: true,
+        SelectOrgList: Form,
       }
     }
   });
@@ -22,7 +23,12 @@ describe('CreateDept.vue', () => {
     document.body.appendChild(el)
 
     const wrapper = mount(CreateDept, {
-      attachTo: el // Teleport가 실제 DOM에 붙도록 설정
+      attachTo: el, // Teleport가 실제 DOM에 붙도록 설정
+      global: {
+        stubs: {
+          SelectOrgList: Form,
+        }
+      }
     });
 
     await wrapper.find('button').trigger('click');
