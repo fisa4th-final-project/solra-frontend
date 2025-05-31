@@ -2,7 +2,6 @@ import { mount } from '@vue/test-utils'
 import { describe, expect, it } from 'vitest'
 import { nextTick } from 'vue';
 import CreateWorkload from '@/components/data/CreateWorkload.vue';
-import CreateDeployInWorkload from '@/components/data/CreateDeployInWorkload.vue';
 import Form from '@/__mocks__/common/Form.vue';
 
 describe('CreateWorkload.vue', () => {
