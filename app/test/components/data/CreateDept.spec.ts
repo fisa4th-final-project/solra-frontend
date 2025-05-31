@@ -1,0 +1,77 @@
+import { flushPromises, mount } from '@vue/test-utils'
+import { describe, expect, it } from 'vitest'
+import { nextTick } from 'vue';
+import SideContents from '@/__mocks__/layout/SideContents.vue';
+import CreateDept from '@/components/data/CreateDept.vue';
+
+const createDeptWrapper = () => {
+  return mount(CreateDept, {
+    global: {
+      stubs: {
+        SideContents: SideContents,
+        SelectOrgList: true,
+      }
+    }
+  });
+}
+describe('CreateDept.vue', () => {
+
+  it('TC_VUE_DEPT_01_01: 클릭 후 입력 form 렌더링 성공', async () => {
+
+    const el = document.createElement('div')
+    document.body.appendChild(el)
+
+    const wrapper = mount(CreateDept, {
+      attachTo: el // Teleport가 실제 DOM에 붙도록 설정
+    });
+
+    await wrapper.find('button').trigger('click');
+    await nextTick();
+    
+    const labels = [
+      '생성할 부서 이름'
+    ]
+
+    labels.forEach(label => {
+      expect(document.body.innerHTML).toContain(label);
+    });
+
+    wrapper.unmount();
+    document.body.removeChild(el);
+  });
+
+  const baseValues = {
+    org: {orgId: 1, orgName: 'test-clusterName'},
+    deptName: 'test-deptName'
+  }
+
+  const requiredFields = [
+    'org',
+    'deptName'
+  ]
+
+  requiredFields.forEach((field, idx) => {
+    it(`TC_VUE_DEPT_04_02_${idx}: ${field} 미입력 시 validate 실패`, async () => {
+      const wrapper = createDeptWrapper();
+
+      // 모든 값 설정
+      wrapper.vm.form.org = baseValues.org;
+      await wrapper.find('[data-test="input-dept-name"] input').setValue(baseValues.deptName);
+
+      // 특정 필드만 비우기
+      switch (field) {
+        case 'org':
+          wrapper.vm.form.org = {orgId: 0, orgName:''};
+          break;
+        case 'deptName':
+          wrapper.vm.form.deptName = '';
+          break;
+      }
+
+      await flushPromises();
+      await nextTick();
+
+      expect(wrapper.vm.valid).toBe(false);
+    });
+  });
+});
