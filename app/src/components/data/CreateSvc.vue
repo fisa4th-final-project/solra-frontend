@@ -25,23 +25,25 @@
         label="서비스 이름"
         color="primary"
         clearable
-      />
-      <v-text-field
+        data-test="input-svc-name"
+        />
+        <v-text-field
         v-model="form.selector.app"
         :rules="[rules.required]"
         variant="underlined"
         label="연결할 리소스 이름"
         color="primary"
         clearable
-      />
-      <v-select
+        data-test="input-app-name"
+        />
+        <v-select
         v-model="form.type"
         :items="['NodePort', 'ClusterIP', 'LoadBalancer']"
-        :rules="[rules.required]"
+        :rules="[rules.required, rules.portType]"
         variant="underlined"
         label="서비스 타입"
         color="primary"
-        clearable
+        data-test="input-svc-type"
       />
       
       <v-card-subtitle>
@@ -144,4 +146,7 @@ const submitForm = () => {
   });
 }
 
+defineExpose({
+  form, valid, addPort
+})
 </script>
