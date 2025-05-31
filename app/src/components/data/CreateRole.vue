@@ -18,13 +18,15 @@
         label="생성할 역할 이름"
         color="primary"
         clearable
-      />
-      <v-text-field
+        data-test="input-role-name"
+        />
+        <v-text-field
         v-model="form.description"
         variant="underlined"
         label="역할 설명"
         color="primary"
         clearable
+        data-test="input-role-desc"
       />
       <v-spacer class="pt-5"/>
       <v-card-title>
@@ -81,5 +83,9 @@ const submitForm = async () => {
     })
   })
 }
+
+defineExpose({
+  form, valid, perms
+});
 
 </script>
