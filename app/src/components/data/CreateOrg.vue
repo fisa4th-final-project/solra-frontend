@@ -14,6 +14,7 @@
         label="생성할 조직 이름"
         color="primary"
         clearable
+        data-test="input-org-name"
       />
       <v-btn
         class="mt-4"
@@ -46,4 +47,7 @@ const submitForm = () => {
   });
 }
 
+defineExpose({
+  form, valid
+})
 </script>
