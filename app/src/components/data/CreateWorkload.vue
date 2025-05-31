@@ -81,4 +81,8 @@ const submitForm = async () => {
   await $createDeployRef.value.submitDeploy();
 }
 
+defineExpose({
+  valid
+})
+
 </script>
