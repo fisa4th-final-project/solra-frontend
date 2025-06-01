@@ -50,6 +50,7 @@
               size="small"
               variant="outlined"
               @click="toggleGroup(item)" 
+              data-test="btn-expend-item"
             ></v-btn>
 
           </div>
