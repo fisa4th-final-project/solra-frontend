@@ -1,6 +1,5 @@
 import { mount } from '@vue/test-utils'
 import { describe, expect, it } from 'vitest'
-import { nextTick } from 'vue';
 import CreateSvcInWorkload from '@/components/data/CreateSvcInWorkload.vue';
 
 const createSvcInWorkloadWrapper = () => {
@@ -11,6 +10,7 @@ const createSvcInWorkloadWrapper = () => {
     }
   });
 }
+
 describe('CreateSvcInWorkload.vue', () => {
 
   it('TC_VUE_SVC_02_01: 입력 form 렌더링 성공', async () => {
