@@ -33,7 +33,7 @@
 import { ref } from 'vue';
 import SideContents from '@/components/layout/SideContents.vue';
 import { rules } from '@/lib/global/inputRules';
-import { createOrgApi } from '@/lib/api/org/createOrgApi';
+import { apiHandler } from '@/lib/global/apiManager';
 
 const valid = ref(false)
 
@@ -42,7 +42,7 @@ const form = ref({
 })
 
 const submitForm = () => {
-  createOrgApi({
+  apiHandler.createOrgApi({
     orgName: form.value.orgName
   });
 }

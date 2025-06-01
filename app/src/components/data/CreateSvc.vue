@@ -93,9 +93,9 @@
 import { ref } from 'vue'
 import SideContents from '@/components/layout/SideContents.vue';
 import { rules } from '@/lib/global/inputRules';
-import { createSvcApi } from '@/lib/api/svc/createSvcApi';
 import SelectClusterList from '@/components/data/SelectClusterList.vue';
 import SelectNSList from '@/components/data/SelectNSList.vue';
+import { apiHandler } from '@/lib/global/apiManager';
 
 const props = defineProps<{
   clusterId: number;
@@ -139,7 +139,7 @@ const removePort = (index: number) => {
 }
 
 const submitForm = () => {
-  createSvcApi({
+  apiHandler.createSvcApi({
     clusterId: props.clusterId,
     nsName: props.nsName,
     ...form.value

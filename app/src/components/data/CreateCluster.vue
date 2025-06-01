@@ -76,9 +76,7 @@ import { ref } from 'vue'
 
 import SideContents from '@/components/layout/SideContents.vue';
 import SelectOrgList from '@/components/data/SelectOrgList.vue';
-
-import { createClusterApi } from '@/lib/api/cluster/createClusterApi';
-
+import { apiHandler } from '@/lib/global/apiManager';
 import { rules } from '@/lib/global/inputRules';
 
 const valid = ref(false)
@@ -98,7 +96,7 @@ interface ClusterRef {
 const form = ref<ClusterRef>({} as ClusterRef);
 
 const submitForm = () => {
-  createClusterApi({
+  apiHandler.createClusterApi({
     orgId: form.value.org.orgId,
     name: form.value.name,
     env: form.value.env,

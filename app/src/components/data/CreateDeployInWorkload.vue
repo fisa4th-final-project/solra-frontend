@@ -36,7 +36,7 @@
 
 import { ref } from 'vue'
 import { rules } from '@/lib/global/inputRules';
-import { createDeployApi } from '@/lib/api/deploy/createDeployApi';
+import { apiHandler } from '@/lib/global/apiManager';
 
 const props = defineProps<{
   clusterId: number;
@@ -57,7 +57,7 @@ const form = ref({
 });
 
 const submitDeploy = () => {
-  createDeployApi({
+  apiHandler.createDeployApi({
     clusterId: props.clusterId,
     nsName: props.nsName,
     name: form.value.name,

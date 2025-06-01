@@ -14,8 +14,8 @@
 <script lang="ts" setup>
 
 import { onMounted, ref } from 'vue';
-import { getClusterListApi } from '@/lib/api/cluster/getClusterListApi';
 import { rules } from '@/lib/global/inputRules';
+import { apiHandler } from '@/lib/global/apiManager';
 
 defineProps<{
   form: {
@@ -32,7 +32,7 @@ const clusterList = ref<{
 }[]>();
 
 onMounted(async () => {
-  await getClusterListApi().then((res) => {
+  await apiHandler.getClusterListApi().then((res) => {
     if (res) clusterList.value = res;
   });
 });

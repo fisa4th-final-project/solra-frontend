@@ -26,7 +26,7 @@
 
 import DataCard from '@/components/common/DataCard.vue';
 import type { GetDeployDetailRequestParam } from '@/lib/api/deploy/deployDto';
-import { getDeployDetailApi } from '@/lib/api/deploy/getDeployDetail.Api';
+import { apiHandler } from '@/lib/global/apiManager';
 
 defineProps<{
   title: string;
@@ -34,7 +34,7 @@ defineProps<{
 }>();
 
 const dataHandler = async (req: GetDeployDetailRequestParam) => {
-  if (req.clusterId && req.nsName && req.deployName) return await getDeployDetailApi(req);
+  if (req.clusterId && req.nsName && req.deployName) return await apiHandler.getDeployDetailApi(req);
 };
 
 </script>

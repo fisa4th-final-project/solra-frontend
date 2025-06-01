@@ -23,9 +23,7 @@
 
 import { onMounted, ref, watch } from 'vue';
 import { rules } from '@/lib/global/inputRules';
-import { getRoleDetailApi } from '@/lib/api/role/getRoleDetailApi';
-import { updateRoleApi } from '@/lib/api/role/updateRoleApi';
-
+import { apiHandler } from '@/lib/global/apiManager';
 
 const props = defineProps<{
   roleId: number;
@@ -38,14 +36,14 @@ const form = ref({
 })
 
 const submitForm = () => {
-  updateRoleApi({
+  apiHandler.updateRoleApi({
     roleId: props.roleId,
     description: form.value.description
   });
 }
 
 const getRoleDetail = () => {
-  getRoleDetailApi({
+  apiHandler.getRoleDetailApi({
     roleId: props.roleId
   }).then((res) => {
     if (!res) return;

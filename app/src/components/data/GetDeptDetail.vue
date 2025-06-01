@@ -24,8 +24,8 @@
 <script lang="ts" setup>
 
 import DataCard from '@/components/common/DataCard.vue';
-import { getDeptDetailApi } from '@/lib/api/dept/getDeptDetailApi';
 import type { GetDeptDetailRequestParam } from '@/lib/api/dept/deptDto';
+import { apiHandler } from '@/lib/global/apiManager';
 
 defineProps<{
   title: string;
@@ -33,7 +33,7 @@ defineProps<{
 }>();
 
 const dataHandler = async (req: GetDeptDetailRequestParam) => {
-  if (req.deptId) return await getDeptDetailApi(req);
+  if (req.deptId) return await apiHandler.getDeptDetailApi(req);
 };
 
 </script>

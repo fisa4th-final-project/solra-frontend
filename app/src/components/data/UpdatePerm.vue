@@ -39,8 +39,8 @@
 import { ref } from 'vue';
 import SideContents from '@/components/layout/SideContents.vue';
 import { rules } from '@/lib/global/inputRules';
-import { updatePermApi } from '@/lib/api/perm/updatePermApi';
 import DeletePerm from '@/components/data/DeletePerm.vue';
+import { apiHandler } from '@/lib/global/apiManager';
 
 const props = defineProps<{
   permId: number;
@@ -54,7 +54,7 @@ const form = ref({
 })
 
 const submitForm = () => {
-  updatePermApi({
+  apiHandler.updatePermApi({
     permId: props.permId,
     description: form.value.description
   });

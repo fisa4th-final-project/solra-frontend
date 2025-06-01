@@ -35,7 +35,7 @@
   import SelectOrgList from '@/components/data/SelectOrgList.vue';
   import SideContents from '@/components/layout/SideContents.vue';
   import { rules } from '@/lib/global/inputRules';
-  import { createDeptApi } from '@/lib/api/dept/createDeptApi';
+import { apiHandler } from '@/lib/global/apiManager';
 
   const valid = ref(false)
 
@@ -48,7 +48,7 @@
   })
 
   const submitForm = async () => {
-    await createDeptApi({
+    await apiHandler.createDeptApi({
       organizationId: form.value.org.orgId,
       deptName: form.value.deptName
     });

@@ -23,7 +23,7 @@
 
 import { ref } from 'vue';
 import { rules } from '@/lib/global/inputRules';
-import { updatePermApi } from '@/lib/api/perm/updatePermApi';
+import { apiHandler } from '@/lib/global/apiManager';
 
 const props = defineProps<{
   permId: number;
@@ -36,7 +36,7 @@ const form = ref({
 })
 
 const submitForm = () => {
-  updatePermApi({
+  apiHandler.updatePermApi({
     permId: props.permId,
     description: form.value.description
   });

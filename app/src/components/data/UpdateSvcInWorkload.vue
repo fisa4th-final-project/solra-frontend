@@ -66,8 +66,7 @@
 
 import { onMounted, ref, watch } from 'vue';
 import { rules } from '@/lib/global/inputRules';
-import { updateSvcApi } from '@/lib/api/svc/updateSvcApi';
-import { getSvcDetailApi } from '@/lib/api/svc/getSvcDetailApi';
+import { apiHandler } from '@/lib/global/apiManager';
 
 const props = defineProps<{
   clusterId: number;
@@ -99,7 +98,7 @@ const form = ref<Form>({
 });
 
 const submitForm = () => {
-  updateSvcApi({
+  apiHandler.updateSvcApi({
     clusterId: props.clusterId,
     nsName: props.nsName,
     name: props.name,
@@ -120,7 +119,7 @@ const removePort = (index: number) => {
 }
 
 const getSvcDetail = () => {
-  getSvcDetailApi({
+  apiHandler.getSvcDetailApi({
     clusterId: props.clusterId,
     nsName: props.nsName,
     name: props.name

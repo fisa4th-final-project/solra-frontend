@@ -67,7 +67,7 @@ import SideContents from '@/components/layout/SideContents.vue';
 import SelectOrgList from '@/components/data/SelectOrgList.vue';
 import SelectDeptList from '@/components/data/SelectDeptList.vue';
 import { rules } from '@/lib/global/inputRules';
-import { createUserApi } from '@/lib/api/user/createUserApi';
+import { apiHandler } from '@/lib/global/apiManager';
 
 const valid = ref(false)
 
@@ -87,7 +87,7 @@ const form = ref({
 })
 
 const submitForm = () => {
-  createUserApi({
+  apiHandler.createUserApi({
     userLoginId: form.value.userLoginId ,
     password: form.value.password ,
     userName: form.value.userName ,

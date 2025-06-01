@@ -69,7 +69,7 @@
 import { ref } from 'vue'
 import { rules } from '@/lib/global/inputRules';
 import SideContents from '@/components/layout/SideContents.vue';
-import { createDeployApi } from '@/lib/api/deploy/createDeployApi';
+import { apiHandler } from '@/lib/global/apiManager';
 import SelectClusterList from '@/components/data/SelectClusterList.vue';
 import SelectNSList from '@/components/data/SelectNSList.vue';
 
@@ -90,7 +90,7 @@ const form = ref({
 });
 
 const submitForm = () => {
-  createDeployApi({
+  apiHandler.createDeployApi({
     clusterId: form.value.cluster.clusterId,
     nsName: form.value.ns.name,
     name: form.value.name,

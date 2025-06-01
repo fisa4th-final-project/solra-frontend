@@ -19,7 +19,7 @@
       >취소</v-btn>
       <v-btn
         color="red"
-        @click="deleteNSApi({clusterId, name})"
+        @click="apiHandler.deleteNSApi({clusterId, name})"
       >삭제</v-btn>
     </template>
   </Dialog>
@@ -27,8 +27,7 @@
 <script lang="ts" setup>
 
   import Dialog from '@/components/common/Dialog.vue';
-  import { deleteNSApi } from '@/lib/api/ns/deleteNSApi';
-  
+import { apiHandler } from '@/lib/global/apiManager';
   import { useDialogStore } from '@/store/dialog';
 
   defineProps<{

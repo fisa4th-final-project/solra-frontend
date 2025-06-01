@@ -22,7 +22,7 @@
       >취소</v-btn>
       <v-btn
         color="red"
-        @click="deleteOrgApi({orgId: org.orgId})"
+        @click="apiHandler.deleteOrgApi({orgId: org.orgId})"
       >삭제</v-btn>
     </template>
   </Dialog>
@@ -31,7 +31,7 @@
 
 import Dialog from '@/components/common/Dialog.vue';
 import { useDialogStore } from '@/store/dialog';
-import { deleteOrgApi } from '@/lib/api/org/deleteOrgApi';
+import { apiHandler } from '@/lib/global/apiManager';
 
 defineProps<{
   org: {

@@ -15,7 +15,7 @@
 
 import DataCardList from '@/components/common/DataCardList.vue';
 import type { GetClusterListRequestParam, GetClusterListResponseDto } from '@/lib/api/cluster/clusterDto';
-import { getClusterListApi } from '@/lib/api/cluster/getClusterListApi';
+import { apiHandler } from '@/lib/global/apiManager';
 
 defineProps<{
   req: GetClusterListRequestParam;
@@ -35,7 +35,7 @@ const isEmpty = (item: boolean) => {
 }
 
 const dataHandler = async (req: GetClusterListRequestParam) => {
-  return await getClusterListApi(req);
+  return await apiHandler.getClusterListApi(req);
 };
 
 </script>

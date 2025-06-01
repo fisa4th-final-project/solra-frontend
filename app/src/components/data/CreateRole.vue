@@ -52,8 +52,7 @@ import { ref } from 'vue'
 import SideContents from '@/components/layout/SideContents.vue';
 import GetPermList from '@/components/data/GetPermList.vue';
 import { rules } from '@/lib/global/inputRules';
-import { createRoleApi } from '@/lib/api/role/createRoleApi';
-import { createRolePermApi } from '@/lib/api/rolePerm/createRolePermApi';
+import { apiHandler } from '@/lib/global/apiManager';
 
 const valid = ref(false);
 
@@ -70,13 +69,13 @@ const perms = ref<{
 
 // TODO: 권한 별 요청이 아닌 1회 요청 시 권한 리스트를 전송 하게 로직 수정
 const submitForm = async () => {
-  createRoleApi({
+  apiHandler.createRoleApi({
     roleName: form.value.roleName,
     description: form.value.description
   }).then((res) => {
     if (!res) return
     perms.value?.forEach( async (perm) => {
-      await createRolePermApi({
+      await apiHandler.createRolePermApi({
         roleId: res.roleId,
         permissionId: perm.permissionId
       });

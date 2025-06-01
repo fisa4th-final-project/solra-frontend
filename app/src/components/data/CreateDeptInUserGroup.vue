@@ -24,7 +24,7 @@
   
   import { ref } from 'vue'
   import { rules } from '@/lib/global/inputRules';
-  import { createDeptApi } from '@/lib/api/dept/createDeptApi';
+import { apiHandler } from '@/lib/global/apiManager';
 
   const valid = ref(false)
 
@@ -42,7 +42,7 @@
   })
 
   const submitForm = async () => {
-    await createDeptApi({
+    await apiHandler.createDeptApi({
       organizationId: props.org.orgId,
       deptName: form.value.dept.deptName
     });

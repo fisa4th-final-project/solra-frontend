@@ -80,12 +80,11 @@
 
 import DataCardList from '@/components/common/DataCardList.vue';
 import type { GetPodListRequestParam, GetPodListResponseDto } from '@/lib/api/pod/podDto';
-import { getSvcListApi } from '@/lib/api/svc/getSvcListApi';
-import { getDeployListApi } from '@/lib/api/deploy/getDeployListApi';
 import { buildWorkloadStructure } from '@/lib/global/workloadBuilder';
 import { ref } from 'vue';
 import DataCard from '@/components/common/DataCard.vue';
 import UpdateWorkload from '@/components/data/UpdateWorkload.vue';
+import { apiHandler } from '@/lib/global/apiManager';
 
 defineProps<{
   req: GetPodListRequestParam
@@ -108,8 +107,8 @@ const selectedItem = ref();
 
 const dataHandler = async (req: GetPodListRequestParam) => {
   // const podList = await getPodListApi(req);
-  const svcList = await getSvcListApi(req);
-  const deployList = await getDeployListApi(req);
+  const svcList = await apiHandler.getSvcListApi(req);
+  const deployList = await apiHandler.getDeployListApi(req);
 
   return buildWorkloadStructure({
     svcList: svcList, deployList: deployList

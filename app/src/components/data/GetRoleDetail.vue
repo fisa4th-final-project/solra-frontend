@@ -7,15 +7,15 @@
 <script lang="ts" setup>
 
 import type { GetRoleDetailRequestParam, GetRoleListResponseDto } from '@/lib/api/role/roleDto';
-import { getRoleDetailApi } from '@/lib/api/role/getRoleDetailApi';
 import DataCard from '@/components/common/DataCard.vue';
-
+import { apiHandler } from '@/lib/global/apiManager';
+apiHandler
   defineProps<{
     req: GetRoleDetailRequestParam
   }>();
 
   const dataHandler = async (req: GetRoleListResponseDto) => {
-    const items = await getRoleDetailApi(req);
+    const items = await apiHandler.getRoleDetailApi(req);
     return {'Role Name': items?.roleName, 'Description': items?.description}
   }
 

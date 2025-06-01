@@ -12,9 +12,8 @@
 </template>
 <script lang="ts" setup>
 
-  import { onMounted, ref, watch } from 'vue';
-
-  import { getDeptListApi } from '@/lib/api/dept/getDeptListApi';
+  import { apiHandler } from '@/lib/global/apiManager';
+import { onMounted, ref, watch } from 'vue';
 
   const depts = ref<{
     deptId: number;
@@ -32,7 +31,7 @@
   }>();
 
   const getDepts = () => {
-    getDeptListApi({
+    apiHandler.getDeptListApi({
       org_id: props.orgId
     }).then((res) => {
       if (!res) return;

@@ -21,7 +21,7 @@
       >취소</v-btn>
       <v-btn
         color="red"
-        @click="deleteUserApi({userId: user.userId})"
+        @click="apiHandler.deleteUserApi({userId: user.userId})"
       >삭제</v-btn>
     </template>
   </Dialog>
@@ -29,10 +29,8 @@
 <script lang="ts" setup>
 
   import Dialog from '@/components/common/Dialog.vue';
-  
+import { apiHandler } from '@/lib/global/apiManager';
   import { useDialogStore } from '@/store/dialog';
-
-  import { deleteUserApi } from '@/lib/api/user/deleteUserApi';
 
   defineProps<{
     user: {

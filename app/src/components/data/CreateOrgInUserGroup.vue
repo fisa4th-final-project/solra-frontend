@@ -60,8 +60,8 @@
 
 import { ref, watch } from 'vue';
 import { rules } from '@/lib/global/inputRules';
-import { createOrgApi } from '@/lib/api/org/createOrgApi';
 import SelectOrgList from '@/components/data/SelectOrgList.vue';
+import { apiHandler } from '@/lib/global/apiManager';
 
 const valid = ref(false);
 
@@ -85,7 +85,7 @@ const isCreateOrg = ref();
 
 const createOrg = async () => {
   if (isCreateOrg) {
-    const res = await createOrgApi({
+    const res = await apiHandler.createOrgApi({
       orgName: form.value.org.orgName
     });
     if (!res) return

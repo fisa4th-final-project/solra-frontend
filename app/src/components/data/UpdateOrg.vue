@@ -39,10 +39,9 @@
 import { onMounted, ref, watch } from 'vue';
 import SideContents from '@/components/layout/SideContents.vue';
 import { rules } from '@/lib/global/inputRules';
-import { updateOrgApi } from '@/lib/api/org/updateOrgApi';
-import { getOrgDetailApi } from '@/lib/api/org/getOrgDetailApi';
 import DeleteOrg from '@/components/data/DeleteOrg.vue';
 import type { GetOrgDetailResponseDto } from '@/lib/api/org/orgDto';
+import { apiHandler } from '@/lib/global/apiManager';
 
 const props = defineProps<{
   orgId: number;
@@ -57,14 +56,14 @@ const form = ref({
 })
 
 const submitForm = () => {
-  updateOrgApi({
+  apiHandler.updateOrgApi({
     orgId: props.orgId,
     orgName: form.value.orgName
   });
 }
 
 const getOrgDetail = () => {
-  getOrgDetailApi({
+  apiHandler.getOrgDetailApi({
     orgId: props.orgId
   }).then((res) => {
     if (!res) return;

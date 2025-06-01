@@ -23,8 +23,7 @@
 
 import { onMounted, ref, watch } from 'vue';
 import { rules } from '@/lib/global/inputRules';
-import { updateDeployApi } from '@/lib/api/deploy/updateDeployApi';
-import { getDeployDetailApi } from '@/lib/api/deploy/getDeployDetail.Api';
+import { apiHandler } from '@/lib/global/apiManager';
 
 const props = defineProps<{
   clusterId: number;
@@ -41,7 +40,7 @@ interface Form {
 const form = ref<Form>({} as Form);
 
 const submitForm = () => {
-  updateDeployApi({
+  apiHandler.updateDeployApi({
     clusterId: props.clusterId,
     nsName: props.nsName,
     name: props.name,
@@ -50,7 +49,7 @@ const submitForm = () => {
 }
 
 const getDeployDetail = () => {
-  getDeployDetailApi({
+  apiHandler.getDeployDetailApi({
     clusterId: props.clusterId,
     nsName: props.nsName,
     deployName: props.name

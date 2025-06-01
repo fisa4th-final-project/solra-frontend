@@ -64,8 +64,7 @@
 import { onMounted, ref, watch } from 'vue';
 import SideContents from '@/components/layout/SideContents.vue';
 import { rules } from '@/lib/global/inputRules';
-import { getClusterDetailApi } from '@/lib/api/cluster/getClusterDetailApi';
-import { updateClusterApi } from '@/lib/api/cluster/updateClusterApi';
+import { apiHandler } from '@/lib/global/apiManager';
 
 const props = defineProps<{
   clusterId: number;
@@ -83,7 +82,7 @@ interface Form {
 const form = ref<Form>({} as Form);
 
 const submitForm = () => {
-  updateClusterApi({
+  apiHandler.updateClusterApi({
     clusterId: props.clusterId,
     name: form.value.name,
     env: form.value.env,
@@ -94,7 +93,7 @@ const submitForm = () => {
 }
 
 const getClusterDetail = () => {
-  getClusterDetailApi({
+  apiHandler.getClusterDetailApi({
     clusterId: props.clusterId
   }).then((res) => {
     if (!res) return;
