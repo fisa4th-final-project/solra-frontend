@@ -2,6 +2,7 @@ import { mount } from '@vue/test-utils'
 import { describe, expect, it } from 'vitest'
 import { nextTick } from 'vue';
 import CreateUserGroup from '@/components/data/CreateUserGroup.vue';
+import Form from '@/__mocks__/common/Form.vue';
 
 describe('CreateUserGroup.vue', () => {
 
@@ -11,7 +12,13 @@ describe('CreateUserGroup.vue', () => {
     document.body.appendChild(el)
 
     const wrapper = mount(CreateUserGroup, {
-      attachTo: el // Teleport가 실제 DOM에 붙도록 설정
+      attachTo: el, // Teleport가 실제 DOM에 붙도록 설정
+      global: {
+        stubs: {
+          CreateOrgInUserGroup: Form,
+          CreateDeptInUserGroup: Form,
+        }
+      }
     });
 
     await wrapper.find('button').trigger('click');

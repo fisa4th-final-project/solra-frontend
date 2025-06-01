@@ -10,7 +10,7 @@ const createRoleWrapper = () => {
     global: {
       stubs: {
         SideContents: SideContents,
-        GetroleList: Form
+        GetPermList: Form
       }
     }
   });
@@ -23,7 +23,12 @@ describe('CreateRole.vue', () => {
     document.body.appendChild(el)
 
     const wrapper = mount(CreateRole, {
-      attachTo: el // Teleport가 실제 DOM에 붙도록 설정
+      attachTo: el, // Teleport가 실제 DOM에 붙도록 설정
+      global: {
+        stubs: {
+          GetPermList: Form
+        }
+      }
     });
 
     await wrapper.find('button').trigger('click');

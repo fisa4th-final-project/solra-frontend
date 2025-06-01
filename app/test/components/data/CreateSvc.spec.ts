@@ -3,12 +3,15 @@ import { describe, expect, it } from 'vitest'
 import { nextTick } from 'vue';
 import SideContents from '@/__mocks__/layout/SideContents.vue';
 import CreateSvc from '@/components/data/CreateSvc.vue';
+import Form from '@/__mocks__/common/Form.vue';
 
 const createSvcWrapper = () => {
   return mount(CreateSvc, {
     global: {
       stubs: {
         SideContents: SideContents,
+        SelectClusterList: Form,
+        SelectNSList: Form
       }
     },
     props: {
@@ -25,7 +28,13 @@ describe('CreateSvc.vue', () => {
     document.body.appendChild(el)
 
     const wrapper = mount(CreateSvc, {
-      attachTo: el // Teleport가 실제 DOM에 붙도록 설정
+      attachTo: el, // Teleport가 실제 DOM에 붙도록 설정
+      global: {
+        stubs: {
+          SelectClusterList: Form,
+          SelectNSList: Form
+        }
+      },
     });
 
     await wrapper.find('button').trigger('click');

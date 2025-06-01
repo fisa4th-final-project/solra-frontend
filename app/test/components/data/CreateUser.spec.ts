@@ -24,7 +24,13 @@ describe('CreateUser.vue', () => {
     document.body.appendChild(el)
 
     const wrapper = mount(CreateUser, {
-      attachTo: el // Teleport가 실제 DOM에 붙도록 설정
+      attachTo: el, // Teleport가 실제 DOM에 붙도록 설정
+      global: {
+        stubs: {
+          SelectOrgList: Form,
+          SelectDeptList: Form
+        }
+      }
     });
 
     await wrapper.find('button').trigger('click');
@@ -107,7 +113,7 @@ describe('CreateUser.vue', () => {
       await flushPromises();
       await nextTick();
       expect(wrapper.vm.valid).toBe(false);
-      
+
     });
   });
 
