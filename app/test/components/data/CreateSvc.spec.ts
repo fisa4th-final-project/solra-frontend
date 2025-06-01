@@ -35,6 +35,10 @@ describe('CreateSvc.vue', () => {
           SelectNSList: Form
         }
       },
+      props: {
+        clusterId: 1,
+        nsName: 'test-nsName'
+      }
     });
 
     await wrapper.find('button').trigger('click');
