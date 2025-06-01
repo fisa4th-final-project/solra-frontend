@@ -4,15 +4,7 @@
     :api="{req, dataHandler}"
   >
     <template v-slot:item="{ item }">
-      <tr v-if="item.field === 'caCert' || item.field === 'saToken'">
-        <th>
-          {{ item.field }}
-        </th>
-        <td class="text-right">
-          ••••••••••••
-        </td>
-      </tr>
-      <tr v-else>
+      <tr>
         <th>{{ item.field }}</th>
         <td class="text-right">{{ item.value }}</td>
       </tr>
