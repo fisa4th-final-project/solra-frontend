@@ -15,7 +15,7 @@
 
 import DataCard from '@/components/common/DataCard.vue';
 import type { GetPodDetailRequestParam } from '@/lib/api/pod/podDto';
-import { getPodDetailApi } from '@/lib/api/pod/getPodDetail.Api';
+import { getPodDetailApi } from '@/lib/api/pod/getPodDetailApi';
 
 defineProps<{
   title: string;

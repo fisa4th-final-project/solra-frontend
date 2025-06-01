@@ -15,7 +15,7 @@
 
 import DataCard from '@/components/common/DataCard.vue';
 import type { GetSvcDetailRequestParam } from '@/lib/api/svc/svcDto';
-import { getSvcDetailApi } from '@/lib/api/svc/getSvcDetail.Api';
+import { getSvcDetailApi } from '@/lib/api/svc/getSvcDetailApi';
 
 defineProps<{
   title: string;

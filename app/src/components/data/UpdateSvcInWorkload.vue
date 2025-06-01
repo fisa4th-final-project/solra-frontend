@@ -67,7 +67,7 @@
 import { onMounted, ref, watch } from 'vue';
 import { rules } from '@/lib/global/inputRules';
 import { updateSvcApi } from '@/lib/api/svc/updateSvcApi';
-import { getSvcDetailApi } from '@/lib/api/svc/getSvcDetail.Api';
+import { getSvcDetailApi } from '@/lib/api/svc/getSvcDetailApi';
 
 const props = defineProps<{
   clusterId: number;
