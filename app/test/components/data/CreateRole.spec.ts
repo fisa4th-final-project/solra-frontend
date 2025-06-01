@@ -3,14 +3,14 @@ import { describe, expect, it } from 'vitest'
 import { nextTick } from 'vue';
 import SideContents from '@/__mocks__/layout/SideContents.vue';
 import CreateRole from '@/components/data/CreateRole.vue';
-import Form from '@/__mocks__/common/Form.vue';
+import Content from '@/__mocks__/common/Content.vue';
 
 const createRoleWrapper = () => {
   return mount(CreateRole, {
     global: {
       stubs: {
         SideContents: SideContents,
-        GetPermList: Form
+        GetPermList: Content
       }
     }
   });
@@ -26,7 +26,7 @@ describe('CreateRole.vue', () => {
       attachTo: el, // Teleport가 실제 DOM에 붙도록 설정
       global: {
         stubs: {
-          GetPermList: Form
+          GetPermList: Content
         }
       }
     });
