@@ -2,6 +2,7 @@ import { mount, flushPromises } from '@vue/test-utils'
 import { describe, it, vi, expect } from 'vitest'
 import GetDeptList from '@/components/data/GetDeptList.vue'
 import * as apiHandler from '@/lib/api/dept/getDeptListApi';
+import { nextTick } from 'vue';
 
 const getDeptListWrapper = () => {
   return mount(GetDeptList, {
@@ -30,7 +31,7 @@ describe('GetDeptList.vue', () => {
 
   it('TC_VUE_DEPT_04_01: skeleton 표시 후 label 정상 렌더링', async () => {
     // skeleton을 테스트하기 위한 mock 구현
-    vi.spyOn(apiHandler, 'getDeptListApi').mockImplementation(() => {
+    const spy = vi.spyOn(apiHandler, 'getDeptListApi').mockImplementation(() => {
       return new Promise(resolve => {
         setTimeout(() => {
           resolve(mockResponse);
@@ -39,6 +40,7 @@ describe('GetDeptList.vue', () => {
     });
 
     const wrapper = getDeptListWrapper();
+    expect(spy).toHaveBeenCalled();
 
     const skeletonLabel = '정보를 불러올 수 없습니다.'
     // skeleton 표시 확인 (응답 오기 전)
@@ -46,18 +48,23 @@ describe('GetDeptList.vue', () => {
 
     // API 응답 처리 완료 대기
     await flushPromises();
-
+    await nextTick();
+    
+    await new Promise(resolve => setTimeout(resolve, 100)); // 100ms 대기
+    
     // skeleton 사라지고 label 확인
-    const labels = Object.keys(mockResponse);
+    const labels = mockResponse.flatMap((obj) => Object.values(obj));
     labels.forEach(label => {
       expect(wrapper.html()).toContain(label);
     });
 
     wrapper.unmount();
   });
+
+
   it('TC_VUE_DEPT_04_02: 빈 List 응답 시 skeleton 렌더링 여부', async () => {
     // skeleton을 테스트하기 위한 mock 구현
-    vi.spyOn(apiHandler, 'getDeptListApi').mockImplementation(() => {
+    const spy = vi.spyOn(apiHandler, 'getDeptListApi').mockImplementation(() => {
       return new Promise(resolve => {
         setTimeout(() => {
           resolve([]);
@@ -67,6 +74,8 @@ describe('GetDeptList.vue', () => {
 
     const wrapper = getDeptListWrapper();
     
+    expect(spy).toHaveBeenCalled();
+
     // API 응답 처리 완료 대기
     await flushPromises();
     

@@ -2,6 +2,7 @@ import { mount, flushPromises } from '@vue/test-utils'
 import { describe, it, vi, expect } from 'vitest'
 import GetDeptDetail from '@/components/data/GetDeptDetail.vue'
 import * as apiHandler from '@/lib/api/dept/getDeptDetailApi'
+import { nextTick } from 'vue';
 
 const getDeptDetailWrapper = () => {
   return mount(GetDeptDetail, {
@@ -24,7 +25,7 @@ describe('GetDeptDetail.vue', () => {
 
   it('TC_VUE_DEPT_03_01: skeleton 표시 후 label 정상 렌더링', async () => {
     // skeleton을 테스트하기 위한 mock 구현
-    vi.spyOn(apiHandler, 'getDeptDetailApi').mockImplementation(() => {
+    const spy = vi.spyOn(apiHandler, 'getDeptDetailApi').mockImplementation(() => {
       return new Promise(resolve => {
         setTimeout(() => {
           resolve(mockResponse);
@@ -34,14 +35,19 @@ describe('GetDeptDetail.vue', () => {
 
     const wrapper = getDeptDetailWrapper();
 
+    expect(spy).toHaveBeenCalled();
+
     // skeleton 표시 확인 (응답 오기 전)
     expect(wrapper.findComponent({ name: 'VProgressCircular' }).exists()).toBe(true);
 
     // API 응답 처리 완료 대기
     await flushPromises();
+    await nextTick();
+
+    await new Promise(resolve => setTimeout(resolve, 100)); // 100ms 대기
 
     // skeleton 사라지고 label 확인
-    const labels = Object.keys(mockResponse);
+    const labels = Object.values(mockResponse);
     labels.forEach(label => {
       expect(wrapper.html()).toContain(label);
     });

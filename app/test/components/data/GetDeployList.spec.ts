@@ -2,6 +2,7 @@ import { mount, flushPromises } from '@vue/test-utils'
 import { describe, it, vi, expect } from 'vitest'
 import GetDeployList from '@/components/data/GetDeployList.vue'
 import * as apiHandler from '@/lib/api/deploy/getDeployListApi';
+import { nextTick } from 'vue';
 
 const getDeployListWrapper = () => {
   return mount(GetDeployList, {
@@ -39,7 +40,7 @@ describe('GetDeployList.vue', () => {
 
   it('TC_VUE_DEPLOY_04_01: skeleton 표시 후 label 정상 렌더링', async () => {
     // skeleton을 테스트하기 위한 mock 구현
-    vi.spyOn(apiHandler, 'getDeployListApi').mockImplementation(() => {
+    const spy = vi.spyOn(apiHandler, 'getDeployListApi').mockImplementation(() => {
       return new Promise(resolve => {
         setTimeout(() => {
           resolve(mockResponse);
@@ -48,6 +49,7 @@ describe('GetDeployList.vue', () => {
     });
 
     const wrapper = getDeployListWrapper();
+    expect(spy).toHaveBeenCalled();
 
     const skeletonLabel = '정보를 불러올 수 없습니다.'
     // skeleton 표시 확인 (응답 오기 전)
@@ -55,9 +57,12 @@ describe('GetDeployList.vue', () => {
 
     // API 응답 처리 완료 대기
     await flushPromises();
+    await nextTick();
+    
+    await new Promise(resolve => setTimeout(resolve, 100)); // 100ms 대기 
 
     // skeleton 사라지고 label 확인
-    const labels = Object.keys(mockResponse);
+    const labels = mockResponse.flatMap((obj) => obj.name || obj.images);
     labels.forEach(label => {
       expect(wrapper.html()).toContain(label);
     });
@@ -66,7 +71,7 @@ describe('GetDeployList.vue', () => {
   });
   it('TC_VUE_DEPLOY_04_02: 빈 List 응답 시 skeleton 렌더링 여부', async () => {
     // skeleton을 테스트하기 위한 mock 구현
-    vi.spyOn(apiHandler, 'getDeployListApi').mockImplementation(() => {
+    const spy = vi.spyOn(apiHandler, 'getDeployListApi').mockImplementation(() => {
       return new Promise(resolve => {
         setTimeout(() => {
           resolve([]);
@@ -76,6 +81,8 @@ describe('GetDeployList.vue', () => {
 
     const wrapper = getDeployListWrapper();
     
+    expect(spy).toHaveBeenCalled();
+
     // API 응답 처리 완료 대기
     await flushPromises();
     
