@@ -1,0 +1,54 @@
+import { mount, flushPromises } from '@vue/test-utils'
+import { describe, it, vi, expect } from 'vitest'
+import GetNSDetail from '@/components/data/GetNSDetail.vue'
+import * as apiHandler from '@/lib/api/ns/getNSDetail.Api'
+
+const getNSDetailWrapper = () => {
+  return mount(GetNSDetail, {
+    props: {
+      title: 'test-ns-detail-title',
+      req: {
+        clusterId: 1,
+        name: 'test-nsName'
+      }
+    }
+  });
+};
+
+describe('GetNSDetail.vue', () => {
+
+  const mockResponse = {
+    name: 'test-ns-name',
+    status: 'test-ns-status',
+    labels: {},
+    annotations: {},
+    createdAt: new Date('2025-05-19')
+  };
+
+  it('TC_VUE_NS_03_01: skeleton 표시 후 label 정상 렌더링', async () => {
+    // skeleton을 테스트하기 위한 mock 구현
+    vi.spyOn(apiHandler, 'getNSDetailApi').mockImplementation(() => {
+      return new Promise(resolve => {
+        setTimeout(() => {
+          resolve(mockResponse);
+        }, 10); // 10ms 지연
+      });
+    });
+
+    const wrapper = getNSDetailWrapper();
+
+    // skeleton 표시 확인 (응답 오기 전)
+    expect(wrapper.findComponent({ name: 'VProgressCircular' }).exists()).toBe(true);
+
+    // API 응답 처리 완료 대기
+    await flushPromises();
+
+    // skeleton 사라지고 label 확인
+    const labels = Object.keys(mockResponse);
+    labels.forEach(label => {
+      expect(wrapper.html()).toContain(label);
+    });
+
+    wrapper.unmount();
+  });
+});
