@@ -34,4 +34,7 @@ import { apiHandler } from '@/lib/global/apiManager';
     });
   });
 
+  defineExpose({
+    orgs
+  })
 </script>
