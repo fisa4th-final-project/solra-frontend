@@ -32,9 +32,12 @@ const clusterList = ref<{
 }[]>();
 
 onMounted(async () => {
-  await apiHandler.getClusterListApi().then((res) => {
-    if (res) clusterList.value = res;
-  });
+  const res = await apiHandler.getClusterListApi();
+  if (res) clusterList.value = res;
+});
+
+defineExpose({
+  clusterList
 });
 
 </script>
