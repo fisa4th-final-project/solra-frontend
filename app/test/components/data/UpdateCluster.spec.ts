@@ -3,7 +3,6 @@ import { describe, it, vi, expect } from 'vitest'
 import UpdateCluster from '@/components/data/UpdateCluster.vue'
 import { apiHandler } from '@/lib/global/apiManager'
 import { nextTick } from 'vue';
-import { VTextField } from 'vuetify/components';
 
 const updateClusterWrapper = (el?: HTMLDivElement) => {
   return mount(UpdateCluster, {
