@@ -44,6 +44,10 @@ onMounted(() => {
 
 watch(() => props.form.cluster.clusterId, () => {
   loadData();
+});
+
+defineExpose({
+  nsList
 })
 
 </script>
