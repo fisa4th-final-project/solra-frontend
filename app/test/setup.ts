@@ -6,7 +6,6 @@ import * as components from 'vuetify/components'
 import * as directives from 'vuetify/directives'
 import { createRouter, createWebHistory } from 'vue-router'
 import { routes } from '@/router'
-import { Transition } from 'vue'
 
 // Vuetify 테마 설정
 const lightTheme = {
