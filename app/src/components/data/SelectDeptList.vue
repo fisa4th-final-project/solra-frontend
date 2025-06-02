@@ -46,5 +46,9 @@ import { onMounted, ref, watch } from 'vue';
 
   watch(() => props.orgId, () => {
     getDepts();
+  });
+
+  defineExpose({
+    depts
   })
 </script>
