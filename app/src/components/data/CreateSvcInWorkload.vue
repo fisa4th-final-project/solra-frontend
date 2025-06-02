@@ -63,7 +63,7 @@
 
 import { ref } from 'vue'
 import { rules } from '@/lib/global/inputRules';
-import { createSvcApi } from '@/lib/api/svc/createSvcApi';
+import { apiHandler } from '@/lib/global/apiManager';
 
 const props = defineProps<{
   clusterId: number;
@@ -107,7 +107,7 @@ const removePort = (index: number) => {
 
 const submitSvc = () => {
   console.log('child')
-  createSvcApi({
+  apiHandler.createSvcApi({
     clusterId: props.clusterId,
     nsName: props.nsName,
     ...form.value

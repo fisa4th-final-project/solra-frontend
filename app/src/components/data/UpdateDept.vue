@@ -39,10 +39,9 @@
 import { onMounted, ref, watch } from 'vue';
 import SideContents from '@/components/layout/SideContents.vue';
 import { rules } from '@/lib/global/inputRules';
-import { updateDeptApi } from '@/lib/api/dept/updateDeptApi';
-import { getDeptDetailApi } from '@/lib/api/dept/getDeptDetailApi';
 import DeleteDept from '@/components/data/DeleteDept.vue';
 import type { GetDeptDetailResponseDto } from '@/lib/api/dept/deptDto';
+import { apiHandler } from '@/lib/global/apiManager';
 
 const props = defineProps<{
   deptId: number;
@@ -57,14 +56,14 @@ const form = ref({
 })
 
 const submitForm = () => {
-  updateDeptApi({
+  apiHandler.updateDeptApi({
     deptId: props.deptId,
     deptName: form.value.deptName
   });
 }
 
 const getDeptDetail = () => {
-  getDeptDetailApi({
+  apiHandler.getDeptDetailApi({
     deptId: props.deptId
   }).then((res) => {
     if (!res) return;

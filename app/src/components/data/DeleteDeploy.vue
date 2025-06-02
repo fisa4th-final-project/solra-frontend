@@ -19,7 +19,7 @@
       >취소</v-btn>
       <v-btn
         color="red"
-        @click="deleteDeployApi({clusterId, nsName, name})"
+        @click="apiHandler.deleteDeployApi({clusterId, nsName, name})"
       >삭제</v-btn>
     </template>
   </Dialog>
@@ -27,8 +27,7 @@
 <script lang="ts" setup>
 
   import Dialog from '@/components/common/Dialog.vue';
-  import { deleteDeployApi } from '@/lib/api/deploy/deleteDeployApi';
-  
+import { apiHandler } from '@/lib/global/apiManager';  
   import { useDialogStore } from '@/store/dialog';
 
   defineProps<{

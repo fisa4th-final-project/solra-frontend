@@ -22,6 +22,7 @@
         label="디플로이먼트 이름"
         color="primary"
         clearable
+        data-test="input-deploy-name"
       />
       <v-text-field
         v-model="form.appName"
@@ -30,6 +31,7 @@
         label="컨테이너 이름"
         color="primary"
         clearable
+        data-test="input-container-name"
       />
       <v-text-field
         v-model="form.image"
@@ -38,6 +40,7 @@
         label="컨테이너 적용 이미지"
         color="primary"
         clearable
+        data-test="input-container-image"
       />
       <v-text-field
         v-model="form.port"
@@ -46,6 +49,7 @@
         label="컨테이너 포트"
         color="primary"
         clearable
+        data-test="input-container-port"
       />
       
       <v-btn
@@ -65,7 +69,7 @@
 import { ref } from 'vue'
 import { rules } from '@/lib/global/inputRules';
 import SideContents from '@/components/layout/SideContents.vue';
-import { createDeployApi } from '@/lib/api/deploy/createDeployApi';
+import { apiHandler } from '@/lib/global/apiManager';
 import SelectClusterList from '@/components/data/SelectClusterList.vue';
 import SelectNSList from '@/components/data/SelectNSList.vue';
 
@@ -86,7 +90,7 @@ const form = ref({
 });
 
 const submitForm = () => {
-  createDeployApi({
+  apiHandler.createDeployApi({
     clusterId: form.value.cluster.clusterId,
     nsName: form.value.ns.name,
     name: form.value.name,
@@ -101,4 +105,7 @@ const submitForm = () => {
   });
 }
 
+defineExpose({
+  form, valid
+})
 </script>

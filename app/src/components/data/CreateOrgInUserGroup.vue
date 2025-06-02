@@ -10,6 +10,7 @@
             label="생성할 조직 이름"
             color="primary"
             clearable
+            data-test="input-org-name"
           />
           <v-row class="mt-3">
             <v-col align="center">
@@ -28,6 +29,7 @@
                 color="red"
                 flat 
                 block
+                data-test="btn-select-org"
               >
                 <v-icon>mdi-delete</v-icon>
               </v-btn>
@@ -42,7 +44,12 @@
         <SelectOrgList :form="props.form"/>
       </v-col>
       <v-col cols="12">
-        <v-btn @click="openCreateOrg" flat block>
+        <v-btn 
+          @click="openCreateOrg" 
+          flat 
+          block 
+          data-test="btn-create-org"
+        >
           <v-icon>mdi-plus</v-icon>
         </v-btn>
       </v-col>
@@ -53,8 +60,8 @@
 
 import { ref, watch } from 'vue';
 import { rules } from '@/lib/global/inputRules';
-import { createOrgApi } from '@/lib/api/org/createOrgApi';
 import SelectOrgList from '@/components/data/SelectOrgList.vue';
+import { apiHandler } from '@/lib/global/apiManager';
 
 const valid = ref(false);
 
@@ -78,7 +85,7 @@ const isCreateOrg = ref();
 
 const createOrg = async () => {
   if (isCreateOrg) {
-    const res = await createOrgApi({
+    const res = await apiHandler.createOrgApi({
       orgName: form.value.org.orgName
     });
     if (!res) return
@@ -97,5 +104,9 @@ const closeCreateOrg = () => {
 watch(() => [form.value.org], () => {
   console.log(form.value.org);
 });
+
+defineExpose({
+  form, valid, isCreateOrg
+})
 
 </script>

@@ -17,6 +17,7 @@
         label="클러스터 이름"
         color="primary"
         clearable
+        data-test="input-name"
       />
       <v-text-field
         v-model="form.env"
@@ -25,6 +26,7 @@
         label="클러스터 목적 (dev, prod 등)"
         color="primary"
         clearable
+        data-test="input-env"
       />
       <v-text-field
         v-model="form.endpoints"
@@ -33,6 +35,7 @@
         label="클러스터 API 서버 엔드포인트"
         color="primary"
         clearable
+        data-test="input-endpoints"
       />
       <v-text-field
         v-model="form.caCert"
@@ -41,6 +44,7 @@
         label="클러스터 ca.cert"
         color="primary"
         clearable
+        data-test="input-cacert"
       />
       <v-text-field
         v-model="form.saToken"
@@ -49,6 +53,7 @@
         label="클러스터 서비스 어카운트 oAuth Token"
         color="primary"
         clearable
+        data-test="input-satoken"
       />
       
       <v-btn
@@ -71,9 +76,7 @@ import { ref } from 'vue'
 
 import SideContents from '@/components/layout/SideContents.vue';
 import SelectOrgList from '@/components/data/SelectOrgList.vue';
-
-import { createClusterApi } from '@/lib/api/cluster/createClusterApi';
-
+import { apiHandler } from '@/lib/global/apiManager';
 import { rules } from '@/lib/global/inputRules';
 
 const valid = ref(false)
@@ -93,7 +96,7 @@ interface ClusterRef {
 const form = ref<ClusterRef>({} as ClusterRef);
 
 const submitForm = () => {
-  createClusterApi({
+  apiHandler.createClusterApi({
     orgId: form.value.org.orgId,
     name: form.value.name,
     env: form.value.env,
@@ -102,4 +105,6 @@ const submitForm = () => {
     apiServerUrl:form.value.endpoints
   });
 }
+
+defineExpose({ form, valid });
 </script>

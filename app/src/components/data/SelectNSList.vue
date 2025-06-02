@@ -15,7 +15,7 @@
 
 import { onMounted, ref, watch } from 'vue';
 import { rules } from '@/lib/global/inputRules';
-import { getNSListApi } from '@/lib/api/ns/getNSListApi';
+import { apiHandler } from '@/lib/global/apiManager';
 
 const props = defineProps<{
   form: {
@@ -33,7 +33,7 @@ const nsList = ref<{
 }[]>();
 
 const loadData = async () => {
-  await getNSListApi({clusterId: props.form.cluster.clusterId}).then((res) => {
+  await apiHandler.getNSListApi({clusterId: props.form.cluster.clusterId}).then((res) => {
     if (res) nsList.value = res;
   });
 }
@@ -44,6 +44,10 @@ onMounted(() => {
 
 watch(() => props.form.cluster.clusterId, () => {
   loadData();
+});
+
+defineExpose({
+  nsList
 })
 
 </script>

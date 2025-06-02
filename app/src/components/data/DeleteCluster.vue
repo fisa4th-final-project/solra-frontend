@@ -19,7 +19,7 @@
       >취소</v-btn>
       <v-btn
         color="red"
-        @click="deleteClusterApi({clusterId: cluster.clusterId})"
+        @click="apiHandler.deleteClusterApi({clusterId: cluster.clusterId})"
       >삭제</v-btn>
     </template>
   </Dialog>
@@ -27,10 +27,8 @@
 <script lang="ts" setup>
 
   import Dialog from '@/components/common/Dialog.vue';
-  
   import { useDialogStore } from '@/store/dialog';
-
-  import { deleteClusterApi } from '@/lib/api/cluster/deleteClusterApi';
+import { apiHandler } from '@/lib/global/apiManager';
 
   defineProps<{
     cluster: {

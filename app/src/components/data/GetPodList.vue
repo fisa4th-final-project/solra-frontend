@@ -18,7 +18,7 @@
 
 import DataCardList from '@/components/common/DataCardList.vue';
 import type { GetPodListRequestParam, GetPodListResponseDto } from '@/lib/api/pod/podDto';
-import { getPodListApi } from '@/lib/api/pod/getPodListApi';
+import { apiHandler } from '@/lib/global/apiManager';
 
 defineProps<{
   req: GetPodListRequestParam
@@ -37,7 +37,7 @@ const isEmpty = (item: boolean) => {
 }
 
 const dataHandler = async (req: GetPodListRequestParam) => {
-  return await getPodListApi(req);
+  return await apiHandler.getPodListApi(req);
 };
 
 </script>

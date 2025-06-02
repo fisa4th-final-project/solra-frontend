@@ -33,8 +33,8 @@
 <script lang="ts" setup>
 
 import DataCard from '@/components/common/DataCard.vue';
-import { getClusterDetailApi } from '@/lib/api/cluster/getClusterDetailApi';
 import type { GetClusterDetailRequestParam } from '@/lib/api/cluster/clusterDto';
+import { apiHandler } from '@/lib/global/apiManager';
 
 defineProps<{
   title: string;
@@ -42,7 +42,7 @@ defineProps<{
 }>();
 
 const dataHandler = async (req: GetClusterDetailRequestParam) => {
-  if (req.clusterId) return await getClusterDetailApi(req);
+  if (req.clusterId) return await apiHandler.getClusterDetailApi(req);
 };
 
 </script>

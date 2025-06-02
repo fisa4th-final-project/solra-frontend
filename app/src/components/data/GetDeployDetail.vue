@@ -4,15 +4,7 @@
     :api="{req, dataHandler}"
   >
     <template v-slot:item="{ item }">
-      <tr v-if="item.field === 'caCert' || item.field === 'saToken'">
-        <th>
-          {{ item.field }}
-        </th>
-        <td class="text-right">
-          ••••••••••••
-        </td>
-      </tr>
-      <tr v-else>
+      <tr>
         <th>{{ item.field }}</th>
         <td class="text-right">{{ item.value }}</td>
       </tr>
@@ -34,7 +26,7 @@
 
 import DataCard from '@/components/common/DataCard.vue';
 import type { GetDeployDetailRequestParam } from '@/lib/api/deploy/deployDto';
-import { getDeployDetailApi } from '@/lib/api/deploy/getDeployDetail.Api';
+import { apiHandler } from '@/lib/global/apiManager';
 
 defineProps<{
   title: string;
@@ -42,7 +34,7 @@ defineProps<{
 }>();
 
 const dataHandler = async (req: GetDeployDetailRequestParam) => {
-  if (req.clusterId && req.nsName && req.deployName) return await getDeployDetailApi(req);
+  if (req.clusterId && req.nsName && req.deployName) return await apiHandler.getDeployDetailApi(req);
 };
 
 </script>

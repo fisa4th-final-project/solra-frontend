@@ -23,8 +23,8 @@
 <script lang="ts" setup>
 
 import DataCard from '@/components/common/DataCard.vue';
-import { getNSDetailApi } from '@/lib/api/ns/getNSDetail.Api';
 import type { GetNSDetailRequestParam } from '@/lib/api/ns/nsDto';
+import { apiHandler } from '@/lib/global/apiManager';
 
 defineProps<{
   title: string;
@@ -32,7 +32,7 @@ defineProps<{
 }>();
 
 const dataHandler = async (req: GetNSDetailRequestParam) => {
-  if (req.clusterId && req.name) return await getNSDetailApi(req);
+  if (req.clusterId && req.name) return await apiHandler.getNSDetailApi(req);
 };
 
 </script>

@@ -13,10 +13,8 @@
 <script lang="ts" setup>
 
   import { onMounted, ref } from 'vue';
-
   import type { GetOrgListResponseDto } from '@/lib/api/org/orgDto';
-  import { getOrgListApi } from '@/lib/api/org/getOrgListApi';
-
+import { apiHandler } from '@/lib/global/apiManager';
 
   const orgs = ref<GetOrgListResponseDto[]>();
 
@@ -30,10 +28,13 @@
   }>()
 
   onMounted(async () => {
-    await getOrgListApi().then((resOrgs) => {
+    await apiHandler.getOrgListApi().then((resOrgs) => {
       if (!resOrgs) return;
       orgs.value = resOrgs;
     });
   });
 
+  defineExpose({
+    orgs
+  })
 </script>

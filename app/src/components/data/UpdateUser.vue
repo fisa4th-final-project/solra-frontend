@@ -68,11 +68,10 @@
 import { onMounted, ref, watch } from 'vue'
 import SideContents from '@/components/layout/SideContents.vue';
 import { rules } from '@/lib/global/inputRules';
-import { updateUserApi } from '@/lib/api/user/updateUserApi';
-import { getUserDetailApi } from '@/lib/api/user/getUserDetailApi';
 import type { GetUserDetailResponseDto } from '@/lib/api/user/userDto';
 import Card from '@/components/common/Card.vue';
 import DeleteUser from '@/components/data/DeleteUser.vue';
+import { apiHandler } from '@/lib/global/apiManager';
 
 const props = defineProps<{
   userId: number;
@@ -95,7 +94,7 @@ const form = ref<ExtendedUserDetail>({
 });
 
 const submitForm = () => {
-  updateUserApi({
+  apiHandler.updateUserApi({
     userId: props.userId,
     userLoginId: form.value.userLoginId,
     userName: form.value.userName,
@@ -105,7 +104,7 @@ const submitForm = () => {
 }
 
 const getuserDetail = () => {
-  getUserDetailApi({
+  apiHandler.getUserDetailApi({
     userId: props.userId
   }).then((res) => {
     if (!res) return;

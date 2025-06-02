@@ -15,7 +15,7 @@
 
 import DataCard from '@/components/common/DataCard.vue';
 import type { GetSvcDetailRequestParam } from '@/lib/api/svc/svcDto';
-import { getSvcDetailApi } from '@/lib/api/svc/getSvcDetail.Api';
+import { apiHandler } from '@/lib/global/apiManager';
 
 defineProps<{
   title: string;
@@ -23,7 +23,7 @@ defineProps<{
 }>();
 
 const dataHandler = async (req: GetSvcDetailRequestParam) => {
-  if (req.clusterId && req.nsName && req.name) return await getSvcDetailApi(req);
+  if (req.clusterId && req.nsName && req.name) return await apiHandler.getSvcDetailApi(req);
 };
 
 </script>

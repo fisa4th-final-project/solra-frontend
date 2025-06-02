@@ -14,13 +14,15 @@
         label="생성할 권한 이름"
         color="primary"
         clearable
-      />
-      <v-text-field
+        data-test="input-perm-name"
+        />
+        <v-text-field
         v-model="form.description"
         variant="underlined"
         label="권한 설명"
         color="primary"
         clearable
+        data-test="input-perm-desc"
       />
       <v-btn
         :disabled="!valid"
@@ -39,7 +41,7 @@
 import { ref } from 'vue'
 import SideContents from '@/components/layout/SideContents.vue';
 import { rules } from '@/lib/global/inputRules';
-import { createPermApi } from '@/lib/api/perm/createPermApi';
+import { apiHandler } from '@/lib/global/apiManager';
 
 const valid = ref(false);
 
@@ -49,10 +51,13 @@ const form = ref({
 });
 
 const submitForm = async () => {
-  await createPermApi({
+  await apiHandler.createPermApi({
     permissionName: form.value.permissionName,
     description: form.value.description
   });
 }
 
+defineExpose({
+  form, valid
+})
 </script>

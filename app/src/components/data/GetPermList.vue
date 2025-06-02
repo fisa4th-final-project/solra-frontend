@@ -17,7 +17,7 @@
 <script lang="ts" setup>
 
   import Card from '@/components/common/Card.vue';
-  import { getPermListApi } from '@/lib/api/perm/getPermListApi';
+import { apiHandler } from '@/lib/global/apiManager';
   import { onMounted, ref } from 'vue';
 
   const modelValue = defineModel<any[]>();
@@ -29,7 +29,7 @@
   }[]>([]);
 
   const loadPerms = () => {
-    getPermListApi().then((res) => {
+    apiHandler.getPermListApi().then((res) => {
       if (!res) return;
       permItems.value = res
     });

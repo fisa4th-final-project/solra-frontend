@@ -37,8 +37,7 @@
 
 import { onMounted, ref, watch } from 'vue';
 import SideContents from '@/components/layout/SideContents.vue';
-import { getNSDetailApi } from '@/lib/api/ns/getNSDetail.Api';
-import { updateNSApi } from '@/lib/api/ns/updateNSApi';
+import { apiHandler } from '@/lib/global/apiManager';
 
 const props = defineProps<{
   clusterId: number;
@@ -55,7 +54,7 @@ interface Form {
 const form = ref<Form>({} as Form);
 
 const submitForm = () => {
-  updateNSApi({
+  apiHandler.updateNSApi({
     clusterId: props.clusterId,
     name: props.name,
     labels: JSON.parse(form.value.labels),
@@ -64,7 +63,7 @@ const submitForm = () => {
 }
 
 const getNSDetail = () => {
-  getNSDetailApi({
+  apiHandler.getNSDetailApi({
     clusterId: props.clusterId,
     name: props.name
   }).then((res) => {

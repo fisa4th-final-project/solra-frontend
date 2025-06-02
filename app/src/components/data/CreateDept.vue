@@ -15,6 +15,7 @@
         label="생성할 부서 이름"
         color="primary"
         clearable
+        data-test="input-dept-name"
       />
       <v-btn
         :disabled="!valid"
@@ -34,7 +35,7 @@
   import SelectOrgList from '@/components/data/SelectOrgList.vue';
   import SideContents from '@/components/layout/SideContents.vue';
   import { rules } from '@/lib/global/inputRules';
-  import { createDeptApi } from '@/lib/api/dept/createDeptApi';
+import { apiHandler } from '@/lib/global/apiManager';
 
   const valid = ref(false)
 
@@ -47,10 +48,13 @@
   })
 
   const submitForm = async () => {
-    await createDeptApi({
+    await apiHandler.createDeptApi({
       organizationId: form.value.org.orgId,
       deptName: form.value.deptName
     });
   }
 
+  defineExpose({
+    form, valid
+  })
 </script>

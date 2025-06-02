@@ -22,7 +22,7 @@
       >취소</v-btn>
       <v-btn
         color="red"
-        @click="deletePermApi({permId: perm.permId})"
+        @click="apiHandler.deletePermApi({permId: perm.permId})"
       >삭제</v-btn>
     </template>
   </Dialog>
@@ -30,10 +30,8 @@
 <script lang="ts" setup>
 
   import Dialog from '@/components/common/Dialog.vue';
-  
+  import { apiHandler } from '@/lib/global/apiManager';
   import { useDialogStore } from '@/store/dialog';
-
-  import { deletePermApi } from '@/lib/api/perm/deletePermApi';
 
   defineProps<{
     perm: {

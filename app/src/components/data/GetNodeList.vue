@@ -34,7 +34,7 @@
 
 import DataCardList from '@/components/common/DataCardList.vue';
 import type { GetNodeListRequestParam, GetNodeListResponseDto } from '@/lib/api/node/nodeDto';
-import { getNodeListApi } from '@/lib/api/node/getNodeListApi';
+import { apiHandler } from '@/lib/global/apiManager';
 
 defineProps<{
   req: GetNodeListRequestParam
@@ -54,7 +54,7 @@ const isEmpty = (item: boolean) => {
 }
 
 const dataHandler = async (req: GetNodeListRequestParam) => {
-  const res = await getNodeListApi(req);
+  const res = await apiHandler.getNodeListApi(req);
   if (res) return res.map(({ clusterId, ...rest }) => rest);
 }
 

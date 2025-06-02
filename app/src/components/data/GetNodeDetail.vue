@@ -33,7 +33,7 @@
 
 import DataCard from '@/components/common/DataCard.vue';
 import type { GetNodeDetailRequestParam } from '@/lib/api/node/nodeDto';
-import { getNodeDetailApi } from '@/lib/api/node/getNodeDetail.Api';
+import { apiHandler } from '@/lib/global/apiManager';
 
 defineProps<{
   title: string;
@@ -41,7 +41,7 @@ defineProps<{
 }>();
 
 const dataHandler = async (req: GetNodeDetailRequestParam) => {
-  if (req.clusterId && req.nodeName) return await getNodeDetailApi(req);
+  if (req.clusterId && req.nodeName) return await apiHandler.getNodeDetailApi(req);
 };
 
 </script>

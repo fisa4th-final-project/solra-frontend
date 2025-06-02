@@ -50,6 +50,7 @@
               size="small"
               variant="outlined"
               @click="toggleGroup(item)" 
+              data-test="btn-expend-item"
             ></v-btn>
 
           </div>
@@ -67,8 +68,7 @@ import Card from '@/components/common/Card.vue';
 import DataCard from '@/components/common/DataCard.vue';
 import UpdatePerm from '@/components/data/UpdatePerm.vue';
 import SideContents from '@/components/layout/SideContents.vue';
-import { getRoleListApi } from '@/lib/api/role/getRoleListApi';
-import { getRolePermListApi } from '@/lib/api/rolePerm/getRolePermListApi';
+import { apiHandler } from '@/lib/global/apiManager';
 import { nextTick, onMounted, ref } from 'vue';
 
 const groupBy = [{ key: 'roleName' }]
@@ -113,12 +113,12 @@ interface Perm {
 const permRows = ref<(Perm & { roleId: number; roleName: string })[]>([]);
 
 const loadRoles = async () => {
-  const res = await getRoleListApi();
+  const res = await apiHandler.getRoleListApi();
   if (!res) return;
 
   const rolePermRows = await Promise.all(
     res.map(async (role) => {
-      const perms = await getRolePermListApi({ roleId: role.roleId }) ?? [];
+      const perms = await apiHandler.getRolePermListApi({ roleId: role.roleId }) ?? [];
 
       if (perms.length === 0) {
         // 권한이 없는 경우 기본 row 생성
@@ -162,5 +162,9 @@ const headers: {
 
 onMounted(() => {
   loadRoles();
-})
+});
+
+defineExpose({
+  loadRoles
+});
 </script>

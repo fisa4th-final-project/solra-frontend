@@ -18,7 +18,7 @@
   import Card from '@/components/common/Card.vue';
 
   import type { GetUserDetailResponseDto } from '@/lib/api/user/userDto';
-  import { getUserDetailApi } from '@/lib/api/user/getUserDetailApi';
+import { apiHandler } from '@/lib/global/apiManager';
 
   const props = defineProps<{
     userId: number
@@ -47,7 +47,7 @@
   ]
 
   const getUserDetail = () => {
-    getUserDetailApi({
+    apiHandler.getUserDetailApi({
       userId: props.userId
     }).then( (res) => {      
       if (!res) return;

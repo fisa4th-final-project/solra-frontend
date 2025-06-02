@@ -15,8 +15,8 @@
 
 <script lang="ts" setup>
 import DataCardList from '@/components/common/DataCardList.vue';
-import { getNSListApi } from '@/lib/api/ns/getNSListApi';
 import type { GetNSListRequestParam, GetNSListResponseDto } from '@/lib/api/ns/nsDto';
+import { apiHandler } from '@/lib/global/apiManager';
 
 defineProps<{
   req: GetNSListRequestParam
@@ -31,7 +31,7 @@ const selected = (item: GetNSListResponseDto) => {
 }
 
 const dataHandler = async (req: GetNSListRequestParam) => {
-  return await getNSListApi(req);
+  return await apiHandler.getNSListApi(req);
 };
 
 </script>

@@ -15,7 +15,7 @@
 
 import DataCard from '@/components/common/DataCard.vue';
 import type { GetPodDetailRequestParam } from '@/lib/api/pod/podDto';
-import { getPodDetailApi } from '@/lib/api/pod/getPodDetail.Api';
+import { apiHandler } from '@/lib/global/apiManager';
 
 defineProps<{
   title: string;
@@ -23,7 +23,7 @@ defineProps<{
 }>();
 
 const dataHandler = async (req: GetPodDetailRequestParam) => {
-  if (req.clusterId && req.nsName && req.name) return await getPodDetailApi(req);
+  if (req.clusterId && req.nsName && req.name) return await apiHandler.getPodDetailApi(req);
 };
 
 </script>

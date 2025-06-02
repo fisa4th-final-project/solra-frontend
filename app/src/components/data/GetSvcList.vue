@@ -27,9 +27,9 @@
 
 <script lang="ts" setup>
 import type { GetSvcListRequestParam, GetSvcListResponseDto } from '@/lib/api/svc/svcDto';
-import { getSvcListApi } from '@/lib/api/svc/getSvcListApi';
 import DataCardList from '@/components/common/DataCardList.vue';
-
+import { apiHandler } from '@/lib/global/apiManager';
+apiHandler
 defineProps<{
   req: GetSvcListRequestParam
 }>();
@@ -47,7 +47,7 @@ const isEmpty = (item: boolean) => {
 }
 
 const dataHandler = async (req: GetSvcListRequestParam) => {
-  return await getSvcListApi(req);
+  return await apiHandler.getSvcListApi(req);
 };
 
 </script>

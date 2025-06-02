@@ -11,9 +11,10 @@
         v-model="form.orgName"
         :rules="[rules.required]"
         variant="underlined"
-        label="생성할 부서 이름"
+        label="생성할 조직 이름"
         color="primary"
         clearable
+        data-test="input-org-name"
       />
       <v-btn
         class="mt-4"
@@ -32,7 +33,7 @@
 import { ref } from 'vue';
 import SideContents from '@/components/layout/SideContents.vue';
 import { rules } from '@/lib/global/inputRules';
-import { createOrgApi } from '@/lib/api/org/createOrgApi';
+import { apiHandler } from '@/lib/global/apiManager';
 
 const valid = ref(false)
 
@@ -41,9 +42,12 @@ const form = ref({
 })
 
 const submitForm = () => {
-  createOrgApi({
+  apiHandler.createOrgApi({
     orgName: form.value.orgName
   });
 }
 
+defineExpose({
+  form, valid
+})
 </script>

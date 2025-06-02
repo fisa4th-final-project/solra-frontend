@@ -17,7 +17,7 @@
 
 import DataCardList from '@/components/common/DataCardList.vue';
 import type { GetDeployListRequestParam, GetDeployListResponseDto } from '@/lib/api/deploy/deployDto';
-import { getDeployListApi } from '@/lib/api/deploy/getDeployListApi';
+import { apiHandler } from '@/lib/global/apiManager';
 
 defineProps<{
   req: GetDeployListRequestParam
@@ -37,7 +37,7 @@ const selected = (item: GetDeployListResponseDto) => {
 }
 
 const dataHandler = async (req: GetDeployListRequestParam) => {
-  return await getDeployListApi(req);
+  return await apiHandler.getDeployListApi(req);
 };
 
 </script>

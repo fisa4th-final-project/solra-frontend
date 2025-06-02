@@ -24,8 +24,8 @@
 <script lang="ts" setup>
 
 import DataCard from '@/components/common/DataCard.vue';
-import { getOrgDetailApi } from '@/lib/api/org/getOrgDetailApi';
 import type { GetOrgDetailRequestDto } from '@/lib/api/org/orgDto';
+import { apiHandler } from '@/lib/global/apiManager';
 
 defineProps<{
   title: string;
@@ -33,7 +33,7 @@ defineProps<{
 }>();
 
 const dataHandler = async (req: GetOrgDetailRequestDto) => {
-  return await getOrgDetailApi(req);
+  return await apiHandler.getOrgDetailApi(req);
 };
 
 </script>

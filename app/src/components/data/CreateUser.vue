@@ -14,8 +14,9 @@
         label="사용자 ID"
         color="primary"
         clearable
-      />
-      <v-text-field
+        data-test="input-user-login-id"
+        />
+        <v-text-field
         v-model="form.password"
         :rules="[rules.required]"
         variant="underlined"
@@ -23,16 +24,18 @@
         type="password"
         color="primary"
         clearable
-      />
-      <v-text-field
+        data-test="input-password"
+        />
+        <v-text-field
         v-model="form.userName"
         :rules="[rules.required]"
         variant="underlined"
         label="이름"
         color="primary"
         clearable
-      />
-      <v-text-field
+        data-test="input-name"
+        />
+        <v-text-field
         v-model="form.email"
         :rules="[rules.required, rules.email]"
         variant="underlined"
@@ -40,6 +43,7 @@
         type="email"
         color="primary"
         clearable
+        data-test="input-email"
       />
       <SelectOrgList :form="form"/>
       <SelectDeptList :orgId="form.org.orgId" :form="form"/>
@@ -63,7 +67,7 @@ import SideContents from '@/components/layout/SideContents.vue';
 import SelectOrgList from '@/components/data/SelectOrgList.vue';
 import SelectDeptList from '@/components/data/SelectDeptList.vue';
 import { rules } from '@/lib/global/inputRules';
-import { createUserApi } from '@/lib/api/user/createUserApi';
+import { apiHandler } from '@/lib/global/apiManager';
 
 const valid = ref(false)
 
@@ -83,7 +87,7 @@ const form = ref({
 })
 
 const submitForm = () => {
-  createUserApi({
+  apiHandler.createUserApi({
     userLoginId: form.value.userLoginId ,
     password: form.value.password ,
     userName: form.value.userName ,
@@ -92,5 +96,9 @@ const submitForm = () => {
     deptId: form.value.dept.deptId
   });
 }
+
+defineExpose({
+  form, valid
+});
 
 </script>

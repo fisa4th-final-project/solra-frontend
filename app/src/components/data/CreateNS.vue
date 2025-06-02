@@ -15,6 +15,7 @@
         label="네임스페이스 이름"
         color="primary"
         clearable
+        data-test="input-namespace-name"
       />
       <v-btn
         :disabled="!valid"
@@ -33,8 +34,8 @@
 import { ref } from 'vue'
 import SideContents from '@/components/layout/SideContents.vue';
 import { rules } from '@/lib/global/inputRules';
-import { createNSApi } from '@/lib/api/ns/createNSApi';
 import SelectClusterList from '@/components/data/SelectClusterList.vue';
+import { apiHandler } from '@/lib/global/apiManager';
 
 const valid = ref(false);
 
@@ -47,10 +48,14 @@ const form = ref({
 });
 
 const submitForm = async () => {
-  await createNSApi({
+  await apiHandler.createNSApi({
     clusterId: form.value.cluster.clusterId,
     name: form.value.name
   });
 }
+
+defineExpose({
+  form, valid
+});
 
 </script>
