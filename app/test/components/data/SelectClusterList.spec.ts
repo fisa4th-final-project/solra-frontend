@@ -3,7 +3,6 @@ import { describe, it, vi, expect } from 'vitest'
 import SelectClusterList from '@/components/data/SelectClusterList.vue'
 import { apiHandler } from '@/lib/global/apiManager'
 import { nextTick } from 'vue';
-import { VIcon, VSelect } from 'vuetify/components';
 
 const selectClusterListWrapper = (el?: HTMLDivElement) => {
   return mount(SelectClusterList, {
