@@ -19,6 +19,7 @@
     "@pinia/testing": "^1.0.1",
     "@types/node": "^22.15.12",
     "@vitejs/plugin-vue": "^5.2.2",
+    "@vitest/ui": "^3.1.4",
     "@vue/test-utils": "^2.4.0-alpha.2",
     "@vue/tsconfig": "^0.7.0",
     "deepmerge": "^4.3.1",

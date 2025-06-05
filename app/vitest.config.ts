@@ -25,6 +25,11 @@ export default defineConfig({
       reporter: ['text', 'json', 'html'], // 커버리지 출력 형식
       exclude: ['test/', 'src/main.ts'] // 커버리지에서 제외할 파일
     },
+    reporters: ['junit', 'json', 'verbose'],
+    outputFile: {
+      junit: './junit-report.xml',
+      json: './json-report.json',
+    },
     server: {
       deps: {
         inline: [/vuetify/] // Vuetify를 transform 대상으로 포함시킴
