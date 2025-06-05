@@ -13,7 +13,7 @@ const updateDeployInWorkloadWrapper = () => {
 }
 describe('UpdateDeployInWorkload.vue', () => {
 
-  it('TC_VUE_DEPLOY_07_01: 입력 form 렌더링 성공', async () => {
+  it('TC_VUE_DP_06_01', async () => {
 
     const wrapper = updateDeployInWorkloadWrapper();
     

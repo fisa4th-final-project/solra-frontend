@@ -29,7 +29,7 @@ describe('GetPermList.vue', () => {
     },
   ];
 
-  it('TC_VUE_PERM_04_01: label 정상 렌더링', async () => {
+  it('TC_VUE_PM_02_01', async () => {
     // skeleton을 테스트하기 위한 mock 구현
     const spy = vi.spyOn(apiHandler, 'getPermListApi').mockImplementation(() => {
       return new Promise(resolve => {

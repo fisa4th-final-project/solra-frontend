@@ -18,7 +18,7 @@ const createUserWrapper = () => {
 }
 describe('CreateUser.vue', () => {
 
-  it('TC_VUE_USER_01_01: 클릭 후 입력 form 렌더링 성공', async () => {
+  it('TC_VUE_USER_01_01', async () => {
 
     const el = document.createElement('div')
     document.body.appendChild(el)
@@ -75,8 +75,8 @@ describe('CreateUser.vue', () => {
     'dept'
   ]
 
-  requiredFields.forEach((field, idx) => {
-    it(`TC_VUE_USER_01_02_${idx}: ${field} 미입력 시 validate 여부`, async () => {
+  requiredFields.forEach((field) => {
+    it(`TC_VUE_USER_01_02_${field}`, async () => {
       const wrapper = createUserWrapper();
 
       // 모든 값 설정
@@ -116,6 +116,4 @@ describe('CreateUser.vue', () => {
 
     });
   });
-
-  // TODO: port 내에서도 required 체크 기능 추가 
 });

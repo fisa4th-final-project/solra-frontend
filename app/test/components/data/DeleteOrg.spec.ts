@@ -5,7 +5,7 @@ import DeleteOrg from '@/components/data/DeleteOrg.vue';
 
 describe('DeleteOrg.vue', () => {
 
-  it('TC_VUE_ORG_02_01: 클릭 후 삭제 Dialog 렌더링 성공', async () => {
+  it('TC_VUE_ORG_06_01', async () => {
 
     const el = document.createElement('div')
     document.body.appendChild(el)

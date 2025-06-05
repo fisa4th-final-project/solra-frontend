@@ -1,11 +1,11 @@
 import { mount, flushPromises } from '@vue/test-utils'
 import { describe, it, vi, expect } from 'vitest'
-import GetPodList from '@/components/data/GetPodList.vue'
+import GetSvcList from '@/components/data/GetSvcList.vue'
 import { apiHandler } from '@/lib/global/apiManager';
 import { nextTick } from 'vue';
 
-const getPodListWrapper = () => {
-  return mount(GetPodList, {
+const getSvcListWrapper = () => {
+  return mount(GetSvcList, {
     props: {
       req: {
         clusterId: 1,
@@ -15,26 +15,46 @@ const getPodListWrapper = () => {
   });
 };
 
-describe('GetPodList.vue', () => {
+describe('GetSvcList.vue', () => {
 
   const mockResponse = [
     {
-      name: 'test-pod-name-01',
-      phase: 'test-pod-phase-01',
-      podIP: 'test-pod-ip-01',
-      nodeName: 'test-nodeName-01'
+      name: 'test-svc-name-01',
+      type: 'test-svc-type-01',
+      clusterIP: '10.5.100.121',
+      selector: {
+        app: 'test-app-name-01'
+      },
+      ports: [
+        {
+          protocol: 'TCP',
+          port: 8081,
+          targetPort: 30181,
+          nodePort: 8081
+        }
+      ]
     },
     {
-      name: 'test-pod-name-02',
-      phase: 'test-pod-phase-02',
-      podIP: 'test-pod-ip-02',
-      nodeName: 'test-nodeName-02'
+      name: 'test-svc-name-02',
+      type: 'test-svc-type-02',
+      clusterIP: '10.5.100.122',
+      selector: {
+        app: 'test-app-name-02'
+      },
+      ports: [
+        {
+          protocol: 'UDP',
+          port: 8082,
+          targetPort: 30182,
+          nodePort: 8082
+        }
+      ]
     },
   ];
 
-  it('TC_VUE_POD_02_01', async () => {
+  it('TC_VUE_SVC_04_01', async () => {
     // skeleton을 테스트하기 위한 mock 구현
-    const spy = vi.spyOn(apiHandler, 'getPodListApi').mockImplementation(() => {
+    const spy = vi.spyOn(apiHandler, 'getSvcListApi').mockImplementation(() => {
       return new Promise(resolve => {
         setTimeout(() => {
           resolve(mockResponse);
@@ -42,7 +62,7 @@ describe('GetPodList.vue', () => {
       });
     });
 
-    const wrapper = getPodListWrapper();
+    const wrapper = getSvcListWrapper();
 
     expect(spy).toHaveBeenCalled();
 
@@ -59,7 +79,14 @@ describe('GetPodList.vue', () => {
 
 
     // skeleton 사라지고 label 확인
-    const labels = mockResponse.flatMap(obj => Object.values(obj));
+    const labels = [
+      mockResponse[0].clusterIP,
+      mockResponse[0].name,
+      mockResponse[0].type,
+      mockResponse[1].clusterIP,
+      mockResponse[1].name,
+      mockResponse[1].type,
+    ]
     labels.forEach(label => {
       expect(wrapper.text()).toContain(label);
     });
@@ -68,9 +95,9 @@ describe('GetPodList.vue', () => {
   });
 
   
-  it('TC_VUE_POD_02_02', async () => {
+  it('TC_VUE_SVC_04_02', async () => {
     // skeleton을 테스트하기 위한 mock 구현
-    const spy = vi.spyOn(apiHandler, 'getPodListApi').mockImplementation(() => {
+    const spy = vi.spyOn(apiHandler, 'getSvcListApi').mockImplementation(() => {
       return new Promise(resolve => {
         setTimeout(() => {
           resolve([]);
@@ -78,7 +105,7 @@ describe('GetPodList.vue', () => {
       });
     });
 
-    const wrapper = getPodListWrapper();
+    const wrapper = getSvcListWrapper();
     
     expect(spy).toHaveBeenCalled();
 

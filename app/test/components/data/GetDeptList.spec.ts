@@ -29,7 +29,7 @@ describe('GetDeptList.vue', () => {
     }
   ];
 
-  it('TC_VUE_DEPT_04_01: skeleton 표시 후 label 정상 렌더링', async () => {
+  it('TC_VUE_DEPT_04_01', async () => {
     // skeleton을 테스트하기 위한 mock 구현
     const spy = vi.spyOn(apiHandler, 'getDeptListApi').mockImplementation(() => {
       return new Promise(resolve => {
@@ -62,7 +62,7 @@ describe('GetDeptList.vue', () => {
   });
 
 
-  it('TC_VUE_DEPT_04_02: 빈 List 응답 시 skeleton 렌더링 여부', async () => {
+  it('TC_VUE_DEPT_04_02', async () => {
     // skeleton을 테스트하기 위한 mock 구현
     const spy = vi.spyOn(apiHandler, 'getDeptListApi').mockImplementation(() => {
       return new Promise(resolve => {

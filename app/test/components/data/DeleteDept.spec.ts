@@ -5,7 +5,7 @@ import DeleteDept from '@/components/data/DeleteDept.vue';
 
 describe('DeleteDept.vue', () => {
 
-  it('TC_VUE_DEPT_02_01: 클릭 후 삭제 Dialog 렌더링 성공', async () => {
+  it('TC_VUE_DEPT_07_01', async () => {
 
     const el = document.createElement('div')
     document.body.appendChild(el)

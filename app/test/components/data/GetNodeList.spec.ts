@@ -61,7 +61,7 @@ describe('GetNodeList.vue', () => {
     },
   ];
 
-  it('TC_VUE_NODE_04_01: skeleton 표시 후 label 정상 렌더링', async () => {
+  it('TC_VUE_ND_02_01', async () => {
     // skeleton을 테스트하기 위한 mock 구현
     const spy = vi.spyOn(apiHandler, 'getNodeListApi').mockImplementation(() => {
       return new Promise(resolve => {
@@ -95,7 +95,7 @@ describe('GetNodeList.vue', () => {
   });
 
 
-  it('TC_VUE_NODE_04_02: 빈 List 응답 시 skeleton 렌더링 여부', async () => {
+  it('TC_VUE_ND_02_02', async () => {
     // skeleton을 테스트하기 위한 mock 구현
     const spy = vi.spyOn(apiHandler, 'getNodeListApi').mockImplementation(() => {
       return new Promise(resolve => {

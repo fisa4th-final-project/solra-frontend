@@ -5,7 +5,7 @@ import DeleteSvc from '@/components/data/DeleteSvc.vue';
 
 describe('DeleteSvc.vue', () => {
 
-  it('TC_VUE_SVC_02_01: 클릭 후 삭제 Dialog 렌더링 성공', async () => {
+  it('TC_VUE_SVC_07_01', async () => {
 
     const el = document.createElement('div')
     document.body.appendChild(el)

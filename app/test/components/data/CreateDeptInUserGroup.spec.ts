@@ -15,7 +15,7 @@ const createDeptInUserGroupWrapper = () => {
 }
 describe('CreateDeptInUserGroup.vue', () => {
 
-  it('TC_VUE_DEPT_02_01: 입력 form 렌더링 성공', async () => {
+  it('TC_VUE_DEPT_02_01', async () => {
 
     const wrapper = createDeptInUserGroupWrapper();
     
@@ -40,8 +40,8 @@ describe('CreateDeptInUserGroup.vue', () => {
     'deptName'
   ]
 
-  requiredFields.forEach((field, idx) => {
-    it(`TC_VUE_DEPT_02_02_${idx}: ${field} 미입력 시 validate 실패`, async () => {
+  requiredFields.forEach((field) => {
+    it(`TC_VUE_DEPT_02_02_${field}`, async () => {
       const wrapper = createDeptInUserGroupWrapper();
 
       // 모든 값 설정

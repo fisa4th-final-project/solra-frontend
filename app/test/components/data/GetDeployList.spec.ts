@@ -38,7 +38,7 @@ describe('GetDeployList.vue', () => {
     },
   ];
 
-  it('TC_VUE_DEPLOY_04_01: skeleton 표시 후 label 정상 렌더링', async () => {
+  it('TC_VUE_DP_04_01', async () => {
     // skeleton을 테스트하기 위한 mock 구현
     const spy = vi.spyOn(apiHandler, 'getDeployListApi').mockImplementation(() => {
       return new Promise(resolve => {
@@ -69,7 +69,7 @@ describe('GetDeployList.vue', () => {
 
     wrapper.unmount();
   });
-  it('TC_VUE_DEPLOY_04_02: 빈 List 응답 시 skeleton 렌더링 여부', async () => {
+  it('TC_VUE_DP_04_02', async () => {
     // skeleton을 테스트하기 위한 mock 구현
     const spy = vi.spyOn(apiHandler, 'getDeployListApi').mockImplementation(() => {
       return new Promise(resolve => {

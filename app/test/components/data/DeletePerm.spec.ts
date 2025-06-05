@@ -5,7 +5,7 @@ import DeletePerm from '@/components/data/DeletePerm.vue';
 
 describe('DeletePerm.vue', () => {
 
-  it('TC_VUE_PERM_02_01: 클릭 후 삭제 Dialog 렌더링 성공', async () => {
+  it('TC_VUE_PM_05_01', async () => {
 
     const el = document.createElement('div')
     document.body.appendChild(el)

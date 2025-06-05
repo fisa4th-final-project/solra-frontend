@@ -12,7 +12,7 @@ const createDeployInWorkloadWrapper = () => {
 }
 describe('CreateDeployInWorkload.vue', () => {
 
-  it('TC_VUE_DEPLOY_03_01: 입력 form 렌더링 성공', async () => {
+  it('TC_VUE_DP_02_01', async () => {
 
     const wrapper = createDeployInWorkloadWrapper();
     

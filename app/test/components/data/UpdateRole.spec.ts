@@ -6,7 +6,7 @@ import Content from '@/__mocks__/common/Content.vue';
 
 describe('UpdateRole.vue', () => {
 
-  it('TC_VUE_ROLE_05_01: 클릭 후 입력 form 렌더링 성공', async () => {
+  it('TC_VUE_ROLE_05_01', async () => {
 
     const el = document.createElement('div')
     document.body.appendChild(el)

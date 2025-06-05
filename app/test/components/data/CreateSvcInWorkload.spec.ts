@@ -13,7 +13,7 @@ const createSvcInWorkloadWrapper = () => {
 
 describe('CreateSvcInWorkload.vue', () => {
 
-  it('TC_VUE_SVC_02_01: 입력 form 렌더링 성공', async () => {
+  it('TC_VUE_SVC_02_01', async () => {
 
     const wrapper = createSvcInWorkloadWrapper();
 

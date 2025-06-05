@@ -37,7 +37,7 @@ describe('GetRoleList.vue', () => {
     }
   ];
 
-  it('TC_VUE_ROLE_04_01: label 정상 렌더링', async () => {
+  it('TC_VUE_ROLE_04_01', async () => {
     // skeleton을 테스트하기 위한 mock 구현
     const spyRole = vi.spyOn(apiHandler, 'getRoleListApi').mockImplementation(() => {
       return new Promise(resolve => {

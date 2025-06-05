@@ -1,37 +1,44 @@
 import { mount, flushPromises } from '@vue/test-utils'
 import { describe, it, vi, expect } from 'vitest'
-import GetDeployDetail from '@/components/data/GetDeployDetail.vue'
+import GetSvcDetail from '@/components/data/GetSvcDetail.vue'
 import { apiHandler } from '@/lib/global/apiManager';
 import { nextTick } from 'vue';
 
-const getDeployDetailWrapper = () => {
-  return mount(GetDeployDetail, {
+const getSvcDetailWrapper = () => {
+  return mount(GetSvcDetail, {
     props: {
-      title: 'test-cluster-detail-title',
+      title: 'test-ns-detail-title',
       req: {
         clusterId: 1,
         nsName: 'test-nsName',
-        deployName: 'test-deployName'
+        name: 'test-svcName'
       }
     }
   });
 };
 
-describe('GetDeployDetail.vue', () => {
+describe('GetSvcDetail.vue', () => {
 
   const mockResponse = {
-    name: 'test-deploy',
-    replicas: 1,
-    readyReplicas: 1,
+    name: 'test-svc-name',
+    type: 'test-svc-type',
+    clusterIP: '10.5.100.122',
     selector: {
-      app: 'test-app',
+      app: 'test-app-name'
     },
-    images: ['test-app:1.0'],
+    ports: [
+      {
+        protocol: 'TCP',
+        port: 8080,
+        targetPort: 30180,
+        nodePort: 8080
+      }
+    ]
   };
 
-  it('TC_VUE_DP_03_01', async () => {
+  it('TC_VUE_SVC_03_01', async () => {
     // skeleton을 테스트하기 위한 mock 구현
-    const spy = vi.spyOn(apiHandler, 'getDeployDetailApi').mockImplementation(() => {
+    const spy = vi.spyOn(apiHandler, 'getSvcDetailApi').mockImplementation(() => {
       return new Promise(resolve => {
         setTimeout(() => {
           resolve(mockResponse);
@@ -39,8 +46,7 @@ describe('GetDeployDetail.vue', () => {
       });
     });
 
-    const wrapper = getDeployDetailWrapper();
-
+    const wrapper = getSvcDetailWrapper();
     expect(spy).toHaveBeenCalled();
 
     // skeleton 표시 확인 (응답 오기 전)
@@ -53,7 +59,11 @@ describe('GetDeployDetail.vue', () => {
     await new Promise(resolve => setTimeout(resolve, 100)); // 100ms 대기
 
     // skeleton 사라지고 label 확인
-    const labels = [mockResponse.name, mockResponse.images];
+    const labels = [
+      mockResponse.name,
+      mockResponse.clusterIP,
+      mockResponse.type
+    ];
     labels.forEach(label => {
       expect(wrapper.html()).toContain(label);
     });
