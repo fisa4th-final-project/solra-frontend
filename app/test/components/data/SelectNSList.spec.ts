@@ -39,7 +39,7 @@ describe('SelectNSList.vue', () => {
     },
   ];
 
-  it('TC_VUE_NS_05_01: label 정상 렌더링', async () => {
+  it('TC_VUE_NS_02_01', async () => {
     // skeleton을 테스트하기 위한 mock 구현
     const spy = vi.spyOn(apiHandler, 'getNSListApi').mockImplementation(() => {
       return new Promise(resolve => {
@@ -64,5 +64,4 @@ describe('SelectNSList.vue', () => {
     wrapper.unmount();
   });
 
-  // TODO: row item 클릭 시 권한 상세 노출 확인
 });

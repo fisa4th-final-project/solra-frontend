@@ -45,7 +45,7 @@ describe('SelectClusterList.vue', () => {
     },
   ];
 
-  it('TC_VUE_CLUSTER_05_01: label 정상 렌더링', async () => {
+  it('TC_VUE_CL_02_01', async () => {
     // skeleton을 테스트하기 위한 mock 구현
     const spy = vi.spyOn(apiHandler, 'getClusterListApi').mockImplementation(() => {
       return new Promise(resolve => {
@@ -73,6 +73,4 @@ describe('SelectClusterList.vue', () => {
     wrapper.unmount();
     document.body.removeChild(el);
   });
-
-  // TODO: row item 클릭 시 권한 상세 노출 확인
 });

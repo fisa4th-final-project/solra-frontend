@@ -5,7 +5,7 @@ import UpdateOrg from '@/components/data/UpdateOrg.vue';
 
 describe('UpdateOrg.vue', () => {
 
-  it('TC_VUE_ORG_05_01: 클릭 후 입력 form 렌더링 성공', async () => {
+  it('TC_VUE_ORG_05_01', async () => {
 
     const el = document.createElement('div')
     document.body.appendChild(el)

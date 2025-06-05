@@ -5,7 +5,7 @@ import UpdatePerm from '@/components/data/UpdatePerm.vue';
 
 describe('UpdatePerm.vue', () => {
 
-  it('TC_VUE_PERM_04_01: 클릭 후 입력 form 렌더링 성공', async () => {
+  it('TC_VUE_PM_03_01', async () => {
 
     const el = document.createElement('div')
     document.body.appendChild(el)

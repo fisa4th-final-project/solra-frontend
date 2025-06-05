@@ -6,7 +6,7 @@ import Form from '@/__mocks__/common/Form.vue';
 
 describe('CreateUserGroup.vue', () => {
 
-  it('TC_VUE_USERGROUP_01_01: 클릭 후 입력 form 렌더링 성공', async () => {
+  it('TC_VUE_UG_01_01', async () => {
 
     const el = document.createElement('div')
     document.body.appendChild(el)

@@ -29,7 +29,7 @@ describe('GetClusterDetail.vue', () => {
     updatedAt: new Date('2024-01-02')
   };
 
-  it('TC_VUE_CLUSTER_03_02: skeleton 표시 후 label 정상 렌더링', async () => {
+  it('TC_VUE_CL_03_01', async () => {
     // skeleton을 테스트하기 위한 mock 구현
     const spy = vi.spyOn(apiHandler, 'getClusterDetailApi').mockImplementation(() => {
       return new Promise(resolve => {

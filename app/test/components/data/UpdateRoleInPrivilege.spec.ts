@@ -4,7 +4,7 @@ import UpdateRoleInPrivilege from '@/components/data/UpdateRoleInPrivilege.vue';
 
 describe('UpdateRoleInPrivilege.vue', () => {
 
-  it('TC_VUE_ROLE_05_01: form 렌더링 성공', async () => {
+  it('TC_VUE_ROLE_06_01', async () => {
 
     const el = document.createElement('div')
     document.body.appendChild(el)

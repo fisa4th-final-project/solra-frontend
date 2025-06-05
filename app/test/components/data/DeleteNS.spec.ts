@@ -5,7 +5,7 @@ import DeleteNS from '@/components/data/DeleteNS.vue';
 
 describe('DeleteNS.vue', () => {
 
-  it('TC_VUE_NAMESPACE_02_01: 클릭 후 삭제 Dialog 렌더링 성공', async () => {
+  it('TC_VUE_NS_06_01', async () => {
 
     const el = document.createElement('div')
     document.body.appendChild(el)

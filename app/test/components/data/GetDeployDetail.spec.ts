@@ -29,7 +29,7 @@ describe('GetDeployDetail.vue', () => {
     images: ['test-app:1.0'],
   };
 
-  it('TC_VUE_DEPLOY_03_01: skeleton 표시 후 label 정상 렌더링', async () => {
+  it('TC_VUE_DP_03_01', async () => {
     // skeleton을 테스트하기 위한 mock 구현
     const spy = vi.spyOn(apiHandler, 'getDeployDetailApi').mockImplementation(() => {
       return new Promise(resolve => {

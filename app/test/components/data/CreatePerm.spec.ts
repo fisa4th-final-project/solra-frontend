@@ -15,7 +15,7 @@ const createPermWrapper = () => {
 }
 describe('CreatePerm.vue', () => {
 
-  it('TC_VUE_PERM_01_01: 클릭 후 입력 form 렌더링 성공', async () => {
+  it('TC_VUE_PM_01_01', async () => {
 
     const el = document.createElement('div')
     document.body.appendChild(el)
@@ -50,8 +50,8 @@ describe('CreatePerm.vue', () => {
     'permDesc'
   ]
 
-  requiredFields.forEach((field, idx) => {
-    it(`TC_VUE_PERM_01_02_${idx}: ${field} 미입력 시 validate 여부`, async () => {
+  requiredFields.forEach((field) => {
+    it(`TC_VUE_PM_01_02_${field}`, async () => {
       const wrapper = createPermWrapper();
 
       // 모든 값 설정

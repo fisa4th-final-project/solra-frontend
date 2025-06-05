@@ -25,7 +25,7 @@ const createOrgInUserGroupWrapper = () => {
 }
 describe('CreateOrgInUserGroup.vue', () => {
 
-  it('TC_VUE_ORG_01_01: 클릭 후 입력 form 렌더링 성공', async () => {
+  it('TC_VUE_ORG_02_01', async () => {
 
     const wrapper = createOrgInUserGroupWrapper();
 
@@ -48,8 +48,8 @@ describe('CreateOrgInUserGroup.vue', () => {
     'orgName',
   ]
 
-  requiredFields.forEach((field, idx) => {
-    it(`TC_VUE_ORG_01_02_${idx}: ${field} 미입력 시 validate 실패`, async () => {
+  requiredFields.forEach((field) => {
+    it(`TC_VUE_ORG_02_02_${field}`, async () => {
       const wrapper = createOrgInUserGroupWrapper();
 
       // 폼 형식 노출
@@ -73,7 +73,7 @@ describe('CreateOrgInUserGroup.vue', () => {
     });
   });
 
-  it('TC_VUE_ORG_01_03: org 추가, 삭제 버튼 클릭 시 isCreateOrg 값 변화', async () => {
+  it('TC_VUE_ORG_02_03', async () => {
 
     const wrapper = createOrgInUserGroupWrapper();
 

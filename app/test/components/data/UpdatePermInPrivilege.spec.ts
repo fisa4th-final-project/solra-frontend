@@ -4,7 +4,7 @@ import UpdatePermInPrivilege from '@/components/data/UpdatePermInPrivilege.vue';
 
 describe('UpdatePermInPrivilege.vue', () => {
 
-  it('TC_VUE_PERM_05_01: 클릭 후 입력 form 렌더링 성공', async () => {
+  it('TC_VUE_PM_04_01', async () => {
 
     const el = document.createElement('div')
     document.body.appendChild(el)

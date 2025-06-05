@@ -32,7 +32,7 @@ describe('SelectOrgList.vue', () => {
  
   ];
 
-  it('TC_VUE_ORG_05_01: label 정상 렌더링', async () => {
+  it('TC_VUE_ORG_04_01', async () => {
     // skeleton을 테스트하기 위한 mock 구현
     const spy = vi.spyOn(apiHandler, 'getOrgListApi').mockImplementation(() => {
       return new Promise(resolve => {
