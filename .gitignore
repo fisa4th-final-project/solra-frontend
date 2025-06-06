@@ -230,3 +230,7 @@ $RECYCLE.BIN/
 # End of https://www.toptal.com/developers/gitignore/api/visualstudiocode,intellij,vue,vuejs,react,dotenv,windows,macos
 
 dist/
+
+certs/
+
+*.pem
