@@ -11,6 +11,7 @@ import Node from '@/pages/admin/Node.vue'
 import Workspace from '@/pages/Workspace.vue'
 import Cluster from '@/pages/admin/Cluster.vue'
 import Privilege from '@/pages/admin/Privilege.vue'
+import LoginFrame from '@/frames/LoginFrame.vue'
 
 export const routes = [
   {
@@ -34,10 +35,16 @@ export const routes = [
   },
   { 
     path: '/login', 
-    component: LoginPage,
+    component: LoginFrame,
     meta: {
       breadcrumb: [{ title: '로그인', href: '/login', disabled: false }]
-    }
+    },
+    children: [
+      {
+        path: '',
+        component: LoginPage
+      },
+    ]
   },
   {
     path: '/admin',
