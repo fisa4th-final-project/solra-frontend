@@ -25,7 +25,9 @@ export interface WhomiResponseDto {
   userLoginId: string;
   email: string;
   departmentId?: number;
+  departmentName?: string;
   organizationId?: number;
+  organizationName?: string;
 }
 
 export interface CreateUserRequestDto {
