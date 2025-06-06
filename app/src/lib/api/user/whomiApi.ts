@@ -4,6 +4,8 @@ import { useDialogStore } from "@/store/dialog";
 import { useAuthStore } from "@/store/auth";
 import type { ApiResponse } from "@/lib/global/ApiResponse";
 import type { WhomiResponseDto } from "@/lib/api/user/userDto";
+import { apiHandler } from "@/lib/global/apiManager";
+import type { GetUserRoleByUserIdResponseDto } from "@/lib/api/userRole/UserRoleDto";
 
 export async function whomiApi() {
 
@@ -16,15 +18,17 @@ export async function whomiApi() {
     auth: true
   }).then(async (res: ApiResponse<WhomiResponseDto>) => {
     if (res.data) {
-      /*
-      todo:
-      1. 내 정보 조회 리팩토링 이후 deptName, orgName 할당
-      */
+      const userRoles = await apiHandler.getUserRoleByUserIdApi({
+        userId: res.data.userId
+      }) ?? [] as GetUserRoleByUserIdResponseDto[];
+
       auth.whomi({
+        userRoles,
+        userId: res.data.userId,
         userName: res.data.userName,
-        deptName: '인프라 통합',
-        orgName: '우리 카드'
-      })
+        userLoginId: res.data.userLoginId,
+        email: res.data.email
+      });
     }
   }).catch((e: ApiError) => {
     console.error(e.res);
