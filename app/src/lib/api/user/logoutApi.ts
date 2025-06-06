@@ -14,9 +14,8 @@ export async function logoutApi() {
     method: "POST",
     path: "api/auth/logout"
   }).then(async (res: ApiResponse<null>) => {
-    if (res.data) {
+    if (res.success === true) {
       auth.logout();
-      console.log(auth.$state);
       await router.push('/login');
     }
   }).catch((e: ApiError) => {
