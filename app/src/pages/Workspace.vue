@@ -158,13 +158,13 @@ const isEmpty = (type: string, empty: boolean) => {
 
 onMounted(() => {
   deptReq.value.deptId = auth.getMe.auth.deptId;
-  userReq.value.deptId = auth.getMe.auth.deptId;
+  userReq.value.deptName = auth.getMe.user.deptName;
   console.log(valid);
 });
 
 watch(() => auth.getMe, () => {
   deptReq.value.deptId = auth.getMe.auth.deptId;
-  userReq.value.deptId = auth.getMe.auth.deptId;
+  userReq.value.deptName = auth.getMe.user.deptName;
 });
 
 </script>
