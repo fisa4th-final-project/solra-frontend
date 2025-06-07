@@ -67,8 +67,8 @@ export interface UpdateUserResponseDto {
 }
 
 export interface GetUserListQueryParam {
-  orgId?: number;
-  deptId?: number;
+  orgName?: string;
+  deptName?: string;
   page: number;
   size: number;
 }

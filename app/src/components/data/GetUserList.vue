@@ -59,8 +59,8 @@ const auth = useAuthStore();
 
 const props = defineProps<{
   req?: {
-    orgId?: number;
-    deptId?: number;
+    orgName?: string;
+    deptName?: string;
   }
 }>();
 
@@ -147,7 +147,7 @@ const headers: {
   }
 ]
 
-watch(() => [props.req?.deptId, props.req?.orgId], () => {
+watch(() => [props.req?.deptName, props.req?.orgName], () => {
   loadUser();
 });
 
