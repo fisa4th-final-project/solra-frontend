@@ -12,6 +12,7 @@ export async function getDeptDetailApi(reqDto: GetDeptDetailRequestParam) {
     auth: true
   }).then((res: ApiResponse<GetDeptDetailResponseDto>) => {
     resStore.push(res);
+    return res.data;
   }).catch((e: ApiError) => {
     resStore.push(e.res);
   }) ?? null;
