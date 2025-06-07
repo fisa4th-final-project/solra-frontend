@@ -9,3 +9,4 @@ declare module '*.vue' {
 
 // vuetify/styles 모듈 추가
 declare module 'vuetify/styles';
+

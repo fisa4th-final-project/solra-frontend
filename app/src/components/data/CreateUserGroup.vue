@@ -1,5 +1,5 @@
 <template>
-  <SideContents>
+  <SideContents v-if="auth.hasPerm('ORG_CREATE') || auth.hasPerm('DEPT_CREATE')">
     <template v-slot:activator="{props}">
       <slot name="activator" v-bind:props>
         <v-btn v-bind="props">CreateWorkload</v-btn>
@@ -23,6 +23,7 @@
         <CreateOrgInUserGroup 
           :form="form"
           ref="$createSvcRef"
+          v-if="auth.hasPerm('ORG_CREATE')"
         />
       </Card>
       <v-spacer class="my-5" />
@@ -54,6 +55,9 @@ import SideContents from '@/components/layout/SideContents.vue';
 import Card from '@/components/common/Card.vue';
 import CreateOrgInUserGroup from '@/components/data/CreateOrgInUserGroup.vue';
 import CreateDeptInUserGroup from '@/components/data/CreateDeptInUserGroup.vue';
+import { useAuthStore } from '@/store/auth';
+
+const auth = useAuthStore();
 
 const valid = ref(false);
 

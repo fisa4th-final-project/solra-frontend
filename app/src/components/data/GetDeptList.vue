@@ -5,9 +5,9 @@
     :detail="{enable: true}"
     @selected="selected"
     @is-empty="isEmpty"
+    v-if="auth.hasPerm('DEPT_READ')"
   >
     <template v-slot:detailTitle>
-      <!-- TODO: dept 삭제 버튼 추가 -->
       <v-row justify="space-between" align="center">
         <v-col>
           부서 상세
@@ -47,7 +47,10 @@ import GetDeptDetail from '@/components/data/GetDeptDetail.vue';
 import UpdateDept from '@/components/data/UpdateDept.vue';
 import type { GetDeptDetailResponseDto, GetDeptListRequestParam } from '@/lib/api/dept/deptDto';
 import { apiHandler } from '@/lib/global/apiManager';
+import { useAuthStore } from '@/store/auth';
 import { ref } from 'vue';
+
+const auth = useAuthStore();
 
 defineProps<{
   req: GetDeptListRequestParam

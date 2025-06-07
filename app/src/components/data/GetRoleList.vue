@@ -1,5 +1,33 @@
 <template>
-  <SideContents :model-value="isPermDetailOpened" :key="selectedItem?.permissionId">
+  <SideContents :model-value="isRoleDetailOpened" :key="selectedRole?.roleId" v-if="auth.hasPerm('ROLE_READ')">
+    <template v-slot:title>
+      <v-row justify="space-between" align="center">
+        <v-col>
+          역할 상세
+        </v-col>
+        <v-col align="end">
+          <UpdateRole
+            v-if="selectedRole"
+            :role-id="selectedRole.roleId"
+            :role-name="selectedRole.roleName"
+          >
+            <template v-slot:activator="{props}">
+              <v-btn 
+                v-bind="props"
+                color="primary"
+                variant="plain"
+              >
+                Edit
+              </v-btn>
+            </template>
+          </UpdateRole>
+        </v-col>
+      </v-row>
+    </template>
+    <DataCard :header="{title: selectedRole.roleName, icon: 'mdi-'}" :data="selectedRole"></DataCard>
+  </SideContents>
+
+  <SideContents :model-value="isPermDetailOpened" :key="selectedItem?.permissionId" v-if="auth.hasPerm('PERM_READ')">
     <template v-slot:title>
       <v-row justify="space-between" align="center">
         <v-col>
@@ -27,7 +55,7 @@
     <DataCard :header="{title: selectedItem.permissionName, icon: 'mdi-'}" :data="selectedItem"></DataCard>
   </SideContents>
 
-  <Card no-title no-text no-gutters>
+  <Card no-title no-text no-gutters v-if="auth.hasPerm('ROLE_READ')">
     <v-data-table
       :headers="headers"
       :items="permRows"
@@ -37,26 +65,38 @@
       ripple
       hover
     >
-    <template v-slot:group-header="{ item, columns, toggleGroup, isGroupOpen }">
-      <tr>
-        <td :colspan="columns.length">
-          <div class="d-flex align-center justify-space-between">
-            <span>ROLE : {{ item.value }}</span>
-
-            <v-btn
-              :icon="isGroupOpen(item) ? '$expand' : '$next'"
-              color="medium-emphasis"
-              density="comfortable"
-              size="small"
-              variant="outlined"
-              @click="toggleGroup(item)" 
-              data-test="btn-expend-item"
-            ></v-btn>
-
-          </div>
-        </td>
-      </tr>
-    </template>
+      <template v-slot:group-header="{ item, columns, toggleGroup, isGroupOpen }">
+        <tr>
+          <td :colspan="columns.length">
+            <div class="d-flex align-center justify-space-between">
+              <span>ROLE : {{ item.value }}</span>
+              <div>
+                <v-btn
+                  icon="mdi-pencil"
+                  color="medium-emphasis"
+                  density="comfortable"
+                  size="small"
+                  variant="plain"
+                  @click="handleRoleClick({roleId: item.items[0].raw.roleId, roleName: item.items[0].raw.roleName})" 
+                  data-test="btn-edit-item"
+                  class="mr-2"
+                  v-if="auth.hasPerm('ROLE_UPDATE')"
+                />
+                <v-btn
+                  :icon="isGroupOpen(item) ? '$expand' : '$next'"
+                  color="medium-emphasis"
+                  density="comfortable"
+                  size="small"
+                  variant="plain"
+                  @click="toggleGroup(item)" 
+                  data-test="btn-expend-item"
+                  v-if="auth.hasPerm('ROLE_PERMISSION_READ')"
+                />
+              </div>
+            </div>
+          </td>
+        </tr>
+      </template>
 
     </v-data-table>
   </Card>
@@ -67,8 +107,10 @@
 import Card from '@/components/common/Card.vue';
 import DataCard from '@/components/common/DataCard.vue';
 import UpdatePerm from '@/components/data/UpdatePerm.vue';
+import UpdateRole from '@/components/data/UpdateRole.vue';
 import SideContents from '@/components/layout/SideContents.vue';
 import { apiHandler } from '@/lib/global/apiManager';
+import { useAuthStore } from '@/store/auth';
 import { nextTick, onMounted, ref } from 'vue';
 
 const groupBy = [{ key: 'roleName' }]
@@ -77,7 +119,17 @@ const emit = defineEmits<{
   (e: 'selected', item: typeof permRows.value[number]): void
 }>();
 
-const handleRowClick = async (item: typeof permRows.value[number]) => {
+const auth = useAuthStore(); 
+
+const handleRoleClick = async (item: {roleId: number, roleName: string}) => {
+  selectedRole.value = item;
+  isRoleDetailOpened.value = false;
+  await nextTick();
+  isRoleDetailOpened.value = true;
+  // emit('selected', item);
+}
+
+const handleRowItemClick = async (item: typeof permRows.value[number]) => {
   selectedItem.value = item;
   isPermDetailOpened.value = false;
   await nextTick();
@@ -90,10 +142,15 @@ const getRowProps = (row: any) => {
     return {};
   } else {
     return {
-      onClick: () => handleRowClick(row.item),
+      onClick: () => handleRowItemClick(row.item),
     }
   }
 }
+
+const selectedRole = ref({
+  roleId: 0,
+  roleName: ''
+});
 
 const selectedItem = ref({
   roleId: 0,
@@ -102,6 +159,8 @@ const selectedItem = ref({
   permissionName: '',
   description: ''
 });
+
+const isRoleDetailOpened = ref(false);
 const isPermDetailOpened = ref(false);
 
 interface Perm {
@@ -110,6 +169,7 @@ interface Perm {
   description: string;
 }
 
+// const roleRow = ref<{ roleId: number; roleName: string }[]>([]);
 const permRows = ref<(Perm & { roleId: number; roleName: string })[]>([]);
 
 const loadRoles = async () => {

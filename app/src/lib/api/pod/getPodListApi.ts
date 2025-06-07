@@ -1,27 +1,19 @@
 import { apiRequest } from "@/lib/global/apiHandler";
 import { ApiError } from "@/lib/global/customError";
-import { useDialogStore } from "@/store/dialog";
 import type { ApiResponse } from "@/lib/global/ApiResponse";
 import type { GetPodListRequestParam, GetPodListResponseDto } from "@/lib/api/pod/podDto";
+import { useResStore } from "@/store/response";
 
-export async function getPodListApi(reqDto: GetPodListRequestParam):Promise<GetPodListResponseDto[] | null> {
-
-  const dialog = useDialogStore();
-
+export async function getPodListApi(reqDto: GetPodListRequestParam) {
+  const resStore = useResStore();
   return await apiRequest({
     method: "GET",
     path: `api/clusters/${reqDto.clusterId}/namespaces/${reqDto.nsName}/pods`,
     auth: true
-  }).then(async (res: ApiResponse<GetPodListResponseDto[]>) => {
-    if (!res.data) return null;
+  }).then((res: ApiResponse<GetPodListResponseDto[]>) => {
+    resStore.push(res);
     return res.data;
-  }).catch(async (e: ApiError) => {
-    console.error(e.res);
-    dialog.open({
-      title: '파드 리스트 조회 실패',
-      message: e.res.message,
-      type: 'mainframe'
-    });
-    return null;
-  });
+  }).catch((e: ApiError) => {
+    resStore.push(e.res);
+  }) ?? null;
 }

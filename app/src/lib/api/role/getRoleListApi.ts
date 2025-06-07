@@ -1,30 +1,19 @@
 import { apiRequest } from "@/lib/global/apiHandler";
 import { ApiError } from "@/lib/global/customError";
-import { useDialogStore } from "@/store/dialog";
 import type { ApiResponse } from "@/lib/global/ApiResponse";
 import type { GetRoleListResponseDto } from "@/lib/api/role/roleDto";
+import { useResStore } from "@/store/response";
 
-
-export async function getRoleListApi():Promise<GetRoleListResponseDto[] | null> {
-
-  const dialog = useDialogStore();
-
+export async function getRoleListApi() {
+  const resStore = useResStore();
   return await apiRequest({
     method: "GET",
     path: `api/roles`,
     auth: true
   }).then(async (res: ApiResponse<GetRoleListResponseDto[]>) => {
-    if (res.data) {
-      return res.data;
-    }
-    return null;
+    resStore.push(res);
+    return res.data;
   }).catch(async (e: ApiError) => {
-    console.error(e.res);
-    dialog.open({
-      title: '역할 리스트 조회 실패',
-      message: e.res.message,
-      type: 'mainframe'
-    });
-    return null;
-  });
+    resStore.push(e.res);
+  }) ?? null;
 }

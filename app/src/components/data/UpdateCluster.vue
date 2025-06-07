@@ -1,5 +1,5 @@
 <template>
-  <SideContents>
+  <SideContents v-if="auth.hasPerm('CLUSTER_UPDATE')">
     <template v-slot:activator="{ props }">
       <slot name="activator" v-bind:props>
         <v-btn v-bind="props">UpdateCluster</v-btn>
@@ -65,12 +65,15 @@ import { onMounted, ref, watch } from 'vue';
 import SideContents from '@/components/layout/SideContents.vue';
 import { rules } from '@/lib/global/inputRules';
 import { apiHandler } from '@/lib/global/apiManager';
+import { useAuthStore } from '@/store/auth';
+
+const auth = useAuthStore();
 
 const props = defineProps<{
   clusterId: number;
 }>();
 
-const valid = ref(false)
+const valid = ref(false);
 
 interface Form {
   name: string;
@@ -79,6 +82,7 @@ interface Form {
   saToken: string;
   apiServerUrl: string;
 }
+
 const form = ref<Form>({} as Form);
 
 const submitForm = () => {

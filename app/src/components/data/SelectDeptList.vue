@@ -8,47 +8,51 @@
     item-title="deptName"
     item-value="deptId"
     return-object
+    v-if="auth.hasPerm('DEPT_READ')"
   />
 </template>
 <script lang="ts" setup>
 
-  import { apiHandler } from '@/lib/global/apiManager';
+import { apiHandler } from '@/lib/global/apiManager';
+import { useAuthStore } from '@/store/auth';
 import { onMounted, ref, watch } from 'vue';
 
-  const depts = ref<{
-    deptId: number;
-    deptName: string;
-  }[]>([]);
+const auth = useAuthStore();
 
-  const props = defineProps<{
-    orgId: number;
-    form: {
-      dept: {
-        deptId: number;
-        deptName: string;
-      }
+const depts = ref<{
+  deptId: number;
+  deptName: string;
+}[]>([]);
+
+const props = defineProps<{
+  orgId: number;
+  form: {
+    dept: {
+      deptId: number;
+      deptName: string;
     }
-  }>();
-
-  const getDepts = () => {
-    apiHandler.getDeptListApi({
-      org_id: props.orgId
-    }).then((res) => {
-      if (!res) return;
-      depts.value = res;
-    });
   }
+}>();
 
-  onMounted(() => {
-    if (!props.orgId) return;
-    getDepts();
+const getDepts = () => {
+  apiHandler.getDeptListApi({
+    org_id: props.orgId
+  }).then((res) => {
+    if (!res) return;
+    depts.value = res;
   });
+}
 
-  watch(() => props.orgId, () => {
-    getDepts();
-  });
+onMounted(() => {
+  if (!props.orgId) return;
+  getDepts();
+});
 
-  defineExpose({
-    depts
-  })
+watch(() => props.orgId, () => {
+  getDepts();
+});
+
+defineExpose({
+  depts
+});
 </script>

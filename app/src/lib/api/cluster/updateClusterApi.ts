@@ -1,33 +1,20 @@
 import { apiRequest } from "@/lib/global/apiHandler";
 import { ApiError } from "@/lib/global/customError";
-import { useDialogStore } from "@/store/dialog";
 import type { ApiResponse } from "@/lib/global/ApiResponse";
 import type { UpdateClusterRequestDto, UpdateClusterResponseDto } from "@/lib/api/cluster/clusterDto";
+import { useResStore } from "@/store/response";
 
 export async function updateClusterApi(reqDto: UpdateClusterRequestDto) {
-
-  const dialog = useDialogStore();
-
-  await apiRequest({
+  const resStore = useResStore();
+  return await apiRequest({
     method: "PATCH",
     path: `api/clusters/${reqDto.clusterId}`,
     body: reqDto,
     auth: true
-  }).then(async (res: ApiResponse<UpdateClusterResponseDto>) => {
-    if (res.data) {
-      dialog.open({
-        title: '클러스터 정보 수정이 완료되었습니다.',
-        message: `Cluster: ${res.data.name}`,
-        type: 'mainframe'
-      });
-    }
+  }).then((res: ApiResponse<UpdateClusterResponseDto>) => {
+    resStore.push(res);
+    return res.data;
   }).catch((e: ApiError) => {
-    console.error(e.res);
-    dialog.open({
-      title: '클러스터 정보 수정 실패',
-      message: e.res.message,
-      type: 'mainframe'
-    });
-
-  });
+    resStore.push(e.res);
+  }) ?? null;
 }

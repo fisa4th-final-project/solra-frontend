@@ -1,5 +1,5 @@
 <template>
-  <SideContents>
+  <SideContents v-if="auth.hasPerm('DEPLOYMENT_CREATE')">
     <template v-slot:activator="{ props }">
       <slot name="activator">
         <v-btn v-bind="props">createDeployment</v-btn>
@@ -72,6 +72,9 @@ import SideContents from '@/components/layout/SideContents.vue';
 import { apiHandler } from '@/lib/global/apiManager';
 import SelectClusterList from '@/components/data/SelectClusterList.vue';
 import SelectNSList from '@/components/data/SelectNSList.vue';
+import { useAuthStore } from '@/store/auth';
+
+const auth = useAuthStore();
 
 const valid = ref(false);
 

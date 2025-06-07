@@ -1,34 +1,20 @@
 import { apiRequest } from "@/lib/global/apiHandler";
 import { ApiError } from "@/lib/global/customError";
-import { useDialogStore } from "@/store/dialog";
 import type { ApiResponse } from "@/lib/global/ApiResponse";
 import type { CreateClusterRequestDto, CreateClusterResponseDto } from "@/lib/api/cluster/clusterDto";
+import { useResStore } from "@/store/response";
 
 export async function createClusterApi(reqDto: CreateClusterRequestDto) {
-
-  const dialog = useDialogStore();
-
-  await apiRequest({
+  const resStore = useResStore();
+  return await apiRequest({
     method: "POST",
     path: "api/clusters",
     body: reqDto,
     auth: true
-  }).then(async (res: ApiResponse<CreateClusterResponseDto>) => {
-    if (res.data) {
-      console.log(res.data);
-      dialog.open({
-        title: '클러스터 정보 생성이 완료되었습니다.',
-        message: res.data.name,
-        type: 'mainframe'
-      });
-    }
+  }).then((res: ApiResponse<CreateClusterResponseDto>) => {
+    resStore.push(res);
+    return res.data;
   }).catch((e: ApiError) => {
-    console.error(e.res);
-    dialog.open({
-      title: '클러스터 정보 생성 실패',
-      message: e.res.message,
-      type: 'mainframe'
-    });
-
-  });
+    resStore.push(e.res);
+  }) ?? null;
 }

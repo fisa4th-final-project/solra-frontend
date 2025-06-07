@@ -1,33 +1,20 @@
 import { apiRequest } from "@/lib/global/apiHandler";
 import { ApiError } from "@/lib/global/customError";
-import { useDialogStore } from "@/store/dialog";
 import type { ApiResponse } from "@/lib/global/ApiResponse";
 import type { CreateRoleRequestDto, CreateRoleResponseDto } from "@/lib/api/role/roleDto";
+import { useResStore } from "@/store/response";
 
-export async function createRoleApi(reqDto: CreateRoleRequestDto): Promise<CreateRoleResponseDto | null>{
-
-  const dialog = useDialogStore();
-
+export async function createRoleApi(reqDto: CreateRoleRequestDto) {
+  const resStore = useResStore();
   return await apiRequest({
     method: "POST",
     path: "api/roles",
     body: reqDto,
     auth: true
-  }).then(async (res: ApiResponse<CreateRoleResponseDto>) => {
-    if (!res.data) return null
-      dialog.open({
-        title: '역할 생성이 완료되었습니다.',
-        message: res.data.roleName,
-        type: 'mainframe'
-      });
-      return res.data;
+  }).then((res: ApiResponse<CreateRoleResponseDto>) => {
+    resStore.push(res);
+    return res.data;
   }).catch((e: ApiError) => {
-    console.error(e.res);
-    dialog.open({
-      title: '역할 생성 실패',
-      message: e.res.message,
-      type: 'mainframe'
-    });
-    return null;
-  });
+    resStore.push(e.res);
+  }) ?? null;
 }

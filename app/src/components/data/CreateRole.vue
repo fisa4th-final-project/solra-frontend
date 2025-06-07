@@ -1,5 +1,5 @@
 <template>
-  <SideContents>
+  <SideContents v-if="auth.hasPerm('ROLE_CREATE')">
     <template v-slot:activator="{ props }">
       <slot name="activator" v-bind:props>
         <v-btn v-bind="props">createRole</v-btn>
@@ -53,6 +53,9 @@ import SideContents from '@/components/layout/SideContents.vue';
 import GetPermList from '@/components/data/GetPermList.vue';
 import { rules } from '@/lib/global/inputRules';
 import { apiHandler } from '@/lib/global/apiManager';
+import { useAuthStore } from '@/store/auth';
+
+const auth = useAuthStore();
 
 const valid = ref(false);
 
@@ -65,22 +68,18 @@ const perms = ref<{
   permissionId: number;
   permissionName: string;
   description: string;
-}[]>();
+}[]>([]);
 
-// TODO: 권한 별 요청이 아닌 1회 요청 시 권한 리스트를 전송 하게 로직 수정
 const submitForm = async () => {
-  apiHandler.createRoleApi({
+  const res = await apiHandler.createRoleApi({
     roleName: form.value.roleName,
     description: form.value.description
-  }).then((res) => {
-    if (!res) return
-    perms.value?.forEach( async (perm) => {
-      await apiHandler.createRolePermApi({
-        roleId: res.roleId,
-        permissionId: perm.permissionId
-      });
-    })
-  })
+  });
+  if (!res) return
+  apiHandler.createRolePermApi({
+    roleId: res.roleId,
+    permissionIds: perms.value.map((perm) => perm.permissionId)
+  });
 }
 
 defineExpose({

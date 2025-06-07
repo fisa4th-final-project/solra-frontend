@@ -1,5 +1,5 @@
 <template>
-  <v-container>
+  <v-container v-if="auth.hasPerm('ORG_CREATE')">
     <v-row v-if="isCreateOrg">
       <v-col>
         <v-form v-model="valid" @submit.prevent="createOrg">
@@ -62,6 +62,9 @@ import { ref, watch } from 'vue';
 import { rules } from '@/lib/global/inputRules';
 import SelectOrgList from '@/components/data/SelectOrgList.vue';
 import { apiHandler } from '@/lib/global/apiManager';
+import { useAuthStore } from '@/store/auth';
+
+const auth = useAuthStore();
 
 const valid = ref(false);
 

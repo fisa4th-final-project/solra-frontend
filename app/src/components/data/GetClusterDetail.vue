@@ -2,6 +2,7 @@
   <DataCard
     :header="{title, icon: 'mdi-kubernetes'}"
     :api="{req, dataHandler}"
+    v-if="auth.hasPerm('CLUSTER_READ')"
   >
     <template v-slot:item="{ item }">
       <tr v-if="item.field === 'caCert' || item.field === 'saToken'">
@@ -35,11 +36,14 @@
 import DataCard from '@/components/common/DataCard.vue';
 import type { GetClusterDetailRequestParam } from '@/lib/api/cluster/clusterDto';
 import { apiHandler } from '@/lib/global/apiManager';
+import { useAuthStore } from '@/store/auth';
 
 defineProps<{
   title: string;
   req: GetClusterDetailRequestParam;
 }>();
+
+const auth = useAuthStore();
 
 const dataHandler = async (req: GetClusterDetailRequestParam) => {
   if (req.clusterId) return await apiHandler.getClusterDetailApi(req);

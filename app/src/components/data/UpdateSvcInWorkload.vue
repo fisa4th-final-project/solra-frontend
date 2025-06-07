@@ -1,5 +1,5 @@
 <template>
-    <v-form v-model="valid" @submit.prevent="submitForm">
+    <v-form v-model="valid" @submit.prevent="submitForm" v-if="auth.hasPerm('SERVICE_UPDATE')">
       <v-card-subtitle>
         기본 정보
       </v-card-subtitle>
@@ -67,6 +67,9 @@
 import { onMounted, ref, watch } from 'vue';
 import { rules } from '@/lib/global/inputRules';
 import { apiHandler } from '@/lib/global/apiManager';
+import { useAuthStore } from '@/store/auth';
+
+const auth = useAuthStore();
 
 const props = defineProps<{
   clusterId: number;

@@ -1,5 +1,5 @@
 <template>
-  <SideContents>
+  <SideContents v-if="auth.hasPerm('DEPT_UPDATE')">
     <template v-slot:activator="{ props }">
       <slot name="activator" v-bind:props>
         <v-btn v-bind="props">UpdateDept</v-btn>
@@ -42,18 +42,21 @@ import { rules } from '@/lib/global/inputRules';
 import DeleteDept from '@/components/data/DeleteDept.vue';
 import type { GetDeptDetailResponseDto } from '@/lib/api/dept/deptDto';
 import { apiHandler } from '@/lib/global/apiManager';
+import { useAuthStore } from '@/store/auth';
+
+const auth = useAuthStore();
 
 const props = defineProps<{
   deptId: number;
 }>();
 
-const valid = ref(false)
+const valid = ref(false);
 
 const dept = ref<GetDeptDetailResponseDto>();
 
 const form = ref({
   deptName: ''
-})
+});
 
 const submitForm = () => {
   apiHandler.updateDeptApi({
@@ -69,7 +72,7 @@ const getDeptDetail = () => {
     if (!res) return;
     form.value.deptName = res.deptName;
     dept.value = res;
-  })
+  });
 }
 
 onMounted(() => {

@@ -12,9 +12,8 @@
         </v-container>
       </v-main>
     </v-layout>
-    <SideContents>
-      
-    </SideContents>
+    <SideContents />
+    <Snackbar />
   </v-app>
 </template>
 
@@ -30,6 +29,7 @@ import { router } from '@/router'
 import { useRouteStore } from '@/store/route'
 import { useDialogStore } from '@/store/dialog'
 import SideContents from '@/components/layout/SideContents.vue'
+import Snackbar from '@/components/common/Snackbar.vue'
 
 const dialog = useDialogStore();
 const routeStore = useRouteStore();
@@ -39,15 +39,8 @@ watch(
   () => {
     const breadcrumb = router.currentRoute.value.meta.breadcrumb as Item[] | undefined;
     routeStore.setBreadcrumbs({ breadcrumbs: breadcrumb || [] });
-    console.log(breadcrumb);
   },
   { immediate: true }
 );
 
 </script>
-
-<style lang="scss" scoped>
-.v-layout {
-  width: 100vw;
-}
-</style>

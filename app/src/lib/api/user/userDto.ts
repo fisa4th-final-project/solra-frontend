@@ -25,7 +25,10 @@ export interface WhomiResponseDto {
   userLoginId: string;
   email: string;
   departmentId?: number;
+  departmentName?: string;
   organizationId?: number;
+  organizationName?: string;
+  permNames: string[];
 }
 
 export interface CreateUserRequestDto {
@@ -64,8 +67,8 @@ export interface UpdateUserResponseDto {
 }
 
 export interface GetUserListQueryParam {
-  orgId?: number;
-  deptId?: number;
+  orgName?: string;
+  deptName?: string;
   page: number;
   size: number;
 }

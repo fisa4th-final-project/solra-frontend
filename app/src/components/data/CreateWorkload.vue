@@ -1,5 +1,5 @@
 <template>
-  <SideContents>
+  <SideContents v-if="auth.hasPerm('SERVICE_CREATE') || auth.hasPerm('DEPLOYMENT_CREATE')">
     <template v-slot:activator="{props}">
       <slot name="activator" v-bind:props>
         <v-btn v-bind="props">CreateWorkload</v-btn>
@@ -61,6 +61,9 @@ import SideContents from '@/components/layout/SideContents.vue';
 import CreateSvcInWorkload from '@/components/data/CreateSvcInWorkload.vue';
 import CreateDeployInWorkload from '@/components/data/CreateDeployInWorkload.vue';
 import Card from '@/components/common/Card.vue';
+import { useAuthStore } from '@/store/auth';
+
+const auth = useAuthStore();
 
 const props = defineProps<{
   cluster: {

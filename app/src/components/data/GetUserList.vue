@@ -1,5 +1,5 @@
 <template>
-  <Card no-title no-text no-gutters>
+  <Card no-title no-text no-gutters v-if="auth.hasPerm('USER_READ')">
     <v-data-table-server
       :headers="headers"
       :items="userItems"
@@ -10,11 +10,9 @@
       :items-per-page="size"
       ripple
       hover
-    >
-     
-    </v-data-table-server>
+    />
   </Card>
-  <SideContents v-model="isOpenUserDetail">
+  <SideContents v-model="isOpenUserDetail" v-if="auth.hasPerm('USER_READ')">
     <template v-slot:title>
       <v-row justify="space-between" align="center">
         <v-col>
@@ -54,12 +52,15 @@ import UpdateUser from '@/components/data/UpdateUser.vue';
 import SideContents from '@/components/layout/SideContents.vue';
 import type { GetUserListResContent } from '@/lib/api/user/userDto';
 import { apiHandler } from '@/lib/global/apiManager';
+import { useAuthStore } from '@/store/auth';
 import { ref, watch } from 'vue';
+
+const auth = useAuthStore();
 
 const props = defineProps<{
   req?: {
-    orgId?: number;
-    deptId?: number;
+    orgName?: string;
+    deptName?: string;
   }
 }>();
 
@@ -70,7 +71,6 @@ const emit = defineEmits<{
 const handleRowClick = (item: typeof userItems.value[number]) => {
   selectedUser.value = item;
   isOpenUserDetail.value = true;
-  console.log(item);
   emit('selected', item);
 }
 
@@ -147,7 +147,8 @@ const headers: {
   }
 ]
 
-watch(() => [props.req?.deptId, props.req?.orgId], () => {
+watch(() => [props.req?.deptName, props.req?.orgName], () => {
   loadUser();
-})
+});
+
 </script>

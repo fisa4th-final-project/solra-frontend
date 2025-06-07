@@ -1,42 +1,47 @@
 <template>
-  <v-text-field
-    v-model="form.name"
-    :rules="[rules.required]"
-    variant="underlined"
-    label="디플로이먼트 이름"
-    color="primary"
-    clearable
-  />
-  <v-text-field
-    v-model="form.appName"
-    :rules="[rules.required]"
-    variant="underlined"
-    label="컨테이너 이름"
-    color="primary"
-    clearable
-  />
-  <v-text-field
-    v-model="form.image"
-    :rules="[rules.required]"
-    variant="underlined"
-    label="컨테이너 적용 이미지"
-    color="primary"
-    clearable
-  />
-  <v-text-field
-    v-model="form.port"
-    :rules="[rules.required]"
-    variant="underlined"
-    label="컨테이너 포트"
-    color="primary"
-    clearable
-  />
+  <div v-if="auth.hasPerm('DEPLOYMENT_CREATE')">
+    <v-text-field
+      v-model="form.name"
+      :rules="[rules.required]"
+      variant="underlined"
+      label="디플로이먼트 이름"
+      color="primary"
+      clearable
+    />
+    <v-text-field
+      v-model="form.appName"
+      :rules="[rules.required]"
+      variant="underlined"
+      label="컨테이너 이름"
+      color="primary"
+      clearable
+    />
+    <v-text-field
+      v-model="form.image"
+      :rules="[rules.required]"
+      variant="underlined"
+      label="컨테이너 적용 이미지"
+      color="primary"
+      clearable
+    />
+    <v-text-field
+      v-model="form.port"
+      :rules="[rules.required]"
+      variant="underlined"
+      label="컨테이너 포트"
+      color="primary"
+      clearable
+    />
+    </div>
 </template>
 <script lang="ts" setup>
 
 import { ref } from 'vue'
 import { rules } from '@/lib/global/inputRules';
 import { apiHandler } from '@/lib/global/apiManager';
+import { useAuthStore } from '@/store/auth';
+
+const auth = useAuthStore();
 
 const props = defineProps<{
   clusterId: number;

@@ -1,5 +1,5 @@
 <template>
-  <SideContents>
+  <SideContents v-if="auth.hasPerm('ORG_UPDATE')">
     <template v-slot:activator="{ props }">
       <slot name="activator" v-bind:props>
         <v-btn v-bind="props">UpdateOrg</v-btn>
@@ -42,18 +42,21 @@ import { rules } from '@/lib/global/inputRules';
 import DeleteOrg from '@/components/data/DeleteOrg.vue';
 import type { GetOrgDetailResponseDto } from '@/lib/api/org/orgDto';
 import { apiHandler } from '@/lib/global/apiManager';
+import { useAuthStore } from '@/store/auth';
+
+const auth = useAuthStore();
 
 const props = defineProps<{
   orgId: number;
 }>();
 
-const valid = ref(false)
+const valid = ref(false);
 
 const org = ref<GetOrgDetailResponseDto>();
 
 const form = ref({
   orgName: ''
-})
+});
 
 const submitForm = () => {
   apiHandler.updateOrgApi({
@@ -69,7 +72,7 @@ const getOrgDetail = () => {
     if (!res) return;
     form.value.orgName = res.orgName;
     org.value = res;
-  })
+  });
 }
 
 onMounted(() => {

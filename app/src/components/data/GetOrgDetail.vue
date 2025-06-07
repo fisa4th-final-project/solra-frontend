@@ -2,6 +2,7 @@
   <DataCard
     :header="{title, icon: 'mdi-office-building'}"
     :api="{req, dataHandler}"
+    v-if="auth.hasPerm('ORG_READ')"
   >      
     <template v-slot:item="{ item }">
       <tr>
@@ -26,6 +27,9 @@
 import DataCard from '@/components/common/DataCard.vue';
 import type { GetOrgDetailRequestDto } from '@/lib/api/org/orgDto';
 import { apiHandler } from '@/lib/global/apiManager';
+import { useAuthStore } from '@/store/auth';
+
+const auth = useAuthStore();
 
 defineProps<{
   title: string;

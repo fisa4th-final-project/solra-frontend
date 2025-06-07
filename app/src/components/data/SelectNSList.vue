@@ -9,6 +9,7 @@
     item-title="name"
     item-value="name"
     return-object
+    v-if="auth.hasPerm('NAMESPACE_READ')"
   />
 </template>
 <script lang="ts" setup>
@@ -16,6 +17,9 @@
 import { onMounted, ref, watch } from 'vue';
 import { rules } from '@/lib/global/inputRules';
 import { apiHandler } from '@/lib/global/apiManager';
+import { useAuthStore } from '@/store/auth';
+
+const auth = useAuthStore();
 
 const props = defineProps<{
   form: {

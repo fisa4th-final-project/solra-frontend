@@ -1,5 +1,5 @@
 <template>
-  <Card no-title no-text no-gutters>
+  <Card no-title no-text no-gutters v-if="auth.hasPerm('PERMISSION_READ')">
     <v-data-table
       v-model="modelValue"
       :headers="headers"
@@ -16,43 +16,48 @@
 </template>
 <script lang="ts" setup>
 
-  import Card from '@/components/common/Card.vue';
+import Card from '@/components/common/Card.vue';
 import { apiHandler } from '@/lib/global/apiManager';
-  import { onMounted, ref } from 'vue';
+import { useAuthStore } from '@/store/auth';
+import { onMounted, ref } from 'vue';
 
-  const modelValue = defineModel<any[]>();
+const auth = useAuthStore();
 
-  const permItems = ref<{
-    permissionId: number,
-    permissionName: string,
-    description: string,
-  }[]>([]);
+const modelValue = defineModel<perm[]>();
 
-  const loadPerms = () => {
-    apiHandler.getPermListApi().then((res) => {
-      if (!res) return;
-      permItems.value = res
-    });
-  };
-  
-  const headers: {
-    title: string;
-    key: string;
-    align: 'start' | 'end';
-  }[] = [
-    { 
-      title: '권한 명',
-      key: 'permissionName',
-      align: 'start'
-    },
-    { 
-      title: '설명',
-      key: 'description',
-      align: 'start'
-    }
-  ]
+interface perm {
+  permissionId: number;
+  permissionName: string;
+  description: string;
+}
+const permItems = ref<perm[]>([]);
 
-  onMounted(() => {
-    loadPerms();
-  })
+const loadPerms = () => {
+  apiHandler.getPermListApi().then((res) => {
+    if (!res) return;
+    permItems.value = res
+  });
+};
+
+const headers: {
+  title: string;
+  key: string;
+  align: 'start' | 'end';
+}[] = [
+  { 
+    title: '권한 명',
+    key: 'permissionName',
+    align: 'start'
+  },
+  { 
+    title: '설명',
+    key: 'description',
+    align: 'start'
+  }
+]
+
+onMounted(() => {
+  loadPerms();
+});
+
 </script>

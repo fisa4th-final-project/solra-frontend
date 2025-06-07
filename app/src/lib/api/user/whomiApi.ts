@@ -1,38 +1,39 @@
 import { apiRequest } from "@/lib/global/apiHandler";
 import { ApiError } from "@/lib/global/customError";
-import { useDialogStore } from "@/store/dialog";
 import { useAuthStore } from "@/store/auth";
 import type { ApiResponse } from "@/lib/global/ApiResponse";
 import type { WhomiResponseDto } from "@/lib/api/user/userDto";
+import { apiHandler } from "@/lib/global/apiManager";
+import type { GetUserRoleByUserIdResponseDto } from "@/lib/api/userRole/UserRoleDto";
+import { useResStore } from "@/store/response";
 
 export async function whomiApi() {
-
-  const dialog = useDialogStore();
+  const resStore = useResStore();
   const auth = useAuthStore();
-
   await apiRequest({
     method: "GET",
     path: "api/auth/me",
     auth: true
   }).then(async (res: ApiResponse<WhomiResponseDto>) => {
     if (res.data) {
-      /*
-      todo:
-      1. 내 정보 조회 리팩토링 이후 deptName, orgName 할당
-      */
+      const userRoles = await apiHandler.getUserRoleByUserIdApi({
+        userId: res.data.userId
+      }) ?? [] as GetUserRoleByUserIdResponseDto[];
       auth.whomi({
+        userRoles,
+        userId: res.data.userId,
         userName: res.data.userName,
-        deptName: '인프라 통합',
-        orgName: '우리 카드'
-      })
+        userLoginId: res.data.userLoginId,
+        email: res.data.email,
+        organizationId: res.data.organizationId,
+        organizationName: res.data.organizationName,
+        departmentId: res.data.departmentId,
+        departmentName: res.data.departmentName,
+        permNames: res.data.permNames
+      });
     }
+    resStore.push(res);
   }).catch((e: ApiError) => {
-    console.error(e.res);
-    dialog.open({
-      title: '내 정보조회 실패',
-      message: e.res.message,
-      type: 'mainframe'
-    });
-
+    resStore.push(e.res);
   });
 }

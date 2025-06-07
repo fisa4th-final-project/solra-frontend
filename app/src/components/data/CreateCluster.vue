@@ -1,5 +1,5 @@
 <template>
-  <SideContents>
+  <SideContents v-if="auth.hasPerm('CLUSTER_CREATE')">
     <template v-slot:activator="{ props }">
       <slot name="activator" v-bind:props>
         <v-btn v-bind="props">createCluster</v-btn>
@@ -78,6 +78,9 @@ import SideContents from '@/components/layout/SideContents.vue';
 import SelectOrgList from '@/components/data/SelectOrgList.vue';
 import { apiHandler } from '@/lib/global/apiManager';
 import { rules } from '@/lib/global/inputRules';
+import { useAuthStore } from '@/store/auth';
+
+const auth = useAuthStore();
 
 const valid = ref(false)
 
