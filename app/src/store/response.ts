@@ -7,7 +7,7 @@ interface SnackbarQueue {
   text: string;
   show: boolean;
   timeout: number;
-  color: string;
+  success: string;
 }
 export const useResStore = defineStore('res', {
   state: () => ({
@@ -20,9 +20,15 @@ export const useResStore = defineStore('res', {
         text: res.message,
         show: true,
         timeout: 3000,
-        color: res.success ? 'success' : 'error'
+        success: res.success ? 'success' : 'error'
       })
-    }
+    },
+    remove(id: number) {
+      this.queue = this.queue.filter((item) => item.id !== id)
+    },
+    clear() {
+      this.queue = []
+    },
   },
   getters: {
     getQueue: (state) => state.queue
