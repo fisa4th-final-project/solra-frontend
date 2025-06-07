@@ -1,15 +1,15 @@
 <template>
   <v-select
-    v-model="form.cluster"
-    :items="clusterList"
+    v-model="form.role"
+    :items="roleList"
     :rules="[rules.required]"
     variant="underlined"
-    label="클러스터 선택"
+    label="역할 선택"
     color="primary"
-    item-title="name"
-    item-value="clusterId"
+    item-title="roleName"
+    item-value="roleId"
     return-object
-    v-if="auth.hasPerm('CLUSTER_READ')"
+    v-if="auth.hasPerm('ROLE_READ')"
   />
 </template>
 <script lang="ts" setup>
@@ -23,25 +23,25 @@ const auth = useAuthStore();
 
 defineProps<{
   form: {
-    cluster: {
-      clusterId: number,
-      name: string
+    role: {
+      roleId: number,
+      roleName: string
     }
   }
 }>();
 
-const clusterList = ref<{
-  clusterId: number;
-  name: string;
+const roleList = ref<{
+  roleId: number;
+  roleName: string;
 }[]>();
 
 onMounted(async () => {
-  const res = await apiHandler.getClusterListApi();
-  if (res) clusterList.value = res;
+  const res = await apiHandler.getRoleListApi();
+  if (res) roleList.value = res;
 });
 
 defineExpose({
-  clusterList
+  roleList
 });
 
 </script>

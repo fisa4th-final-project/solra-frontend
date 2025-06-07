@@ -4,6 +4,7 @@
     :header="{titleKey: 'name', icon: 'mdi-cube'}"
     @selected="selected"
     @is-empty="isEmpty"
+    v-if="auth.hasPerm('POD_READ')"
   >
     <template v-slot:item="{ item }">
       <tr >
@@ -19,6 +20,9 @@
 import DataCardList from '@/components/common/DataCardList.vue';
 import type { GetPodListRequestParam, GetPodListResponseDto } from '@/lib/api/pod/podDto';
 import { apiHandler } from '@/lib/global/apiManager';
+import { useAuthStore } from '@/store/auth';
+
+const auth = useAuthStore();
 
 defineProps<{
   req: GetPodListRequestParam

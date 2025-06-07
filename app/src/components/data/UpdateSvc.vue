@@ -1,5 +1,5 @@
 <template>
-  <SideContents>
+  <SideContents v-if="auth.hasPerm('SERVICE_UPDATE')">
     <template v-slot:activator="{ props }">
       <slot name="activator">
         <v-btn v-bind="props">UpdateSvc</v-btn>
@@ -76,6 +76,9 @@ import { onMounted, ref, watch } from 'vue';
 import SideContents from '@/components/layout/SideContents.vue';
 import { rules } from '@/lib/global/inputRules';
 import { apiHandler } from '@/lib/global/apiManager';
+import { useAuthStore } from '@/store/auth';
+
+const auth = useAuthStore();
 
 const props = defineProps<{
   clusterId: number;
@@ -120,7 +123,7 @@ const addPort = () => {
     protocol: '',
     port: 0,
     targetPort: 0
-  })
+  });
 }
 
 const removePort = (index: number) => {

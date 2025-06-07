@@ -2,6 +2,7 @@
   <DataCard
     :header="{title, icon: 'mdi-briefcase'}"
     :api="{req, dataHandler}"
+    v-if="auth.hasPerm('DEPT_READ')"
   >      
     <template v-slot:item="{ item }">
       <tr v-if="item.field !== 'orgId' && item.field !== 'deptId'">
@@ -26,6 +27,9 @@
 import DataCard from '@/components/common/DataCard.vue';
 import type { GetDeptDetailRequestParam } from '@/lib/api/dept/deptDto';
 import { apiHandler } from '@/lib/global/apiManager';
+import { useAuthStore } from '@/store/auth';
+
+const auth = useAuthStore();
 
 defineProps<{
   title: string;

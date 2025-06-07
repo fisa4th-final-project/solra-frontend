@@ -1,5 +1,5 @@
 <template>
-  <SideContents>
+  <SideContents v-if="auth.hasPerm('PERMISSION_UPDATE')">
     <template v-slot:activator="{ props }">
       <slot name="activator" v-bind:props>
         <v-btn v-bind="props">UpdatePerm</v-btn>
@@ -41,17 +41,20 @@ import SideContents from '@/components/layout/SideContents.vue';
 import { rules } from '@/lib/global/inputRules';
 import DeletePerm from '@/components/data/DeletePerm.vue';
 import { apiHandler } from '@/lib/global/apiManager';
+import { useAuthStore } from '@/store/auth';
+
+const auth = useAuthStore();
 
 const props = defineProps<{
   permId: number;
   permName: string;
 }>();
 
-const valid = ref(false)
+const valid = ref(false);
 
 const form = ref({
   description: ''
-})
+});
 
 const submitForm = () => {
   apiHandler.updatePermApi({

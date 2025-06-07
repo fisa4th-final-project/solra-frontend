@@ -2,6 +2,7 @@
   <DataCard 
     :header="{title, icon: 'mdi-server'}"
     :api="{req, dataHandler}"
+    v-if="auth.hasPerm('NODE_READ')"
   >
     <template v-slot:item="{ item }">
       <tr v-if="item.field === 'capacity' || item.field === 'allocatable'">
@@ -34,6 +35,9 @@
 import DataCard from '@/components/common/DataCard.vue';
 import type { GetNodeDetailRequestParam } from '@/lib/api/node/nodeDto';
 import { apiHandler } from '@/lib/global/apiManager';
+import { useAuthStore } from '@/store/auth';
+
+const auth = useAuthStore();
 
 defineProps<{
   title: string;

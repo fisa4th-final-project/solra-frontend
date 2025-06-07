@@ -4,6 +4,7 @@
     :header="{titleKey: 'name', icon: 'mdi-kubernetes'}"
     @selected="selected"
     @isEmpty="isEmpty"
+    v-if="auth.hasPerm('CLUSTER_READ')"
   >
     <template v-slot:item.value="{ item }">
       <span v-if="item.field === 'caCert' || item.field === 'saToken'">••••••••••••</span>
@@ -16,6 +17,9 @@
 import DataCardList from '@/components/common/DataCardList.vue';
 import type { GetClusterListRequestParam, GetClusterListResponseDto } from '@/lib/api/cluster/clusterDto';
 import { apiHandler } from '@/lib/global/apiManager';
+import { useAuthStore } from '@/store/auth';
+
+const auth = useAuthStore();
 
 defineProps<{
   req: GetClusterListRequestParam;

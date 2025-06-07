@@ -2,6 +2,7 @@
   <DataCard
     :header="{title, icon: 'mdi-lan'}"
     :api="{req, dataHandler}"
+    v-if="auth.hasPerm('SERVICE_READ')"
   >  
     <template v-slot:item="{ item }">
       <tr>
@@ -16,6 +17,9 @@
 import DataCard from '@/components/common/DataCard.vue';
 import type { GetSvcDetailRequestParam } from '@/lib/api/svc/svcDto';
 import { apiHandler } from '@/lib/global/apiManager';
+import { useAuthStore } from '@/store/auth';
+
+const auth = useAuthStore();
 
 defineProps<{
   title: string;

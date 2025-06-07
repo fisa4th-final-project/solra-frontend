@@ -2,6 +2,7 @@
   <DataCard
     :header="{title, icon: 'mdi-cube'}"
     :api="{req, dataHandler}"
+    v-if="auth.hasPerm('POD_READ')"
   >      
     <template v-slot:item="{ item }">
       <tr>
@@ -16,6 +17,9 @@
 import DataCard from '@/components/common/DataCard.vue';
 import type { GetPodDetailRequestParam } from '@/lib/api/pod/podDto';
 import { apiHandler } from '@/lib/global/apiManager';
+import { useAuthStore } from '@/store/auth';
+
+const auth = useAuthStore();
 
 defineProps<{
   title: string;

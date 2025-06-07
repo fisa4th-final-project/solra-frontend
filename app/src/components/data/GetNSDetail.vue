@@ -2,6 +2,7 @@
   <DataCard 
     :header="{title, icon: 'mdi-scan-helper'}"
     :api="{req, dataHandler}"
+    v-if="auth.hasPerm('NAMESPACE_READ')"
   >
     <template v-slot:item="{ item }">
       <tr v-if="item.field === 'labels' || item.field === 'annotations'">
@@ -25,6 +26,9 @@
 import DataCard from '@/components/common/DataCard.vue';
 import type { GetNSDetailRequestParam } from '@/lib/api/ns/nsDto';
 import { apiHandler } from '@/lib/global/apiManager';
+import { useAuthStore } from '@/store/auth';
+
+const auth = useAuthStore();
 
 defineProps<{
   title: string;

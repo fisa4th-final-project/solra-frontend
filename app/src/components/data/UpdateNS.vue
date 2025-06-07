@@ -1,5 +1,5 @@
 <template>
-  <SideContents>
+  <SideContents v-if="auth.hasPerm('NAMESPACE_UPDATE')">
     <template v-slot:activator="{ props }">
       <slot name="activator">
         <v-btn v-bind="props">UpdateNS</v-btn>
@@ -38,13 +38,16 @@
 import { onMounted, ref, watch } from 'vue';
 import SideContents from '@/components/layout/SideContents.vue';
 import { apiHandler } from '@/lib/global/apiManager';
+import { useAuthStore } from '@/store/auth';
+
+const auth = useAuthStore();
 
 const props = defineProps<{
   clusterId: number;
   name: string;
 }>();
 
-const valid = ref(false)
+const valid = ref(false);
 
 interface Form {
   labels: string;

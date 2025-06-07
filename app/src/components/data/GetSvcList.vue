@@ -4,6 +4,7 @@
     :header="{titleKey: 'name', icon: 'mdi-lan'}"
     @selected="selected"
     @is-empty="isEmpty"
+    v-if="auth.hasPerm('SERVICE_READ')"
   >
     <template v-slot:item="{ item }">
 
@@ -24,12 +25,15 @@
       </template>
   </DataCardList>
 </template>
-
 <script lang="ts" setup>
+
 import type { GetSvcListRequestParam, GetSvcListResponseDto } from '@/lib/api/svc/svcDto';
 import DataCardList from '@/components/common/DataCardList.vue';
 import { apiHandler } from '@/lib/global/apiManager';
-apiHandler
+import { useAuthStore } from '@/store/auth';
+
+const auth = useAuthStore();
+
 defineProps<{
   req: GetSvcListRequestParam
 }>();

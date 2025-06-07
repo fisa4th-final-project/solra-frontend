@@ -1,5 +1,5 @@
 <template>
-  <SideContents>
+  <SideContents v-if="auth.hasPerm('USER_UPDATE')">
     <template v-slot:activator="{ props }">
       <slot name="activator" v-bind:props>
         <v-btn v-bind="props">updateUser</v-btn>
@@ -72,6 +72,9 @@ import type { GetUserDetailResponseDto } from '@/lib/api/user/userDto';
 import Card from '@/components/common/Card.vue';
 import DeleteUser from '@/components/data/DeleteUser.vue';
 import { apiHandler } from '@/lib/global/apiManager';
+import { useAuthStore } from '@/store/auth';
+
+const auth = useAuthStore();
 
 const props = defineProps<{
   userId: number;

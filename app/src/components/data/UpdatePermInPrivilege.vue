@@ -1,5 +1,5 @@
 <template>
-  <v-form v-model="valid" @submit.prevent="submitForm">
+  <v-form v-model="valid" @submit.prevent="submitForm" v-if="auth.hasPerm('PERMISSION_UPDATE')">
     <v-text-field
       v-model="form.description"
       :rules="[rules.required]"
@@ -24,6 +24,9 @@
 import { ref } from 'vue';
 import { rules } from '@/lib/global/inputRules';
 import { apiHandler } from '@/lib/global/apiManager';
+import { useAuthStore } from '@/store/auth';
+
+const auth = useAuthStore();
 
 const props = defineProps<{
   permId: number;

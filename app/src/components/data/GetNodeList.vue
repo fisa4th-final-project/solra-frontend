@@ -4,6 +4,7 @@
     :header="{titleKey: 'name', icon: 'mdi-server'}"
     @selected="selected"
     @isEmpty="isEmpty"
+    v-if="auth.hasPerm('NODE_READ')"
   >
     <template v-slot:item="{ item }">
       <tr v-if="item.field === 'capacity' || item.field === 'allocatable'">
@@ -35,6 +36,9 @@
 import DataCardList from '@/components/common/DataCardList.vue';
 import type { GetNodeListRequestParam, GetNodeListResponseDto } from '@/lib/api/node/nodeDto';
 import { apiHandler } from '@/lib/global/apiManager';
+import { useAuthStore } from '@/store/auth';
+
+const auth = useAuthStore();
 
 defineProps<{
   req: GetNodeListRequestParam

@@ -4,6 +4,7 @@
     :header="{titleKey: 'name', icon: 'mdi-hexagon-multiple'}"
     @selected="selected"
     @is-empty="isEmpty"
+    v-if="auth.hasPerm('DEPLOYMENT_READ')"
   >
     <template v-slot:item="{ item }">
       <tr>
@@ -18,6 +19,9 @@
 import DataCardList from '@/components/common/DataCardList.vue';
 import type { GetDeployListRequestParam, GetDeployListResponseDto } from '@/lib/api/deploy/deployDto';
 import { apiHandler } from '@/lib/global/apiManager';
+import { useAuthStore } from '@/store/auth';
+
+const auth = useAuthStore();
 
 defineProps<{
   req: GetDeployListRequestParam

@@ -1,5 +1,5 @@
 <template>
-  <v-form v-model="valid" @submit.prevent="submitForm">
+  <v-form v-model="valid" @submit.prevent="submitForm" v-if="auth.hasPerm('ROLE_UPDATE')">
     <v-text-field
       v-model="form.description"
       :rules="[rules.required]"
@@ -24,16 +24,19 @@
 import { onMounted, ref, watch } from 'vue';
 import { rules } from '@/lib/global/inputRules';
 import { apiHandler } from '@/lib/global/apiManager';
+import { useAuthStore } from '@/store/auth';
+
+const auth = useAuthStore();
 
 const props = defineProps<{
   roleId: number;
 }>();
 
-const valid = ref(false)
+const valid = ref(false);
 
 const form = ref({
   description: ''
-})
+});
 
 const submitForm = () => {
   apiHandler.updateRoleApi({
@@ -48,7 +51,7 @@ const getRoleDetail = () => {
   }).then((res) => {
     if (!res) return;
     form.value.description = res.description;
-  })
+  });
 }
 
 onMounted(() => {

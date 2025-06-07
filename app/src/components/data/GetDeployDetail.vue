@@ -2,6 +2,7 @@
   <DataCard 
     :header="{title, icon: 'mdi-hexagon-multiple'}"
     :api="{req, dataHandler}"
+    v-if="auth.hasPerm('DEPLOYMENT_READ')"
   >
     <template v-slot:item="{ item }">
       <tr>
@@ -27,6 +28,9 @@
 import DataCard from '@/components/common/DataCard.vue';
 import type { GetDeployDetailRequestParam } from '@/lib/api/deploy/deployDto';
 import { apiHandler } from '@/lib/global/apiManager';
+import { useAuthStore } from '@/store/auth';
+
+const auth = useAuthStore();
 
 defineProps<{
   title: string;
