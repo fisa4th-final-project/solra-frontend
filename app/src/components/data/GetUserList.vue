@@ -71,7 +71,6 @@ const emit = defineEmits<{
 const handleRowClick = (item: typeof userItems.value[number]) => {
   selectedUser.value = item;
   isOpenUserDetail.value = true;
-  console.log(item);
   emit('selected', item);
 }
 

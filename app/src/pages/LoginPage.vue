@@ -1,25 +1,3 @@
-<script setup>
-  import Dialog from '@/components/common/Dialog.vue';
-import { loginApi } from '@/lib/api/user/loginApi';
-  import { ref } from 'vue'
-
-  const visible = ref(false)
-  const form = ref({
-    userLoginId: '',
-    password: ''
-  });
-
-  async function loginHandler() {
-    const res = await loginApi({
-      userLoginId: form.value.userLoginId,
-      password: form.value.password
-    }).finally(() => {
-      form.value.userLoginId = '';
-      form.value.password = '';
-    });
-  }
-</script>
-
 <template>
   <Dialog></Dialog>
   <v-container height="100%">
@@ -85,3 +63,25 @@ import { loginApi } from '@/lib/api/user/loginApi';
     </v-row>
   </v-container>
 </template>
+<script lang="ts" setup>
+
+  import Dialog from '@/components/common/Dialog.vue';
+import { loginApi } from '@/lib/api/user/loginApi';
+  import { ref } from 'vue'
+
+  const visible = ref(false)
+  const form = ref({
+    userLoginId: '',
+    password: ''
+  });
+
+  async function loginHandler() {
+    await loginApi({
+      userLoginId: form.value.userLoginId,
+      password: form.value.password
+    }).finally(() => {
+      form.value.userLoginId = '';
+      form.value.password = '';
+    });
+  }
+</script>

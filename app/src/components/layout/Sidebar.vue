@@ -1,64 +1,3 @@
-<script lang="ts" setup>
-  import { logoutApi } from '@/lib/api/user/logoutApi';
-  import { whomiApi } from '@/lib/api/user/whomiApi';
-  import { sidebarMenus } from '@/lib/global/menus';
-  import { useToggleTheme } from '@/lib/global/setTheme';
-  import { useAuthStore } from '@/store/auth';
-  import { ref } from 'vue'
-
-  const auth = useAuthStore();
-  whomiApi();
-
-  console.log(sidebarMenus)
-  // ---- Mock Auth ----
-
-  auth.login({
-    userId: 1,
-    orgId: 2,
-    deptId: 3,
-    roles: [
-      {
-        roleId: 1,
-        roleName: 'org-admin',
-        description: '조직관리자',
-        createdAt: '2025-05-12'
-      },
-      {
-        roleId: 2,
-        roleName: 'dept-admin',
-        description: '부서관리자',
-        createdAt: '2025-05-12'
-      },
-      {
-        roleId: 3,
-        roleName: 'proj-admin',
-        description: '조직관리자',
-        createdAt: '2025-05-12'
-      },
-      {
-        roleId: 4,
-        roleName: 'dev',
-        description: '개발자',
-        createdAt: '2025-05-12'
-      },
-      {
-        roleId: 5,
-        roleName: 'root',
-        description: '루트',
-        createdAt: '2025-05-12'
-      }
-    ]
-  })
-  
-  // ---- Mock Auth ----
-
-  const { toggleTheme, isDark } = useToggleTheme();
-
-  const drawer = ref(true);
-  const rail = ref(true);
-
-</script>
-
 <template>
   <v-navigation-drawer
     v-model="drawer"
@@ -95,10 +34,7 @@
 
       <v-list-item
         prepend-icon="mdi-account-circle"
-        style="
-          padding-top: 20px;
-          padding-bottom: 20px;
-        "
+        size="10"
       >
         <v-list-item-title>
           {{ auth.getMe.user.orgName }} / {{ auth.getMe.user.deptName }}
@@ -142,7 +78,7 @@
           </v-btn>
           <v-btn 
             icon="mdi-logout"
-            @click="logoutApi"
+            @click="apiHandler.logoutApi"
           >
           </v-btn>
           
@@ -152,4 +88,23 @@
     </div>
   </v-navigation-drawer>
 </template>
+<script lang="ts" setup>
 
+import { apiHandler } from '@/lib/global/apiManager';
+import { sidebarMenus } from '@/lib/global/menus';
+import { useToggleTheme } from '@/lib/global/setTheme';
+import { useAuthStore } from '@/store/auth';
+import { onMounted, ref } from 'vue'
+
+const auth = useAuthStore();
+
+onMounted(() => {
+  apiHandler.whomiApi();
+});
+
+const { toggleTheme, isDark } = useToggleTheme();
+
+const drawer = ref(true);
+const rail = ref(true);
+
+</script>

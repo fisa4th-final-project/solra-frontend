@@ -90,8 +90,4 @@ watch(() => props.roleId, () => {
   getRoleDetail();
 });
 
-watch(() => permIdList.value, () => {
-  console.log(permIdList.value);
-});
-
 </script>
