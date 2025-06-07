@@ -28,6 +28,7 @@ export interface WhomiResponseDto {
   departmentName?: string;
   organizationId?: number;
   organizationName?: string;
+  permNames: string[];
 }
 
 export interface CreateUserRequestDto {

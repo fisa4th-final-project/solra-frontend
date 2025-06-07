@@ -1,31 +1,20 @@
 import type { DeleteRolePermRequestDto } from "@/lib/api/rolePerm/rolePermDto";
 import { apiRequest } from "@/lib/global/apiHandler";
+import type { ApiResponse } from "@/lib/global/ApiResponse";
 import { ApiError } from "@/lib/global/customError";
-import { useDialogStore } from "@/store/dialog";
-
+import { useResStore } from "@/store/response";
 
 export async function deleteRolePermApi(reqParam: DeleteRolePermRequestDto) {
-
-  const dialog = useDialogStore();
-
+  const resStore = useResStore();
   return await apiRequest({
     method: "DELETE",
     path: `api/role-permissions`,
     body: reqParam,
     auth: true
-  }).then((res) => {
-    dialog.open({
-      title: "권한 회수 성공",
-      message: `${res.message}`,
-      type: 'mainframe'
-    });
-  }).catch(async (e: ApiError) => {
-    console.error(e.res);
-    dialog.open({
-      title: '권한 회수 실패',
-      message: e.res.message,
-      type: 'mainframe'
-    });
-    return null;
-  });
+  }).then((res: ApiResponse<null>) => {
+    resStore.push(res);
+    return res.data;
+  }).catch((e: ApiError) => {
+    resStore.push(e.res);
+  }) ?? null;
 }

@@ -1,33 +1,20 @@
 import { apiRequest } from "@/lib/global/apiHandler";
 import { ApiError } from "@/lib/global/customError";
-import { useDialogStore } from "@/store/dialog";
 import type { ApiResponse } from "@/lib/global/ApiResponse";
 import type { UpdateRoleRequestDto, UpdateRoleResponseDto } from "@/lib/api/role/roleDto";
+import { useResStore } from "@/store/response";
 
 export async function updateRoleApi(reqDto: UpdateRoleRequestDto) {
-
-  const dialog = useDialogStore();
-
-  await apiRequest({
+  const resStore = useResStore();
+  return await apiRequest({
     method: "PATCH",
     path: `api/roles/${reqDto.roleId}`,
     body: reqDto,
     auth: true
-  }).then(async (res: ApiResponse<UpdateRoleResponseDto>) => {
-    if (res.data) {
-      dialog.open({
-        title: '역할 수정이 완료되었습니다.',
-        message: `role: ${res.data.roleName}`,
-        type: 'mainframe'
-      });
-    }
+  }).then((res: ApiResponse<UpdateRoleResponseDto>) => {
+    resStore.push(res);
+    return res.data;
   }).catch((e: ApiError) => {
-    console.error(e.res);
-    dialog.open({
-      title: '역할 수정 실패',
-      message: e.res.message,
-      type: 'mainframe'
-    });
-
-  });
+    resStore.push(e.res);
+  }) ?? null;
 }

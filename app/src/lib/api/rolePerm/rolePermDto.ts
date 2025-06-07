@@ -1,6 +1,6 @@
 export interface CreateRolePermRequestDto {
   roleId: number;
-  permissionId: number;
+  permissionIds: number[];
 }
 
 export interface CreateRolePermResponseDto {

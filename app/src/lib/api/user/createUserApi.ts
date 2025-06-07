@@ -1,33 +1,20 @@
 import { apiRequest } from "@/lib/global/apiHandler";
 import { ApiError } from "@/lib/global/customError";
-import { useDialogStore } from "@/store/dialog";
 import type { ApiResponse } from "@/lib/global/ApiResponse";
 import type { CreateUserRequestDto, CreateUserResponseDto } from "@/lib/api/user/userDto";
+import { useResStore } from "@/store/response";
 
 export async function createUserApi(reqDto: CreateUserRequestDto) {
-
-  const dialog = useDialogStore();
-
-  await apiRequest({
+  const resStore = useResStore();
+  return await apiRequest({
     method: "POST",
     path: "api/users",
     body: reqDto,
     auth: true
-  }).then(async (res: ApiResponse<CreateUserResponseDto>) => {
-    if (res.data) {
-      dialog.open({
-        title: '사용자 생성이 완료되었습니다.',
-        message: res.data.email,
-        type: 'mainframe'
-      });
-    }
+  }).then((res: ApiResponse<CreateUserResponseDto>) => {
+    resStore.push(res);
+    return res.data;
   }).catch((e: ApiError) => {
-    console.error(e.res);
-    dialog.open({
-      title: '사용자 생성 실패',
-      message: e.res.message,
-      type: 'mainframe'
-    });
-
-  });
+    resStore.push(e.res);
+  }) ?? null;
 }
