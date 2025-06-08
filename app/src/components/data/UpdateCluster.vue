@@ -90,8 +90,8 @@ const submitForm = () => {
     clusterId: props.clusterId,
     name: form.value.name,
     env: form.value.env,
-    caCert: form.value.caCert,
-    saToken: form.value.saToken,
+    caCert: btoa(form.value.caCert),
+    saToken: btoa(form.value.saToken),
     apiServerUrl: form.value.apiServerUrl
   });
 }
