@@ -80,3 +80,4 @@ export { whomiApi } from "@/lib/api/user/whomiApi";
 // UserRole
 export { getUserRoleByUserIdApi } from "@/lib/api/userRole/getUserRoleApi";
 export { createUserRoleApi } from "@/lib/api/userRole/createUserRoleApi";
+export { deleteUserRoleApi } from "@/lib/api/userRole/deleteUserRoleApi";
