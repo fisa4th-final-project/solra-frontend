@@ -1,5 +1,5 @@
 <template>
-  <SideContents v-if="auth.hasPerm('ROLE_CREATE')">
+  <SideContents v-if="auth.hasPerm('ROLE_CREATE')" v-model="isOpened">
     <template v-slot:activator="{ props }">
       <slot name="activator" v-bind:props>
         <v-btn v-bind="props">createRole</v-btn>
@@ -57,6 +57,11 @@ import { useAuthStore } from '@/store/auth';
 
 const auth = useAuthStore();
 
+const props = defineProps<{
+  onUpdate?: () => void;
+}>();
+
+const isOpened = ref();
 const valid = ref(false);
 
 const form = ref({
@@ -79,6 +84,9 @@ const submitForm = async () => {
   apiHandler.createRolePermApi({
     roleId: res.roleId,
     permissionIds: perms.value.map((perm) => perm.permissionId)
+  }).then(() => {
+    isOpened.value = false;
+    props.onUpdate?.();
   });
 }
 

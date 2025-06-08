@@ -1,5 +1,5 @@
 <template>
-  <SideContents v-if="auth.hasPerm('PERMISSION_UPDATE')">
+  <SideContents v-if="auth.hasPerm('PERMISSION_UPDATE')" v-model="isOpened">
     <template v-slot:activator="{ props }">
       <slot name="activator" v-bind:props>
         <v-btn v-bind="props">UpdatePerm</v-btn>
@@ -48,9 +48,12 @@ const auth = useAuthStore();
 const props = defineProps<{
   permId: number;
   permName: string;
+  onUpdate?: () => void;
 }>();
 
 const valid = ref(false);
+
+const isOpened = ref();
 
 const form = ref({
   description: ''
@@ -60,6 +63,9 @@ const submitForm = () => {
   apiHandler.updatePermApi({
     permId: props.permId,
     description: form.value.description
+  }).then(() => {
+    props.onUpdate?.();
+    isOpened.value = false;
   });
 }
 
