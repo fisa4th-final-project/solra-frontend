@@ -1,5 +1,5 @@
 <template>
-  <SideContents v-if="auth.hasPerm('CLUSTER_CREATE')">
+  <SideContents v-if="auth.hasPerm('CLUSTER_CREATE')" v-model="isOpened">
     <template v-slot:activator="{ props }">
       <slot name="activator" v-bind:props>
         <v-btn v-bind="props">createCluster</v-btn>
@@ -82,7 +82,13 @@ import { useAuthStore } from '@/store/auth';
 
 const auth = useAuthStore();
 
-const valid = ref(false)
+const props = defineProps<{
+  onUpdate?: (arg: any) => void;
+}>();
+
+const valid = ref(false);
+
+const isOpened = ref();
 
 interface ClusterRef {
   org: {
@@ -106,8 +112,13 @@ const submitForm = () => {
     caCert: btoa(form.value.caCert),
     saToken: btoa(form.value.saToken),
     apiServerUrl:form.value.endpoints
+  }).then((res) => {
+    if (!res) return
+    props.onUpdate?.(res.orgId);
+    isOpened.value = false;
   });
 }
 
 defineExpose({ form, valid });
+
 </script>

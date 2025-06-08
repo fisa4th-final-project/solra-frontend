@@ -6,6 +6,7 @@
     @isEmpty="isEmpty"
     v-if="auth.hasPerm('CLUSTER_READ')"
     :detail="{enable: true}"
+    ref="$getClusterList"
   >
     <template v-slot:detailTitle>
       <v-row justify="space-between" align="center">
@@ -15,6 +16,7 @@
         <v-col align="end">
           <UpdateCluster
             :clusterId="selectedItem.clusterId"
+            :onUpdate="onUpdate"
           >
             <template v-slot:activator="{props}">
               <v-btn 
@@ -59,8 +61,11 @@ const auth = useAuthStore();
 
 const selectedItem = ref<GetClusterListResponseDto>({} as GetClusterListResponseDto);
 
+const $getClusterList = ref();
+
 defineProps<{
   req: GetClusterListRequestParam;
+  onUpdate?: (arg?: any) => void;
 }>();
 
 const emit = defineEmits<{
@@ -85,5 +90,9 @@ const enableField = [
   'clusterId',
   'orgId',
 ]
+
+defineExpose({
+  loadData: async () => await $getClusterList?.value?.loadData?.()
+});
 
 </script>

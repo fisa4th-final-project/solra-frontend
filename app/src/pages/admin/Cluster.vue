@@ -7,7 +7,7 @@
         </span>
       </v-col>
       <v-col align="end">
-        <CreateCluster>
+        <CreateCluster :onUpdate="loadCluster">
           <template v-slot:activator="{ props }">
             <v-btn
               v-bind="props"
@@ -39,15 +39,16 @@
             <v-divider/>
           </v-col>
 
-          <v-icon> <!-- TODO: org 정보 조회 기능 추가 -->
-            mdi-information-outline
-          </v-icon>
+          <v-btn flat variant="plain" icon="mdi-refresh" @click="loadCluster(org.orgId)"/>
+
         </v-row>
         <GetClusterList 
           :req="{orgId: org.orgId}"
           @selected="select"
           @is-empty="(empty) => isEmpty(org.orgId, empty)"
-        />
+          :onUpdate="loadCluster"
+          :ref="(el) => getclusterListRef(el, org.orgId)"
+          />
         <v-spacer v-if="i + 1 < orgList.length" class="ma-15" />
       </v-col>
     </v-row>
@@ -76,6 +77,7 @@ const auth = useAuthStore();
 const orgList = ref<GetOrgListResponseDto[]>([]);
 const selectedCluster = ref<GetClusterDetailResponseDto>();
 const isEmptyList = ref<Record<number,boolean>>({});
+const $getClusterList = ref<Record<number, InstanceType<typeof GetClusterList> | null>>({});
 
 const select = (item: GetClusterDetailResponseDto) => {
   selectedCluster.value = item;
@@ -84,7 +86,7 @@ const isEmpty = (orgId: number, empty: boolean) => {
   isEmptyList.value[orgId] = empty;
 }
 
-onMounted(async () => {
+const loadData = async () => {
   const res = await apiHandler.getOrgListApi().catch( async () => {
     await apiHandler.getOrgDetailApi({
       orgId: auth.getMe.auth.orgId
@@ -93,6 +95,18 @@ onMounted(async () => {
     });
   }); 
   if (res) return orgList.value = res;
+}
+
+const getclusterListRef = (el: any, orgId: number) => {
+  $getClusterList.value[orgId] = el;
+}
+
+const loadCluster = (orgId: number) => {
+  $getClusterList?.value?.[orgId]?.loadData();
+}
+
+onMounted(() => {
+  loadData();
 });
 
 </script>

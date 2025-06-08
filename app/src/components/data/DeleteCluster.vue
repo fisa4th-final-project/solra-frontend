@@ -2,10 +2,13 @@
   <div v-if="auth.hasPerm('CLUSTER_CREATE')">
     <v-btn
       flat
+      variant="plain"
       color="red"
       class="font-weight-bold"
-      @click="deleteCluster"
-    >삭제</v-btn>
+      @click="openDialog"
+    >
+      Delete
+    </v-btn>
     <Dialog v-if="dialog.getType === 'deleteCluster'">
       <template v-slot:title>
         클러스터 정보를 삭제하시겠습니까?
@@ -20,7 +23,7 @@
         >취소</v-btn>
         <v-btn
           color="red"
-          @click="apiHandler.deleteClusterApi({clusterId: cluster.clusterId})"
+          @click="deleteCluster"
         >삭제</v-btn>
       </template>
     </Dialog>
@@ -28,27 +31,35 @@
 </template>
 <script lang="ts" setup>
 
-  import Dialog from '@/components/common/Dialog.vue';
-  import { useDialogStore } from '@/store/dialog';
+import Dialog from '@/components/common/Dialog.vue';
+import { useDialogStore } from '@/store/dialog';
 import { apiHandler } from '@/lib/global/apiManager';
 import { useAuthStore } from '@/store/auth';
 
-  defineProps<{
-    cluster: {
-      clusterId: number;
-      name: string;
-    }
-  }>();
+const props = defineProps<{
+  cluster: {
+    clusterId: number;
+    name: string;
+  },
+  onUpdate?: () => void;
+}>();
 
-  const auth = useAuthStore();
-  const dialog = useDialogStore();
+const auth = useAuthStore();
+const dialog = useDialogStore();
 
-  function deleteCluster() {
-    dialog.open({
-      title: '',
-      message: '',
-      type: 'deleteCluster'
-    });
-  }
-  
+const deleteCluster = () => {
+  dialog.close();
+  apiHandler.deleteClusterApi({clusterId: props.cluster.clusterId}).then(() => {
+    props.onUpdate?.();
+  });
+}
+
+function openDialog() {
+  dialog.open({
+    title: '',
+    message: '',
+    type: 'deleteCluster'
+  });
+}
+
 </script>
