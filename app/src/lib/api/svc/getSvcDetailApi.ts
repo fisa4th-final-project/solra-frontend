@@ -11,7 +11,6 @@ export async function getSvcDetailApi(reqDto: GetSvcDetailRequestParam) {
     path: `api/clusters/${reqDto.clusterId}/namespaces/${reqDto.nsName}/services/${reqDto.name}`,
     auth: true
   }).then((res: ApiResponse<GetSvcDetailResponseDto>) => {
-    resStore.push(res);
     return res.data;
   }).catch((e: ApiError) => {
     resStore.push(e.res);

@@ -11,7 +11,6 @@ export async function getOrgListApi() {
     path: `api/organizations`,
     auth: true
   }).then((res: ApiResponse<GetOrgListResponseDto[]>) => {
-    resStore.push(res);
     return res.data
   }).catch((e: ApiError) => {
     resStore.push(e.res);

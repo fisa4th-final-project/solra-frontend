@@ -11,7 +11,6 @@ export async function getOrgDetailApi(reqDto: GetOrgDetailRequestDto) {
     path: `api/organizations/${reqDto.orgId}`,
     auth: true
   }).then((res: ApiResponse<GetOrgDetailResponseDto>) => {
-    resStore.push(res);
     return res.data;
   }).catch((e: ApiError) => {
     resStore.push(e.res);

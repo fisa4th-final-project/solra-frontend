@@ -11,7 +11,6 @@ export async function getRolePermListApi(reqDto: GetRolePermListRequestParam) {
     path: `api/role-permissions/${reqDto.roleId}`,
     auth: true
   }).then((res: ApiResponse<GetRolePermListResponseDto[]>) => {
-    resStore.push(res);
     return res.data;
   }).catch((e: ApiError) => {
     resStore.push(e.res);

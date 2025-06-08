@@ -32,7 +32,6 @@ export async function whomiApi() {
         permNames: res.data.permNames
       });
     }
-    resStore.push(res);
   }).catch((e: ApiError) => {
     resStore.push(e.res);
   });

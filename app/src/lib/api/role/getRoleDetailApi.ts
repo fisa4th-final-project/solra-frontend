@@ -11,7 +11,6 @@ export async function getRoleDetailApi(reqDto: GetRoleDetailRequestParam) {
     path: `api/roles/${reqDto.roleId}`,
     auth: true
   }).then((res: ApiResponse<GetRoleDetailResponseDto>) => {
-    resStore.push(res);
     return res.data;
   }).catch((e: ApiError) => {
     resStore.push(e.res);
