@@ -1,5 +1,5 @@
 <template>
-  <SideContents v-if="auth.hasPerm('USER_CREATE')">
+  <SideContents v-if="auth.hasPerm('USER_CREATE')" v-model="isOpened">
     <template v-slot:activator="{ props }">
       <slot name="activator" v-bind:props>
         <v-btn v-bind="props">createUser</v-btn>
@@ -74,6 +74,12 @@ import { useAuthStore } from '@/store/auth';
 
 const auth = useAuthStore();
 
+const props = defineProps<{
+  onUpdate?: () => void;
+}>();
+
+const isOpened = ref();
+
 const valid = ref(false)
 
 const form = ref({
@@ -96,18 +102,21 @@ const form = ref({
 })
 
 const submitForm = async () => {
-  const res = await apiHandler.createUserApi({
+  await apiHandler.createUserApi({
     userLoginId: form.value.userLoginId ,
     password: form.value.password ,
     userName: form.value.userName ,
     email: form.value.email ,
     orgId: form.value.org.orgId ,
     deptId: form.value.dept.deptId
-  });
-
-  if (res && form.value.role.roleId != 0) await apiHandler.createUserRoleApi({
-    userId: res.userId,
-    roleId: form.value.role.roleId
+  }).then(async (res) => {
+    if (res && form.value.role.roleId != 0) await apiHandler.createUserRoleApi({
+      userId: res.userId,
+      roleId: form.value.role.roleId
+    });
+  }).then(() => {
+    isOpened.value = false;
+    props.onUpdate?.();
   });
 }
 

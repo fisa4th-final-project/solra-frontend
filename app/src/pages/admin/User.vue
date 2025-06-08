@@ -7,7 +7,7 @@
         </span>
       </v-col>
       <v-col align="end">
-        <CreateUser v-if="auth.hasPerm('USER_CREATE')">
+        <CreateUser v-if="auth.hasPerm('USER_CREATE')" :onUpdate="$getUserList?.loadUser">
           <template v-slot:activator="{ props }">
             <v-btn
               v-bind="props"
@@ -33,10 +33,13 @@
     </v-form>
     <v-row>
       <v-col>
-        <GetUserList :req="{
-          orgName: form.org.orgName ?? 0,
-          deptName: form.dept.deptName ?? 0
-        }"/>
+        <GetUserList 
+          :req="{
+            orgName: form.org.orgName ?? 0,
+            deptName: form.dept.deptName ?? 0
+          }"
+          ref="$getUserList"
+        />
       </v-col>
     </v-row>
   </v-container>
@@ -51,6 +54,8 @@ import { useAuthStore } from '@/store/auth';
 import { ref } from 'vue';
 
 const auth = useAuthStore();
+
+const $getUserList = ref();
 
 const form = ref<{
   org: {

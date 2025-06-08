@@ -16,10 +16,14 @@
     <template v-slot:title>
       <v-row justify="space-between" align="center">
         <v-col>
-          {{ `${selectedUser.organizationName} / ${selectedUser.departmentName} - ${selectedUser.userName}` }}
+          사용자 상세
         </v-col>
         <v-col align="end">
-          <UpdateUser v-if="selectedUser && selectedUser.userId" :user-id="selectedUser.userId">
+          <UpdateUser 
+            v-if="selectedUser && selectedUser.userId" 
+            :user-id="selectedUser.userId"
+            :onUpdate="loadUser"
+          >
             <template v-slot:activator="{props}">
               <v-btn 
               v-bind="props"
@@ -35,8 +39,11 @@
     </template>
     <v-row>
       <v-col>
-
-        <GetUserDetail v-if="selectedUser && selectedUser.userId" :user-id="selectedUser.userId"/>
+        <GetUserDetail 
+          v-if="selectedUser && selectedUser.userId"
+          :title="`${selectedUser.organizationName} / ${selectedUser.departmentName} - ${selectedUser.userName}`"
+          :req="{userId: selectedUser.userId}"
+        />
       </v-col>
     </v-row>
   
@@ -92,6 +99,7 @@ const size = ref(3);
 const page = ref(1);
 
 const loadUser = (options?: any) => {
+  isOpenUserDetail.value = false;
   if (options) {
     page.value = options.page;
     size.value = options.itemsPerPage;
@@ -149,6 +157,10 @@ const headers: {
 
 watch(() => [props.req?.deptName, props.req?.orgName], () => {
   loadUser();
+});
+
+defineExpose({
+  loadUser
 });
 
 </script>
