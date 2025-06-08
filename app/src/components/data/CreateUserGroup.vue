@@ -1,5 +1,5 @@
 <template>
-  <SideContents v-if="auth.hasPerm('ORG_CREATE') || auth.hasPerm('DEPT_CREATE')">
+  <SideContents v-if="auth.hasPerm('ORG_CREATE') || auth.hasPerm('DEPT_CREATE')" v-model="isOpened">
     <template v-slot:activator="{props}">
       <slot name="activator" v-bind:props>
         <v-btn v-bind="props">CreateWorkload</v-btn>
@@ -43,23 +43,30 @@
         <CreateDeptInUserGroup
           :org="form.org"
           ref="$createDeployRef"
-          />
+          :onUpdate="updateCallBack"
+        />
       </Card>
     </v-form>
   </SideContents>
 </template>
 <script lang="ts" setup>
 
-import { ref, watch } from 'vue'
+import { ref } from 'vue'
 import SideContents from '@/components/layout/SideContents.vue';
 import Card from '@/components/common/Card.vue';
 import CreateOrgInUserGroup from '@/components/data/CreateOrgInUserGroup.vue';
 import CreateDeptInUserGroup from '@/components/data/CreateDeptInUserGroup.vue';
 import { useAuthStore } from '@/store/auth';
 
+const props = defineProps<{
+  onUpdate?: () => void;
+}>();
+
 const auth = useAuthStore();
 
 const valid = ref(false);
+
+const isOpened = ref();
 
 const form = ref({
   org: {
@@ -68,8 +75,9 @@ const form = ref({
   }
 });
 
-watch(() => [form.value.org], () => {
-  console.log(form.value.org);
-});
+const updateCallBack = () => {
+  props.onUpdate?.();
+  isOpened.value = false;
+}
 
 </script>

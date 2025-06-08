@@ -5,7 +5,7 @@
     v-if="auth.hasPerm('ORG_READ')"
   >      
     <template v-slot:item="{ item }">
-      <tr>
+      <tr v-if="!enableField.includes(item.field)">
         <th>{{ item.field }}</th>
         <td class="text-right">{{ item.value }}</td>
       </tr>
@@ -40,4 +40,7 @@ const dataHandler = async (req: GetOrgDetailRequestDto) => {
   return await apiHandler.getOrgDetailApi(req);
 };
 
+const enableField = [
+  'orgId'
+]
 </script>

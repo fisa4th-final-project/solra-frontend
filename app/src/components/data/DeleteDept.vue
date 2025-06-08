@@ -5,7 +5,7 @@
       variant="plain"
       color="red"
       class="font-weight-bold"
-      @click="deleteDept"
+      @click="openDialog"
     >
       Delete
     </v-btn>
@@ -23,7 +23,7 @@
         >취소</v-btn>
         <v-btn
           color="red"
-          @click="apiHandler.deleteDeptApi({deptId: dept.deptId})"
+          @click="deleteDept()"
         >삭제</v-btn>
       </template>
     </Dialog>
@@ -31,23 +31,24 @@
 </template>
 <script lang="ts" setup>
 
-  import Dialog from '@/components/common/Dialog.vue';
-  import { useDialogStore } from '@/store/dialog';
+import Dialog from '@/components/common/Dialog.vue';
+import { useDialogStore } from '@/store/dialog';
 import { apiHandler } from '@/lib/global/apiManager';  
 import { useAuthStore } from '@/store/auth';
 
 const auth = useAuthStore();
 
-  defineProps<{
+  const props = defineProps<{
     dept: {
       deptId: number,
       deptName: string
-    };
+    },
+    onUpdate?: () => void
   }>();
 
   const dialog = useDialogStore();
 
-  function deleteDept() {
+  function openDialog() {
     dialog.open({
       title: '',
       message: '',
@@ -55,4 +56,11 @@ const auth = useAuthStore();
     });
   }
   
+  function deleteDept() {
+    dialog.close();
+    apiHandler.deleteDeptApi({deptId: props.dept.deptId}).then(() => {
+      props.onUpdate?.();
+    });
+  }
+
 </script>
