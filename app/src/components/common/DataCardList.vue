@@ -85,8 +85,10 @@ const isItemDetailOpen = ref();
 
 const datas = ref();
 
-const loadData = async (req: Object | null, dataHandler: Function) => {
-  const res = await dataHandler(req);
+const loadData = async () => {
+  if (isItemDetailOpen.value) isItemDetailOpen.value = false;
+
+  const res = await props.api.dataHandler(props.api.req ?? null);
   if (!res || res.length === 0) {
     isEmpty(true);
   } else {
@@ -102,13 +104,17 @@ const onClickItem = () => {
 }
 
 onMounted(() => {
-  loadData(props.api.req ?? null, props.api.dataHandler);
+  loadData();
 });
 
 watch(() => props.api?.req, () => {
   if (props.api?.req) { 
-    loadData(props.api.req, props.api.dataHandler);
+    loadData();
   }
+});
+
+defineExpose({
+  loadData
 });
 
 </script>
