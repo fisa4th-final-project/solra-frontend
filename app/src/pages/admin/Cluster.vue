@@ -66,9 +66,12 @@
 import CreateCluster from '@/components/data/CreateCluster.vue';
 import GetClusterList from '@/components/data/GetClusterList.vue';
 import type { GetClusterDetailResponseDto } from '@/lib/api/cluster/clusterDto';
-import { getOrgListApi } from '@/lib/api/org/getOrgListApi';
 import type { GetOrgListResponseDto } from '@/lib/api/org/orgDto';
+import { apiHandler } from '@/lib/global/apiManager';
+import { useAuthStore } from '@/store/auth';
 import { onMounted, ref } from 'vue';
+
+const auth = useAuthStore();
 
 const orgList = ref<GetOrgListResponseDto[]>([]);
 const selectedCluster = ref<GetClusterDetailResponseDto>();
@@ -82,9 +85,14 @@ const isEmpty = (orgId: number, empty: boolean) => {
 }
 
 onMounted(async () => {
-  await getOrgListApi().then((res) => {
-    if (res) orgList.value = res;
-  });
+  const res = await apiHandler.getOrgListApi().catch( async () => {
+    await apiHandler.getOrgDetailApi({
+      orgId: auth.getMe.auth.orgId
+    }).then((org) => {
+      if (org) orgList.value.push(org);
+    });
+  }); 
+  if (res) return orgList.value = res;
 });
 
 </script>

@@ -5,21 +5,59 @@
     @selected="selected"
     @isEmpty="isEmpty"
     v-if="auth.hasPerm('CLUSTER_READ')"
+    :detail="{enable: true}"
   >
-    <template v-slot:item.value="{ item }">
-      <span v-if="item.field === 'caCert' || item.field === 'saToken'">••••••••••••</span>
-      <span v-else>{{ item.value }}</span>
+    <template v-slot:detailTitle>
+      <v-row justify="space-between" align="center">
+        <v-col>
+          클러스터 상세
+        </v-col>
+        <v-col align="end">
+          <UpdateCluster
+            :clusterId="selectedItem.clusterId"
+          >
+            <template v-slot:activator="{props}">
+              <v-btn 
+                v-bind="props"
+                color="primary"
+                variant="plain"
+              >
+                Edit
+              </v-btn>
+            </template>
+          </UpdateCluster>
+        </v-col>
+      </v-row>
+    </template>
+    <template v-slot:detail>
+      <GetClusterDetail :title="selectedItem.name" :req="{clusterId: selectedItem.clusterId}" />
+    </template>
+    <template v-slot:item="{ item }">
+      <tr v-if="!enableField.includes(item.field)">
+        <th>
+          {{ item.field }}
+        </th>
+        <td v-if="item.field === 'caCert' || item.field === 'saToken'" class="text-right">••••••••••••</td>
+        <td v-else class="text-right">
+          {{ item.value }}
+        </td>
+      </tr>
     </template>
   </DataCardList>
 </template>
 <script lang="ts" setup>
 
 import DataCardList from '@/components/common/DataCardList.vue';
+import GetClusterDetail from '@/components/data/GetClusterDetail.vue';
+import UpdateCluster from '@/components/data/UpdateCluster.vue';
 import type { GetClusterListRequestParam, GetClusterListResponseDto } from '@/lib/api/cluster/clusterDto';
 import { apiHandler } from '@/lib/global/apiManager';
 import { useAuthStore } from '@/store/auth';
+import { ref } from 'vue';
 
 const auth = useAuthStore();
+
+const selectedItem = ref<GetClusterListResponseDto>({} as GetClusterListResponseDto);
 
 defineProps<{
   req: GetClusterListRequestParam;
@@ -31,7 +69,8 @@ const emit = defineEmits<{
 }>()
 
 const selected = (item: GetClusterListResponseDto) => {
-  emit('selected', item)
+  selectedItem.value = item;
+  emit('selected', item);
 }
 
 const isEmpty = (item: boolean) => {
@@ -41,5 +80,10 @@ const isEmpty = (item: boolean) => {
 const dataHandler = async (req: GetClusterListRequestParam) => {
   return await apiHandler.getClusterListApi(req);
 };
+
+const enableField = [
+  'clusterId',
+  'orgId',
+]
 
 </script>
