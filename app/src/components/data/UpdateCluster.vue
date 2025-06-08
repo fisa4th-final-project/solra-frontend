@@ -104,8 +104,8 @@ const getClusterDetail = () => {
     form.value = {
       name: res.name,
       env: res.env,
-      caCert: res.caCert,
-      saToken: res.saToken,
+      caCert: atob(res.caCert),
+      saToken: atob(res.saToken),
       apiServerUrl: res.apiServerUrl
     };
   })
