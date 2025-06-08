@@ -1,5 +1,5 @@
 <template>
-  <div v-if="auth.hasPerm('ROLE_DELETE')">
+  <div v-if="auth.hasPerm('USER_ROLE_REVOKE')">
     <v-btn
       flat
       variant="plain"

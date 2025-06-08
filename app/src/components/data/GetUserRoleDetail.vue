@@ -2,7 +2,7 @@
   <DataCard
     :data="data"
     :header="{title: data?.roleName ?? '', icon: 'mdi-card-account-details'}"
-    v-if="auth.hasPerm('ROLE_READ')"
+    v-if="auth.hasPerm('USER_ROLE_READ')"
   />
 </template>
 <script lang="ts" setup>

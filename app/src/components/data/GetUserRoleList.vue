@@ -5,7 +5,7 @@
     :detail="{enable: true}"
     @selected="selected"
     @is-empty="isEmpty"
-    v-if="auth.hasPerm('DEPT_READ')"
+    v-if="auth.hasPerm('USER_ROLE_READ')"
     ref="$userRoleList"
   >
     <template v-slot:detailTitle>

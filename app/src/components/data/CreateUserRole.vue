@@ -1,5 +1,5 @@
 <template>
-  <SideContents v-if="auth.hasPerm('ROLE_CREATE')" v-model="isOpened">
+  <SideContents v-if="auth.hasPerm('USER_ROLE_ASSIGN')" v-model="isOpened">
     <template v-slot:activator="{ props }">
       <slot name="activator" v-bind:props>
         <v-btn v-bind="props">createRole</v-btn>
