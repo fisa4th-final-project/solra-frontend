@@ -3,8 +3,21 @@
     <v-row align="center">
       <v-col>
         <span class="text-h4">
-          노드
+          노드 & 네임스페이스
         </span>
+      </v-col>
+      <v-col align="end">
+        <CreateNS v-if="auth.hasPerm('NAMESPACE_CREATE')">
+          <template v-slot:activator="{props}">
+            <v-btn 
+              v-bind="props"
+              color="primary"
+              variant="plain"
+            >
+              Add
+            </v-btn>
+          </template>
+        </CreateNS>
       </v-col>
     </v-row>
     <v-row v-if="clusterList.length" v-for="(cluster, i) in clusterList" :key="i">
@@ -32,7 +45,13 @@
         </v-row>
         <GetNodeList 
           :req="{clusterId: cluster.clusterId}"
-          @selected="select"
+          @selected="selectNode"
+          @is-empty="(empty) => isEmpty(cluster.clusterId, empty)"
+        />
+        <v-divider class="my-6"/>
+        <GetNSList 
+          :req="{clusterId: cluster.clusterId}"
+          @selected="selectNS"
           @is-empty="(empty) => isEmpty(cluster.clusterId, empty)"
         />
         <v-spacer v-if="i + 1 < clusterList.length" class="ma-15" />
@@ -59,8 +78,6 @@
             :clusterId="selectedCluster.clusterId"
           >
             <template v-slot:activator="{props}">
-              {{ console.log(selectedCluster.clusterId) }}
-              {{ console.log(props) }}
               <v-btn 
                 v-bind="props"
                 color="primary"
@@ -86,17 +103,27 @@ import type { GetNodeDetailResponseDto } from '@/lib/api/node/nodeDto';
 import SideContents from '@/components/layout/SideContents.vue';
 import GetClusterDetail from '@/components/data/GetClusterDetail.vue';
 import UpdateCluster from '@/components/data/UpdateCluster.vue';
+import GetNSList from '@/components/data/GetNSList.vue';
+import type { GetNSDetailResponseDto } from '@/lib/api/ns/nsDto';
+import { useAuthStore } from '@/store/auth';
+import CreateNS from '@/components/data/CreateNS.vue';
+
+const auth = useAuthStore();
 
 const clusterList = ref<GetClusterListResponseDto[]>([]);
 const selectedNode = ref<GetNodeDetailResponseDto>();
+const selectedNS = ref<GetNSDetailResponseDto>();
 const isEmptyList = ref<Record<number, boolean>>({});
 
 const selectedCluster = ref();
 
 const isClusterDetailOpen = ref(false);
 
-const select = (item: GetNodeDetailResponseDto) => {
+const selectNode = (item: GetNodeDetailResponseDto) => {
   selectedNode.value = item;
+}
+const selectNS = (item: GetNSDetailResponseDto) => {
+  selectedNS.value = item;
 }
 const isEmpty = (clusterId: number, empty: boolean) => {
   isEmptyList.value[clusterId] = empty;
@@ -104,7 +131,6 @@ const isEmpty = (clusterId: number, empty: boolean) => {
 
 const openClusterDetail = (cluster: any) => {
   selectedCluster.value = cluster;
-  console.log(selectedCluster.value);
   isClusterDetailOpen.value = true;
 }
 

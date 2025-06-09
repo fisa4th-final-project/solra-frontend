@@ -51,6 +51,7 @@
       </v-card-subtitle>
       <v-row v-for="(port, i) in form.ports" :key="i" dense justify="start" align="start" class="pt-2">
         <v-col cols="12" class="py-2">
+          <v-text-field hide-details v-model="port.name" label="name" />
           <v-text-field hide-details v-model="port.protocol" label="Protocol" >
             <template v-slot:append-inner>
               <v-icon @click="removePort(i)">mdi-delete</v-icon>
@@ -108,6 +109,7 @@ const props = defineProps<{
 const valid = ref(false);
 
 interface Port {
+  name: string;
   protocol: string;
   port: number;
   targetPort: number;
@@ -131,6 +133,7 @@ const form = ref({
 
 const addPort = () => {
   form.value.ports.push({
+    name: '',
     protocol: '',
     port: 0,
     targetPort: 0

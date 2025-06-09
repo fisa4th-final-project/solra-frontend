@@ -48,6 +48,7 @@ export interface CreateSvcRequestDto {
     app: string;
   };
   ports: {
+    name: string;
     protocol: string;
     port: number;
     targetPort: number;

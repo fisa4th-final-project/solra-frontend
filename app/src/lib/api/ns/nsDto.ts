@@ -3,6 +3,7 @@ export interface GetNSListRequestParam {
 }
 
 export interface GetNSListResponseDto {
+  clusterId: number;
   name: string;
   status: string;
   labels: {};
@@ -16,6 +17,7 @@ export interface GetNSDetailRequestParam {
 }
 
 export interface GetNSDetailResponseDto {
+  clusterId: number;
   name: string;
   status: string;
   labels: {};

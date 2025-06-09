@@ -10,6 +10,17 @@
     return-object
     v-if="auth.hasPerm('ORG_READ')"
   />
+  <v-select
+    v-model="form.org"
+    :items="orgs"
+    variant="underlined"
+    label="조직 선택"
+    color="primary"
+    item-title="orgName"
+    item-value="orgId"
+    return-object
+    v-else
+  />
 </template>
 <script lang="ts" setup>
 
@@ -22,7 +33,7 @@ const auth = useAuthStore();
 
 const orgs = ref<GetOrgListResponseDto[]>();
 
-defineProps<{
+const props = defineProps<{
   form: {
     org: {
       orgId: number,
@@ -32,10 +43,22 @@ defineProps<{
 }>();
 
 onMounted(async () => {
-  await apiHandler.getOrgListApi().then((resOrgs) => {
-    if (!resOrgs) return;
-    orgs.value = resOrgs;
-  });
+  if (auth.hasPerm('ORG_READ')) {
+
+    await apiHandler.getOrgListApi().then((resOrgs) => {
+      if (!resOrgs) return;
+      orgs.value = resOrgs;
+    });
+  } else {
+    orgs.value = [{
+      orgId: auth.auth.orgId ,
+      orgName: auth.user.orgName 
+    }]
+    props.form.org = {
+      orgId: auth.auth.orgId ,
+      orgName: auth.user.orgName 
+    }
+  }
 });
 
 defineExpose({

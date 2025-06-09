@@ -2,10 +2,13 @@
   <div v-if="auth.hasPerm('NAMESPACE_DELETE')">
     <v-btn
       flat
+      variant="plain"
       color="red"
       class="font-weight-bold"
-      @click="deleteNS"
-    >삭제</v-btn>
+      @click="openDialog"
+    >
+      Delete
+    </v-btn>
     <Dialog v-if="dialog.getType === 'deleteNS'">
       <template v-slot:title>
         네임스페이스를 삭제하시겠습니까?
@@ -20,7 +23,7 @@
         >취소</v-btn>
         <v-btn
           color="red"
-          @click="apiHandler.deleteNSApi({clusterId, name})"
+          @click="deleteNs"
         >삭제</v-btn>
       </template>
     </Dialog>
@@ -28,26 +31,37 @@
 </template>
 <script lang="ts" setup>
 
-  import Dialog from '@/components/common/Dialog.vue';
+import Dialog from '@/components/common/Dialog.vue';
 import { apiHandler } from '@/lib/global/apiManager';
 import { useAuthStore } from '@/store/auth';
-  import { useDialogStore } from '@/store/dialog';
+import { useDialogStore } from '@/store/dialog';
 
-  const auth = useAuthStore();
+const auth = useAuthStore();
 
-  defineProps<{
-    clusterId: number;
-    name: string;
-  }>();
+const props = defineProps<{
+  clusterId: number;
+  name: string;
+  onUpdate?: () => void;
+}>();
 
-  const dialog = useDialogStore();
+const dialog = useDialogStore();
 
-  function deleteNS() {
-    dialog.open({
-      title: '',
-      message: '',
-      type: 'deleteNS'
-    });
-  }
+const deleteNs = () => {
+  apiHandler.deleteNSApi({
+    clusterId: props.clusterId, 
+    name: props.name
+  }).then(() => {
+    props.onUpdate?.();
+  });
+  dialog.close();
+}
+
+function openDialog() {
+  dialog.open({
+    title: '',
+    message: '',
+    type: 'deleteNS'
+  });
+}
   
 </script>

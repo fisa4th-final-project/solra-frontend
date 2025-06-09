@@ -37,9 +37,11 @@ const nsList = ref<{
 }[]>();
 
 const loadData = async () => {
-  await apiHandler.getNSListApi({clusterId: props.form.cluster.clusterId}).then((res) => {
-    if (res) nsList.value = res;
-  });
+  if (auth.hasPerm('NAMESPACE_READ')) {
+    await apiHandler.getNSListApi({clusterId: props.form.cluster.clusterId}).then((res) => {
+      if (res) nsList.value = res;
+    });
+  }
 }
 
 onMounted(() => {

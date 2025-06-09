@@ -36,8 +36,10 @@ const clusterList = ref<{
 }[]>();
 
 onMounted(async () => {
-  const res = await apiHandler.getClusterListApi();
-  if (res) clusterList.value = res;
+  if (auth.hasPerm('CLUSTER_READ')) {
+    const res = await apiHandler.getClusterListApi();
+    if (res) clusterList.value = res;
+  }
 });
 
 defineExpose({
