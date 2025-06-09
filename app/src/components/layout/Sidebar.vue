@@ -52,7 +52,7 @@
         density="default"
       >
         <v-list-item
-          v-for="menu in sidebarMenus"
+          v-for="menu in filteredMenu"
           :key="menu.to"
           :title="menu.title"
           :prepend-icon="menu.icon"
@@ -63,7 +63,7 @@
         
       </v-list>
     </div>
-    <div
+  <div
       class="mt-auto"
     >
       <v-list-item prepend-icon="mdi-dots-horizontal-circle-outline">
@@ -91,7 +91,7 @@
 <script lang="ts" setup>
 
 import { apiHandler } from '@/lib/global/apiManager';
-import { sidebarMenus } from '@/lib/global/menus';
+import { sidebarMenus as menus } from '@/lib/global/menus';
 import { useToggleTheme } from '@/lib/global/setTheme';
 import { useAuthStore } from '@/store/auth';
 import { onMounted, ref } from 'vue'
@@ -107,4 +107,5 @@ const { toggleTheme, isDark } = useToggleTheme();
 const drawer = ref(true);
 const rail = ref(true);
 
+const filteredMenu = menus.filter((menu) => auth.hasAnyRole(menu.roles));
 </script>

@@ -26,13 +26,13 @@ router.beforeEach(async (to, _from, next) => {
 // 역할 검증
 router.beforeEach((to, _from, next) => {
   const auth = useAuthStore(); 
-  const requireRoles = to.meta.role;
+  const requireRoles: any = to.meta.roles;
 
   const userRoles = auth.getRoles.map((role) => role.roleName);
 
   if (!requireRoles) return next();
 
-  const hasAccess = requireRoles?.some(role => userRoles.includes(role));
+  const hasAccess = requireRoles?.some((role: any) => userRoles.includes(role));
 
   if (hasAccess) {
     next()
