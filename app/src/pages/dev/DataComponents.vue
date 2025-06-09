@@ -10,7 +10,7 @@
 
       <div>
         <h2>getUser</h2>
-        <GetUserDetail :user-id="user.userId" />
+        <GetUserDetail :title="user.userLoginId" :req="{userId: user.userId}"/>
       </div>
 
       <v-row justify="space-between">
