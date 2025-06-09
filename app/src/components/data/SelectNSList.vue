@@ -39,7 +39,8 @@ const nsList = ref<{
 const loadData = async () => {
   if (auth.hasPerm('NAMESPACE_READ')) {
     await apiHandler.getNSListApi({clusterId: props.form.cluster.clusterId}).then((res) => {
-      if (res) nsList.value = res;
+      //TODO NS 조회 제한 제거할 것.
+      if (res) nsList.value = res.filter((ns) => !invailedNs.includes(ns.name));
     });
   }
 }
@@ -54,6 +55,24 @@ watch(() => props.form.cluster.clusterId, () => {
 
 defineExpose({
   nsList
-})
+});
+
+
+const invailedNs = [
+  'argocd',
+  'cilium-secrets',
+  'default',
+  'ingress-nginx',
+  'kube-node-lease',
+  'kube-public',
+  'kube-system',
+  'local-path-storage',
+  'monitoring',
+  'redis',
+  'solra',
+  'solra-harbor',
+  'solra-jenkins',
+  'solra-monitoring'
+]
 
 </script>
