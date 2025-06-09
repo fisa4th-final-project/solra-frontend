@@ -1,12 +1,12 @@
 <template>
-  <SideContents>
+  <SideContents v-if="auth.hasPerm('SERVICE_UPDATE') || auth.hasPerm('DEPLOYMENT_UPDATE')">
     <template v-slot:activator="{props}">
       <slot name="activator" v-bind:props>
         <v-btn v-bind="props">CreateWorkload</v-btn>
       </slot>
     </template>
     <template v-slot:title>워크로드 수정</template>
-    <v-row>
+    <v-row v-if="auth.hasPerm('SERVICE_UPDATE')">
       <v-col>
         <Card no-text no-gutters v-if="props.svc">
           <template v-slot:title>
@@ -27,7 +27,7 @@
           />
         </Card>
         <v-spacer class="my-5"/>
-        <Card no-text no-gutters v-if="props.deploy">
+        <Card no-text no-gutters v-if="props.deploy && auth.hasPerm('DEPLOYMENT_UPDATE')">
           <template v-slot:title>
             <v-container>
               <v-row align="center" class="py-5">
@@ -55,6 +55,9 @@ import SideContents from '@/components/layout/SideContents.vue';
 import UpdateSvcInWorkload from '@/components/data/UpdateSvcInWorkload.vue';
 import UpdateDeployInWorkload from '@/components/data/UpdateDeployInWorkload.vue';
 import Card from '@/components/common/Card.vue';
+import { useAuthStore } from '@/store/auth';
+
+const auth = useAuthStore();
 
 const props = defineProps<{
   cluster: {
