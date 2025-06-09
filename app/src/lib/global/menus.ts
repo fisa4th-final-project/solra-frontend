@@ -1,10 +1,18 @@
 export const sidebarMenus = [
   {
-    title: '대쉬보드',
-    icon: 'mdi-view-dashboard',
-    to: '/admin/dashboard',
+    title: '작업영역',
+    icon: 'mdi-aspect-ratio',
+    to: '/',
     roles: [
-      'org-admin'
+      'ROOT', 'DEVELOPER'
+    ]
+  },
+  {
+    title: '워크로드',
+    icon: 'mdi-apps',
+    to: '/workload',
+    roles: [
+      'ROOT', 'DEVELOPER'
     ]
   },
   {
@@ -12,7 +20,7 @@ export const sidebarMenus = [
     icon: 'mdi-card-account-details',
     to: '/admin/privilege',
     roles: [
-      'root', 'org-admin'
+      'ROOT', 'ORG_ADMIN'
     ]
   },
   {
@@ -20,7 +28,7 @@ export const sidebarMenus = [
     icon: 'mdi-office-building',
     to: '/admin/userGroup',
     roles: [
-      'root', 'org-admin', 'dept-admin', 'proj-admin'
+      'ROOT', 'ORG_ADMIN'
     ]
   },
 
@@ -29,35 +37,31 @@ export const sidebarMenus = [
     icon: 'mdi-account-group',
     to: '/admin/users',
     roles: [
-      'root'
-    ],
+      'ROOT', 'ORG_ADMIN', 'DEPT_ADMIN'
+    ]
   },
   {
     title: '클러스터',
     icon: 'mdi-kubernetes',
-    to: '/admin/resource/cluster'
+    to: '/admin/resource/cluster',
+    roles: [
+      'ROOT', 'ORG_ADMIN'
+    ]
   },
   {
-    title: '노드',
+    title: '노드 & 네임스페이스',
     icon: 'mdi-server',
-    to: '/admin/resource/node'
-  },
-  {
-    title: '작업영역',
-    icon: 'mdi-aspect-ratio',
-    to: '/workspace'
-  },
-  {
-    title: '워크로드',
-    icon: 'mdi-apps',
-    to: '/workload'
+    to: '/admin/resource/node-ns',
+    roles: [
+      'ROOT', 'ORG_ADMIN'
+    ]
   },
   {
     title: '개발자',
     icon: 'mdi-xml',
     to: '/dev/components/data',
     roles: [
-      'root'
+      'ROOT'
     ],
   },
 ]

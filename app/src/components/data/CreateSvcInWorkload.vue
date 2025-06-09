@@ -32,13 +32,16 @@
     <v-card-subtitle>
       포트 정보
     </v-card-subtitle>
-    <v-row v-for="(port, i) in form.ports" :key="i" dense justify="start" align="start" class="pt-2">
-      <v-col cols="12" class="py-2">
-        <v-text-field hide-details v-model="port.protocol" label="Protocol" >
+    <v-row v-for="(port, i) in form.ports" :key="i" dense justify="start" align="start" class="pt-5">
+      <v-col cols="12" class="py-0">
+        <v-text-field hide-details v-model="port.name" label="name" >
           <template v-slot:append-inner>
             <v-icon @click="removePort(i)">mdi-delete</v-icon>
           </template>
         </v-text-field>
+      </v-col>
+      <v-col cols="12" class="py-2">
+        <v-text-field hide-details v-model="port.protocol" label="protocol" />
       </v-col>
       <v-col cols="4" v-if="form.type === 'NodePort'" class="py-0">
         <v-text-field hide-details v-model="port.nodePort" label="NodePort" type="number" />
@@ -75,6 +78,7 @@ const props = defineProps<{
 }>();
 
 interface Port {
+  name: string;
   protocol: string;
   port: number;
   targetPort: number;
@@ -99,6 +103,7 @@ const form = ref({
 
 const addPort = () => {
   form.value.ports.push({
+    name: '',
     protocol: '',
     port: 0,
     targetPort: 0

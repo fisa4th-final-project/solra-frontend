@@ -35,9 +35,24 @@
       </tr>
     </template>
   </DataCardList>
+  <v-row v-else>
+    <v-col>
+
+      <Card no-title>
+        <template v-slot:text>
+          <v-row >
+            <v-col align="center">
+              조회 권한이 없습니다.
+            </v-col>
+          </v-row>
+        </template>
+      </Card>
+    </v-col>
+  </v-row>
 </template>
 <script lang="ts" setup>
 
+import Card from '@/components/common/Card.vue';
 import DataCardList from '@/components/common/DataCardList.vue';
 import DeleteUserRole from '@/components/data/DeleteUserRole.vue';
 import GetUserRoleDetail from '@/components/data/GetUserRoleDetail.vue';

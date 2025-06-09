@@ -1,7 +1,7 @@
 <template>
   <SideContents v-if="auth.hasPerm('NAMESPACE_CREATE')">
     <template v-slot:activator="{ props }">
-      <slot name="activator">
+      <slot name="activator" v-bind:props>
         <v-btn v-bind="props">createNS</v-btn>
       </slot>
     </template>

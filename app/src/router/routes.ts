@@ -1,4 +1,3 @@
-import Dashboard from '@/pages/Dashboard.vue'
 import User from '@/pages/admin/User.vue'
 import Workload from '@/pages/Workload.vue'
 import UserGroup from '@/pages/admin/UserGroup.vue'
@@ -12,25 +11,6 @@ import LoginFrame from '@/frames/LoginFrame.vue'
 import LoginPage from '@/pages/LoginPage.vue'
 
 export const routes = [
-  {
-    path: '/dev',
-    component: MainFrame,
-    children: [
-      {
-        path: 'components/data',
-        component: DataComponents,
-        meta: {
-          breadcrumb: [
-            { title: '개발자', href: '/dev', disabled: true },
-            { title: '데이터 컴포넌트', href: '/components/data', disabled: false },
-          ]
-        }
-      }
-    ],
-    meta: {
-      breadcrumb: [{ title: '개발자', href: '/dev', disabled: false }]
-    }
-  },
   {
     path: '/login',
     component: LoginFrame,
@@ -46,6 +26,39 @@ export const routes = [
     ]
   },
   {
+    path: '/',
+    component: MainFrame,
+    meta: {
+      breadcrumb: [{ title: '홈', href: '/', disabled: false }]
+    },
+    children: [
+      {
+        path: '', component: Workspace,
+        meta: {
+          title: '작업영역',
+          icon: 'mdi-aspect-ratio',
+          to: '/workspace',
+          breadcrumb: [
+            { title: '홈', href: '/', disabled: true },
+            { title: '작업영역', href: '/workspace', disabled: false },
+          ]
+        }
+      },
+      {
+        path: 'workload', component: Workload,
+        meta: {
+          title: '워크로드',
+          icon: 'mdi-apps',
+          to: '/workload',
+          breadcrumb: [
+            { title: '홈', href: '/', disabled: true },
+            { title: '워크로드', href: '/workload', disabled: false },
+          ]
+        }
+      },
+    ]
+  },
+  {
     path: '/admin',
     component: MainFrame,
     meta: {
@@ -53,19 +66,13 @@ export const routes = [
     },
     children: [
       {
-        path: 'dashboard',
-        component: Dashboard,
-        meta: {
-          breadcrumb: [
-            { title: '관리자', href: '/admin', disabled: true },
-            { title: '대시보드', href: '/admin/dashboard', disabled: false }
-          ]
-        }
-      },
-      {
         path: 'users',
         component: User,
         meta: {
+          title: '사용자',
+          icon: 'mdi-account-group',
+          to: '/admin/users',
+          roles: ['ROOT', 'ORG_ADMIN', 'DEPT_ADMIN'],
           breadcrumb: [
             { title: '관리자', href: '/admin', disabled: true },
             { title: '사용자', href: '/admin/users', disabled: false }
@@ -76,6 +83,10 @@ export const routes = [
         path: 'userGroup',
         component: UserGroup,
         meta: {
+          title: '사용자 그룹',
+          icon: 'mdi-office-building',
+          roles: ['ROOT', 'ORG_ADMIN'],
+          to: '/admin/userGroup',
           breadcrumb: [
             { title: '관리자', href: '/admin', disabled: true },
             { title: '사용자 그룹', href: '/admin/userGroup', disabled: false }
@@ -86,6 +97,10 @@ export const routes = [
         path: 'privilege',
         component: Privilege,
         meta: {
+          title: '역할 및 권한',
+          icon: 'mdi-card-account-details',
+          roles: ['ROOT'],
+          to: '/admin/privilege',
           breadcrumb: [
             { title: '관리자', href: '/admin', disabled: true },
             { title: '역할 및 권한', href: '/admin/privilege', disabled: false }
@@ -93,12 +108,16 @@ export const routes = [
         }
       },
       {
-        path: 'resource/node',
+        path: 'resource/node-ns',
         component: Node,
         meta: {
+          title: '노드 & 네임스페이스',
+          icon: 'mdi-server',
+          roles: ['ROOT', 'ORG_ADMIN'],
+          to: '/admin/resource/node-ns',
           breadcrumb: [
             { title: '관리자', href: '/admin', disabled: true },
-            { title: '노드', href: '/admin/resource/node', disabled: false },
+            { title: '노드', href: '/admin/resource/node-ns', disabled: false },
           ]
         }
       },
@@ -106,6 +125,10 @@ export const routes = [
         path: 'resource/cluster',
         component: Cluster,
         meta: {
+          title: '클러스터',
+          icon: 'mdi-kubernetes',
+          roles: ['ROOT', 'ORG_ADMIN', 'DEPT_ADMIN'],
+          to: '/admin/resource/cluster',
           breadcrumb: [
             { title: '관리자', href: '/admin', disabled: true },
             { title: '클러스터', href: '/admin/resource/cluster', disabled: false },
@@ -114,32 +137,28 @@ export const routes = [
       }
     ]
   },
+  
   {
-    path: '/',
+    path: '/dev',
     component: MainFrame,
     meta: {
-      breadcrumb: [{ title: '홈', href: '/', disabled: false }]
+      breadcrumb: [{ title: '개발자', href: '/dev', disabled: false }]
     },
     children: [
-      { path: 'dashboard', component: Dashboard },
       {
-        path: 'workload', component: Workload,
+        path: 'components/data',
+        component: DataComponents,
         meta: {
+          title: '데이터 컴포넌트',
+          icon: 'mdi-xml',
+          roles: ['ROOT'],
           breadcrumb: [
-            { title: '홈', href: '/', disabled: true },
-            { title: '워크로드', href: '/workload', disabled: false },
+            { title: '개발자', href: '/dev', disabled: true },
+            { title: '데이터 컴포넌트', href: '/components/data', disabled: false },
           ]
         }
-      },
-      {
-        path: 'workspace', component: Workspace,
-        meta: {
-          breadcrumb: [
-            { title: '홈', href: '/', disabled: true },
-            { title: '작업영역', href: '/workspace', disabled: false },
-          ]
-        }
-      },
-    ]
-  }
+      }
+    ],
+    
+  },
 ]
