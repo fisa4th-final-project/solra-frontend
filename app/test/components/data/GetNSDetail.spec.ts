@@ -19,6 +19,7 @@ const getNSDetailWrapper = () => {
 describe('GetNSDetail.vue', () => {
 
   const mockResponse = {
+    clusterId: 1,
     name: 'test-ns-name',
     status: 'test-ns-status',
     labels: '{}',

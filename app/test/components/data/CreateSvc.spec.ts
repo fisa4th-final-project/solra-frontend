@@ -65,6 +65,7 @@ describe('CreateSvc.vue', () => {
     appName: 'test-appName',
     svcType: 'NodePort',
     ports: [{
+      name: 'test-port-01',
       protocol: 'test-tcp',
       port: 6001,
       targetPort: 6001,
