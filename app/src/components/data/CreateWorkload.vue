@@ -1,5 +1,5 @@
 <template>
-  <SideContents v-if="auth.hasPerm('SERVICE_CREATE') || auth.hasPerm('DEPLOYMENT_CREATE')">
+  <SideContents v-if="auth.hasPerm('SERVICE_CREATE') || auth.hasPerm('DEPLOYMENT_CREATE')" v-model="isOpened">
     <template v-slot:activator="{props}">
       <slot name="activator" v-bind:props>
         <v-btn v-bind="props">CreateWorkload</v-btn>
@@ -70,10 +70,12 @@ const props = defineProps<{
     clusterId: number;
   },
   ns: {
-    name: string
-  }
+    name: string;
+  },
+  onUpdate?: () => void;
 }>();
 
+const isOpened = ref();
 const valid = ref(false);
 
 const $createSvcRef = ref()
@@ -81,7 +83,10 @@ const $createDeployRef = ref()
 
 const submitForm = async () => {
   await $createSvcRef.value.submitSvc();
-  await $createDeployRef.value.submitDeploy();
+  await $createDeployRef.value.submitDeploy().then(() => {
+    props.onUpdate?.();
+    isOpened.value = false;
+  });
 }
 
 defineExpose({

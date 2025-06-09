@@ -10,6 +10,7 @@
         <CreateWorkload 
           :cluster="{clusterId: form.cluster.clusterId}" 
           :ns="{name: form.ns.name}" 
+          :onUpdate="$getWorkloadList?.loadData"
         >
           <template v-slot:activator="{ props }">
             <v-btn
@@ -36,7 +37,7 @@
     </v-form>
     <v-row>
       <v-col>
-        <GetWorkloadList :req="{clusterId:form.cluster.clusterId, nsName: form.ns.name}"/>
+        <GetWorkloadList :req="{clusterId:form.cluster.clusterId, nsName: form.ns.name}" ref="$getWorkloadList"/>
       </v-col>
     </v-row>
   </v-container>
@@ -65,5 +66,8 @@ const form = ref<{
   ns: {
     name: ''
   }
-})
+});
+
+const $getWorkloadList = ref();
+
 </script>
