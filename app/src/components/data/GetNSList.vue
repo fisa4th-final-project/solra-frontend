@@ -100,6 +100,13 @@ const invailedNs = [
   'solra',
   'solra-harbor',
   'solra-jenkins',
-  'solra-monitoring'
+  'solra-monitoring',
+  '01-solra-access',
+  'solra-access-0609',
+  'solra-token',
+  'cilium',
+  'solra-cert',
+  'solra-gitlab',
+  'solra-kube-monkey'
 ]
 </script>
