@@ -3,6 +3,7 @@
     <v-layout>
       <v-main class="bg">
         <Dialog v-if="dialog.getType === 'loginframe'"></Dialog>
+        <Snackbar/>
         <v-container height="100%">
           <router-view />
         </v-container>
@@ -14,6 +15,7 @@
 <script setup lang="ts">
 
 import Dialog from '@/components/common/Dialog.vue'
+import Snackbar from '@/components/common/Snackbar.vue';
 import { useDialogStore } from '@/store/dialog'
 
 const dialog = useDialogStore();
