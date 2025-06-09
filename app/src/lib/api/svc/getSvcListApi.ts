@@ -11,7 +11,6 @@ export async function getSvcListApi(reqDto: GetSvcListRequestParam) {
     path: `api/clusters/${reqDto.clusterId}/namespaces/${reqDto.nsName}/services`,
     auth: true
   }).then((res: ApiResponse<GetSvcListResponseDto[]>) => {
-    resStore.push(res);
     return res.data;
   }).catch((e: ApiError) => {
     resStore.push(e.res);

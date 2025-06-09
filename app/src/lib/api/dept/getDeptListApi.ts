@@ -12,7 +12,6 @@ export async function getDeptListApi(reqParam: GetDeptListRequestParam) {
     path: `api/departments?${query}`,
     auth: true
   }).then((res: ApiResponse<GetDeptListResponseDto[]>) => {
-    resStore.push(res);
     return res.data;
   }).catch((e: ApiError) => {
     resStore.push(e.res);

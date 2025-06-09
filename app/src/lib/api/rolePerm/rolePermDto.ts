@@ -21,5 +21,5 @@ export interface GetRolePermListResponseDto {
 
 export interface DeleteRolePermRequestDto {
   roleId: number;
-  permissionId: number;
+  permissionIds: number[];
 }

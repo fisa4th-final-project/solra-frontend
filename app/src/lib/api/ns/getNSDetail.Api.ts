@@ -11,7 +11,6 @@ export async function getNSDetailApi(reqDto: GetNSDetailRequestParam) {
     path: `api/clusters/${reqDto.clusterId}/namespaces/${reqDto.name}`,
     auth: true
   }).then((res: ApiResponse<GetNSDetailResponseDto>) => {
-    resStore.push(res);
     return res.data;
   }).catch((e: ApiError) => {
     resStore.push(e.res)

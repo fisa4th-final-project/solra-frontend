@@ -1,7 +1,7 @@
 <template>
   <DataCard
     :header="{title, icon: 'mdi-briefcase'}"
-    :api="{req, dataHandler}"
+    :api="{req: req ?? {deptId: auth.getMe.auth.deptId}, dataHandler}"
     v-if="auth.hasPerm('DEPT_READ')"
   >      
     <template v-slot:item="{ item }">
@@ -33,11 +33,11 @@ const auth = useAuthStore();
 
 defineProps<{
   title: string;
-  req: GetDeptDetailRequestParam;
+  req?: GetDeptDetailRequestParam;
 }>();
 
 const dataHandler = async (req: GetDeptDetailRequestParam) => {
-  if (req.deptId) return await apiHandler.getDeptDetailApi(req);
+  return await apiHandler.getDeptDetailApi(req);
 };
 
 </script>

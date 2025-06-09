@@ -11,7 +11,6 @@ export async function getNSListApi(reqDto: GetNSListRequestParam) {
     path: `api/clusters/${reqDto.clusterId}/namespaces`,
     auth: true
   }).then((res: ApiResponse<GetNSListResponseDto[]>) => {
-    resStore.push(res);
     return res.data;
   }).catch((e: ApiError) => {
     resStore.push(e.res);

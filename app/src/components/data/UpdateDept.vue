@@ -1,5 +1,5 @@
 <template>
-  <SideContents v-if="auth.hasPerm('DEPT_UPDATE')">
+  <SideContents v-if="auth.hasPerm('DEPT_UPDATE')" v-model="isOpened">
     <template v-slot:activator="{ props }">
       <slot name="activator" v-bind:props>
         <v-btn v-bind="props">UpdateDept</v-btn>
@@ -10,7 +10,7 @@
         부서 수정
       </span>
       <v-col align="end">
-        <DeleteDept v-if="dept" :dept="{deptId: dept.deptId, deptName: dept.deptName}"/>
+        <DeleteDept v-if="dept" :dept="{deptId: dept.deptId, deptName: dept.deptName}" :onUpdate="onUpdate"/>
       </v-col>
     </template>
     <v-form v-model="valid" @submit.prevent="submitForm">
@@ -48,9 +48,12 @@ const auth = useAuthStore();
 
 const props = defineProps<{
   deptId: number;
+  onUpdate?: () => void;
 }>();
 
 const valid = ref(false);
+
+const isOpened = ref();
 
 const dept = ref<GetDeptDetailResponseDto>();
 
@@ -62,6 +65,8 @@ const submitForm = () => {
   apiHandler.updateDeptApi({
     deptId: props.deptId,
     deptName: form.value.deptName
+  }).then(() => {
+    updateCallback();
   });
 }
 
@@ -75,6 +80,10 @@ const getDeptDetail = () => {
   });
 }
 
+const updateCallback = () => {
+  isOpened.value = false;
+  props.onUpdate?.();
+}
 onMounted(() => {
   if (!props.deptId) return;
   getDeptDetail();

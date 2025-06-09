@@ -1,5 +1,5 @@
 <template>
-  <SideContents v-if="auth.hasPerm('ORG_UPDATE')">
+  <SideContents v-if="auth.hasPerm('ORG_UPDATE')" v-model="isOpened">
     <template v-slot:activator="{ props }">
       <slot name="activator" v-bind:props>
         <v-btn v-bind="props">UpdateOrg</v-btn>
@@ -10,7 +10,7 @@
         조직 수정
       </span>
       <v-col align="end">
-        <DeleteOrg v-if="org" :org="{orgId: org.orgId, orgName: org.orgName}"/>
+        <DeleteOrg v-if="org" :org="{orgId: org.orgId, orgName: org.orgName}" :onUpdate="updateCallBack"/>
       </v-col>
     </template>
     <v-form v-model="valid" @submit.prevent="submitForm">
@@ -48,9 +48,12 @@ const auth = useAuthStore();
 
 const props = defineProps<{
   orgId: number;
+  onUpdate?: () => void;
 }>();
 
 const valid = ref(false);
+
+const isOpened = ref();
 
 const org = ref<GetOrgDetailResponseDto>();
 
@@ -62,9 +65,15 @@ const submitForm = () => {
   apiHandler.updateOrgApi({
     orgId: props.orgId,
     orgName: form.value.orgName
+  }).then(() => {
+    updateCallBack();
   });
 }
 
+const updateCallBack = () => {
+  props.onUpdate?.();
+  isOpened.value = false;
+}
 const getOrgDetail = () => {
   apiHandler.getOrgDetailApi({
     orgId: props.orgId

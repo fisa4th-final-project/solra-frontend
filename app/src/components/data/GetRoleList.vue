@@ -10,6 +10,7 @@
             v-if="selectedRole"
             :role-id="selectedRole.roleId"
             :role-name="selectedRole.roleName"
+            :onUpdate="loadRoles"
           >
             <template v-slot:activator="{props}">
               <v-btn 
@@ -24,7 +25,14 @@
         </v-col>
       </v-row>
     </template>
-    <DataCard :header="{title: selectedRole.roleName, icon: 'mdi-'}" :data="selectedRole"></DataCard>
+    <DataCard :header="{title: selectedRole.roleName, icon: 'mdi-calendar-account-outline'}" :data="selectedRole">
+      <template v-slot:item="{ item }">
+        <tr v-if="!enableField.includes(item.field)">
+          <th style="white-space: nowrap;">{{ item.field }}</th>
+          <td class="text-right">{{ item.value }}</td>
+        </tr>
+      </template>
+    </DataCard>
   </SideContents>
 
   <SideContents :model-value="isPermDetailOpened" :key="selectedItem?.permissionId" v-if="auth.hasPerm('PERM_READ')">
@@ -38,6 +46,7 @@
             v-if="selectedItem"
             :perm-id="selectedItem.permissionId"
             :perm-name="selectedItem.permissionName"
+            :onUpdate="loadRoles"
           >
             <template v-slot:activator="{props}">
               <v-btn 
@@ -52,7 +61,14 @@
         </v-col>
       </v-row>
     </template>
-    <DataCard :header="{title: selectedItem.permissionName, icon: 'mdi-'}" :data="selectedItem"></DataCard>
+    <DataCard :header="{title: selectedItem.permissionName, icon: 'mdi-security'}" :data="selectedItem">
+      <template v-slot:item="{ item }">
+        <tr v-if="!enableField.includes(item.field)">
+          <th style="white-space: nowrap;">{{ item.field }}</th>
+          <td class="text-right">{{ item.value }}</td>
+        </tr>
+      </template>
+    </DataCard>
   </SideContents>
 
   <Card no-title no-text no-gutters v-if="auth.hasPerm('ROLE_READ')">
@@ -173,6 +189,10 @@ interface Perm {
 const permRows = ref<(Perm & { roleId: number; roleName: string })[]>([]);
 
 const loadRoles = async () => {
+  // 열려 있는 사이드 컨텐츠 닫기
+  isRoleDetailOpened.value = false;
+  isPermDetailOpened.value = false;
+
   const res = await apiHandler.getRoleListApi();
   if (!res) return;
 
@@ -200,7 +220,7 @@ const loadRoles = async () => {
   );
 
   // 2차원 배열을 평탄화
-  permRows.value = rolePermRows.flat();
+  permRows.value = rolePermRows.flat();  
 }
 
 const headers: {
@@ -218,6 +238,11 @@ const headers: {
     key: 'description',
     align: 'start'
   }
+]
+
+const enableField = [
+  'permissionId',
+  'roleId',
 ]
 
 onMounted(() => {

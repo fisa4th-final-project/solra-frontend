@@ -11,7 +11,6 @@ export async function getPermListApi() {
     path: `api/permissions`,
     auth: true
   }).then((res: ApiResponse<GetPermListResponseDto[]>) => {
-    resStore.push(res);
     return res.data;
   }).catch((e: ApiError) => {
     resStore.push(e.res);

@@ -1,5 +1,5 @@
 <template>
-  <SideContents v-if="auth.hasPerm('USER_UPDATE')">
+  <SideContents v-if="auth.hasPerm('USER_UPDATE')" v-model="isOpened">
     <template v-slot:activator="{ props }">
       <slot name="activator" v-bind:props>
         <v-btn v-bind="props">updateUser</v-btn>
@@ -78,9 +78,12 @@ const auth = useAuthStore();
 
 const props = defineProps<{
   userId: number;
+  onUpdate?: () => void;
 }>();
 
 const valid = ref(false);
+
+const isOpened = ref();
 
 type ExtendedUserDetail = GetUserDetailResponseDto & {
   password: string;
@@ -103,6 +106,9 @@ const submitForm = () => {
     userName: form.value.userName,
     password: form.value.password,
     email: form.value.email
+  }).then(() => {
+    isOpened.value = false;
+    props.onUpdate?.();
   });
 }
 

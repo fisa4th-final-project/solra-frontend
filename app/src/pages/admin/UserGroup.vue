@@ -7,7 +7,7 @@
         </span>
       </v-col>
       <v-col align="end">
-        <CreateUserGroup>
+        <CreateUserGroup v-if="auth.hasPerm('ORG_CREATE') || auth.hasPerm('DEPT_CREATE')" :onUpdate="loadOrg">
           <template v-slot:activator="{props}">
             <v-btn 
               v-bind="props"
@@ -71,6 +71,7 @@
           <UpdateOrg
             v-if="selectedOrg"
             :org-id="selectedOrg.orgId"
+            :onUpdate="loadOrg"
           >
             <template v-slot:activator="{props}">
               <v-btn 
@@ -99,6 +100,9 @@ import SideContents from '@/components/layout/SideContents.vue';
 import UpdateOrg from '@/components/data/UpdateOrg.vue';
 import GetOrgDetail from '@/components/data/GetOrgDetail.vue';
 import CreateUserGroup from '@/components/data/CreateUserGroup.vue';
+import { useAuthStore } from '@/store/auth';
+
+const auth = useAuthStore();
 
 const orgList = ref<GetOrgListResponseDto[]>([]);
 const selectedDept = ref<GetDeptDetailResponseDto>();
@@ -117,12 +121,17 @@ const isEmpty = (deptId: number, empty: boolean) => {
 
 const openOrgDetail = (org: any) => {
   selectedOrg.value = org;
-  console.log(selectedOrg.value);
   isOrgDetailOpen.value = true;
 }
-onMounted(async () => {
+
+const loadOrg = async () => {
+  isOrgDetailOpen.value = false;
   const res = await getOrgListApi();
   if (res) orgList.value = res;
+}
+
+onMounted( () => {
+  loadOrg();
 });
 
 </script>

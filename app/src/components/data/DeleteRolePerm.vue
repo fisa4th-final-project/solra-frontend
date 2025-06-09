@@ -20,7 +20,7 @@
         >취소</v-btn>
         <v-btn
           color="red"
-          @click="apiHandler.deleteRolePermApi({roleId: role.roleId, permissionId: perm.permissionId})"
+          @click="apiHandler.deleteRolePermApi({roleId: role.roleId, permissionIds: [perm.permissionId]})"
         >삭제</v-btn>
       </template>
     </Dialog>

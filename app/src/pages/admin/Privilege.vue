@@ -7,7 +7,7 @@
         </span>
       </v-col>
       <v-col align="end">
-        <CreateRole>
+        <CreateRole v-if="auth.hasPerm('ROLE_CREATE')" :onUpdate="$getRoleList?.loadRoles">
           <template v-slot:activator="{props}">
             <v-btn 
               v-bind="props"
@@ -20,42 +20,32 @@
         </CreateRole>
       </v-col>
     </v-row>
-    <v-row v-if="roleList.length">
+    <v-row>
       <v-col>
         <GetRoleList 
           @selected="select"
+          ref="$getRoleList"
         />
       </v-col>
     </v-row>
-    <v-container v-else  height="100%" class="d-flex justify-center align-center">
-        <v-progress-circular
-        :width="3"
-        size="50"
-        color="primary"
-        indeterminate
-        />
-      </v-container>
   </v-container>
 </template>
 <script lang="ts" setup>
 
-import { onMounted, ref } from 'vue';
+import { ref } from 'vue';
 import GetRoleList from '@/components/data/GetRoleList.vue';
-import { getRoleListApi } from '@/lib/api/role/getRoleListApi';
-import type { GetRoleListResponseDto } from '@/lib/api/role/roleDto';
 import type { GetPermDetailResponseDto } from '@/lib/api/perm/permDto';
 import CreateRole from '@/components/data/CreateRole.vue';
+import { useAuthStore } from '@/store/auth';
 
-const roleList = ref<GetRoleListResponseDto[]>([]);
+const auth = useAuthStore();
+
 const selectedPerm = ref<GetPermDetailResponseDto & {roleId: number, roleName: string}>();
 
 const select = (item: GetPermDetailResponseDto & {roleId: number, roleName: string}) => {
   selectedPerm.value = item;
 }
 
-onMounted(async () => {
-  const res = await getRoleListApi();
-  if (res) roleList.value = res;
-});
+const $getRoleList = ref();
 
 </script>

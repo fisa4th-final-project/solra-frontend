@@ -11,7 +11,6 @@ export async function getDeployListApi(reqDto: GetDeployListRequestParam) {
     path: `api/clusters/${reqDto.clusterId}/namespaces/${reqDto.nsName}/deployments`,
     auth: true
   }).then((res: ApiResponse<GetDeployListResponseDto[]>) => {
-    resStore.push(res);
     return res.data;
   }).catch((e: ApiError) => {
     resStore.push(e.res);

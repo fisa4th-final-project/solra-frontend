@@ -12,7 +12,6 @@ export async function getClusterListApi(reqParam?: GetClusterListRequestParam) {
     path: `api/clusters${query}`,
     auth: true
   }).then((res: ApiResponse<GetClusterListResponseDto[]>) => {
-    resStore.push(res);
     return res.data;
   }).catch((e: ApiError) => {
     resStore.push(e.res);

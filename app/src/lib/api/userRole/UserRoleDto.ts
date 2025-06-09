@@ -18,3 +18,8 @@ export interface CreateUserRoleResDto {
   roleId: number;
   roleName: string;
 }
+
+export interface DeleteUserRoleRequestDto {
+  userId: number;
+  roleId: number;
+}

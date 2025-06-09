@@ -10,10 +10,9 @@ export async function getRoleListApi() {
     method: "GET",
     path: `api/roles`,
     auth: true
-  }).then(async (res: ApiResponse<GetRoleListResponseDto[]>) => {
-    resStore.push(res);
+  }).then((res: ApiResponse<GetRoleListResponseDto[]>) => {
     return res.data;
-  }).catch(async (e: ApiError) => {
+  }).catch((e: ApiError) => {
     resStore.push(e.res);
   }) ?? null;
 }

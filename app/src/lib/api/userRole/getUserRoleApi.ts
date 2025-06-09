@@ -11,7 +11,6 @@ export async function getUserRoleByUserIdApi(reqParam: GetUserRoleByUserIdQueryP
     path: `api/user-roles/${reqParam.userId}`,
     auth: true
   }).then((res: ApiResponse<GetUserRoleByUserIdResponseDto[]>) => {
-    resStore.push(res);
     return res.data;
   }).catch((e: ApiError) => {
     resStore.push(e.res);

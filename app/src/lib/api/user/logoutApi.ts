@@ -15,7 +15,9 @@ export async function logoutApi() {
     auth.logout();
     resStore.push(res);
     await router.push('/login');
-  }).catch((e: ApiError) => {
+  }).catch(async (e: ApiError) => {
+    auth.logout();
     resStore.push(e.res);
+    await router.push('/login');
   });
 }

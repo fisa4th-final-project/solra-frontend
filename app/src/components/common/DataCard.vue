@@ -67,8 +67,8 @@ const isLoading = ref(false)
 
 const mapToTableRows = (item: Record<string, any>) => {
   return Object.entries(item).map(([key, value]) => ({
-    field: key,
-    value: value,
+    field: convertField(key),
+    value: value
   }));
 };
 
@@ -77,9 +77,10 @@ const tableHeader: readonly DataTableHeader[] = [
   { key: 'value', title: '값', align: 'end' },
 ];
 
-const loadData = async (req: Object, dataHandler: Function) => {
+const loadData = async () => {
+  if (!props.api) return;
   isLoading.value = true;
-  entity.value = await dataHandler(req).then((res: any) =>{
+  entity.value = await props.api.dataHandler(props.api.req).then((res: any) =>{
     if (res) {
       isLoading.value = false;
       return res;
@@ -89,7 +90,7 @@ const loadData = async (req: Object, dataHandler: Function) => {
 
 onMounted(() => {
   if (props.api?.req ) {
-    loadData(props.api.req, props.api.dataHandler);
+    loadData();
   }
 
   if (props.data)  {
@@ -100,7 +101,7 @@ onMounted(() => {
 
 watch(() => props.api?.req, () => {
   if (props.api?.req) { 
-    loadData(props.api.req, props.api.dataHandler);
+    loadData();
   }
 });
 
@@ -112,4 +113,51 @@ watch(() => [props.data, props.header], () => {
     isLoading.value = true;
   }
 });
+
+defineExpose({
+  loadData
+})
+
+const convertField = (field: string): string => {
+  let key = '';
+
+  switch (field) {
+    case 'orgName':
+      key = '조직명'
+      break;
+    case 'deptName':
+      key = '부서명'
+      break;
+    case 'userName':
+      key = '사용자명'
+      break;
+    case 'userLoginId':
+      key = '사용자 ID'
+      break;
+    case 'departmentName':
+      key = '부서명'
+      break;
+    case 'organizationName':
+      key = '조직명'
+      break;
+    case 'permNames':
+      key = '권한목록'
+      break;
+    case 'permissionName':
+      key = '권한명'
+      break;
+    case 'description':
+      key = '설명'
+      break;
+    case 'roleName':
+      key = '역할명'
+      break;
+    default:
+      key = field
+      break;
+      
+  }
+
+  return key;
+}
 </script>

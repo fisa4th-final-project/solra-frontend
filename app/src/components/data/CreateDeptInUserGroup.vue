@@ -22,36 +22,40 @@
 </template>
 <script lang="ts" setup>
   
-  import { ref } from 'vue'
-  import { rules } from '@/lib/global/inputRules';
+import { ref } from 'vue'
+import { rules } from '@/lib/global/inputRules';
 import { apiHandler } from '@/lib/global/apiManager';
 import { useAuthStore } from '@/store/auth';
 
 const auth = useAuthStore();
 
-  const valid = ref(false)
+const valid = ref(false)
 
-  const props = defineProps<{
-    org: {
-      orgId: number;
-      orgName: string;
-    }
-  }>();
+const props = defineProps<{
+  org: {
+    orgId: number;
+    orgName: string;
+  },
+  onUpdate?: () => void;
+}>();
 
-  const form = ref({
-    dept: {
-      deptName: ''
-    }
-  })
-
-  const submitForm = async () => {
-    await apiHandler.createDeptApi({
-      organizationId: props.org.orgId,
-      deptName: form.value.dept.deptName
-    });
+const form = ref({
+  dept: {
+    deptName: ''
   }
+})
 
-  defineExpose({
-    form, valid
-  })
+const submitForm = async () => {
+  await apiHandler.createDeptApi({
+    organizationId: props.org.orgId,
+    deptName: form.value.dept.deptName
+  }).then(() => {
+    props.onUpdate?.();
+  });
+}
+
+defineExpose({
+  form, valid
+});
+
 </script>

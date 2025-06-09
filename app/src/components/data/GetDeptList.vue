@@ -6,6 +6,7 @@
     @selected="selected"
     @is-empty="isEmpty"
     v-if="auth.hasPerm('DEPT_READ')"
+    ref="$deptList"
   >
     <template v-slot:detailTitle>
       <v-row justify="space-between" align="center">
@@ -15,6 +16,7 @@
         <v-col align="end">
           <UpdateDept
             :dept-id="selectedItem.deptId"
+            :onUpdate="$deptList.loadData"
           >
             <template v-slot:activator="{props}">
               <v-btn 
@@ -69,6 +71,8 @@ const selected = (item: GetDeptDetailResponseDto) => {
   selectedItem.value = item;
   emit('selected', item);
 }
+
+const $deptList = ref();
 
 const selectedItem = ref();
 

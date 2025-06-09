@@ -1,5 +1,5 @@
 <template>
-  <div v-if="auth.hasPerm('CLUSTER_CREATE')">
+  <div v-if="auth.hasPerm('USER_ROLE_REVOKE')">
     <v-btn
       flat
       variant="plain"
@@ -7,14 +7,14 @@
       class="font-weight-bold"
       @click="openDialog"
     >
-      Delete
+      Revoke
     </v-btn>
-    <Dialog v-if="dialog.getType === 'deleteCluster'">
+    <Dialog v-if="dialog.getType === 'deleteUserRole'">
       <template v-slot:title>
-        클러스터 정보를 삭제하시겠습니까?
+        부여된 역할을 회수하시겠습니까?
       </template>
       <template v-slot:default>
-        클러스터: {{ cluster.name }} 
+        역할: {{ role.roleName }} 
       </template>
       <template v-slot:actions>
         <v-btn
@@ -23,8 +23,8 @@
         >취소</v-btn>
         <v-btn
           color="red"
-          @click="deleteCluster"
-        >삭제</v-btn>
+          @click="deleteUserRole()"
+        >회수</v-btn>
       </template>
     </Dialog>
   </div>
@@ -32,24 +32,31 @@
 <script lang="ts" setup>
 
 import Dialog from '@/components/common/Dialog.vue';
-import { useDialogStore } from '@/store/dialog';
 import { apiHandler } from '@/lib/global/apiManager';
 import { useAuthStore } from '@/store/auth';
+import { useDialogStore } from '@/store/dialog';
 
 const props = defineProps<{
-  cluster: {
-    clusterId: number;
-    name: string;
+  role: {
+    roleId: number;
+    roleName: string;
   },
+  user: {
+    userId: number;
+  }
   onUpdate?: () => void;
 }>();
 
 const auth = useAuthStore();
+
 const dialog = useDialogStore();
 
-const deleteCluster = () => {
+const deleteUserRole = () => {
   dialog.close();
-  apiHandler.deleteClusterApi({clusterId: props.cluster.clusterId}).then(() => {
+  apiHandler.deleteUserRoleApi({
+    roleId: props.role.roleId, 
+    userId: props.user.userId
+  }).then(() => {
     props.onUpdate?.();
   });
 }
@@ -58,7 +65,7 @@ function openDialog() {
   dialog.open({
     title: '',
     message: '',
-    type: 'deleteCluster'
+    type: 'deleteUserRole'
   });
 }
 

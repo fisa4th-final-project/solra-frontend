@@ -20,7 +20,6 @@ export async function getUserListApi(reqParam: GetUserListQueryParam) {
     path: `api/users${query}`,
     auth: true
   }).then((res: ApiResponse<GetUserListResponseDto>) => {
-    resStore.push(res);
     return res.data;
   }).catch((e: ApiError) => {
     resStore.push(e.res);

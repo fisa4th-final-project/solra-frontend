@@ -1,11 +1,21 @@
 <template>
-  <SideContents v-if="auth.hasPerm('CLUSTER_UPDATE')">
+  <SideContents v-if="auth.hasPerm('CLUSTER_UPDATE')" v-model="isOpened">
     <template v-slot:activator="{ props }">
       <slot name="activator" v-bind:props>
         <v-btn v-bind="props">UpdateCluster</v-btn>
       </slot>
     </template>
-    <template v-slot:title>클러스터 정보 수정</template>
+    <template v-slot:title>
+      <span>
+        클러스터 정보 수정
+      </span>
+      <v-col align="end">
+        <DeleteCluster 
+          :cluster="{clusterId: clusterDetail.clusterId, name: clusterDetail.name}" 
+          :onUpdate="() => updateCallback(clusterDetail.orgId)" 
+        />
+      </v-col>
+    </template>
     <v-form v-model="valid" @submit.prevent="submitForm">
       <v-text-field
         v-model="form.name"
@@ -66,12 +76,19 @@ import SideContents from '@/components/layout/SideContents.vue';
 import { rules } from '@/lib/global/inputRules';
 import { apiHandler } from '@/lib/global/apiManager';
 import { useAuthStore } from '@/store/auth';
+import DeleteCluster from '@/components/data/DeleteCluster.vue';
+import type { GetClusterDetailResponseDto } from '@/lib/api/cluster/clusterDto';
 
 const auth = useAuthStore();
 
 const props = defineProps<{
   clusterId: number;
+  onUpdate?: (arg?: any) => void;
 }>();
+
+const isOpened = ref();
+
+const clusterDetail = ref<GetClusterDetailResponseDto>({} as GetClusterDetailResponseDto);
 
 const valid = ref(false);
 
@@ -93,7 +110,15 @@ const submitForm = () => {
     caCert: btoa(form.value.caCert),
     saToken: btoa(form.value.saToken),
     apiServerUrl: form.value.apiServerUrl
+  }).then((res) => {
+    if (!res) return
+    updateCallback(res.orgId);
   });
+}
+
+const updateCallback = (orgId: number) => {
+  props.onUpdate?.(orgId);
+  isOpened.value = false;
 }
 
 const getClusterDetail = () => {
@@ -101,6 +126,7 @@ const getClusterDetail = () => {
     clusterId: props.clusterId
   }).then((res) => {
     if (!res) return;
+    clusterDetail.value = res;
     form.value = {
       name: res.name,
       env: res.env,

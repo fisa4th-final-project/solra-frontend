@@ -11,7 +11,6 @@ export async function getNodeListApi(reqDto: GetNodeListRequestParam) {
     path: `api/clusters/${reqDto.clusterId}/nodes`,
     auth: true
   }).then((res: ApiResponse<GetNodeListResponseDto[]>) => {
-    resStore.push(res);
     return res.data;
   }).catch((e: ApiError) => {
     resStore.push(e.res);

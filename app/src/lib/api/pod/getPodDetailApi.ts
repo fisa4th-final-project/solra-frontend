@@ -11,7 +11,6 @@ export async function getPodDetailApi(reqDto: GetPodDetailRequestParam) {
     path: `api/clusters/${reqDto.clusterId}/namespaces/${reqDto.nsName}/pods/${reqDto.name}`,
     auth: true
   }).then((res: ApiResponse<GetPodDetailResponseDto>) => {
-    resStore.push(res);
     return res.data;
   }).catch((e: ApiError) => {
     resStore.push(e.res);
