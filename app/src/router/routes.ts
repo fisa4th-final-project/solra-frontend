@@ -40,7 +40,7 @@ export const routes = [
           to: '/workspace',
           breadcrumb: [
             { title: '홈', href: '/', disabled: true },
-            { title: '작업영역', href: '/workspace', disabled: false },
+            { title: '작업영역', href: '/', disabled: false },
           ]
         }
       },

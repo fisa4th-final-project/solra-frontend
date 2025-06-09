@@ -15,16 +15,17 @@ export const useResStore = defineStore('res', {
   }),
   actions: {
     push(res: ApiResponse<any>) {
+      if (!res.message) return;
       this.queue.push({
         id: Date.now(),
         text: res.message,
         show: true,
         timeout: 3000,
         success: res.success ? 'success' : 'error'
-      })
+      });
     },
     remove(id: number) {
-      this.queue = this.queue.filter((item) => item.id !== id)
+      this.queue = this.queue.filter((item) => item.id !== id);
     },
     clear() {
       this.queue = []
