@@ -4,7 +4,7 @@ export const sidebarMenus = [
     icon: 'mdi-aspect-ratio',
     to: '/',
     roles: [
-      'ROOT', 'DEVELOPER'
+      'ROOT', 'DEVELOPER', 'ORG_ADMIN', 'DEPT_ADMIN'
     ]
   },
   {
@@ -20,7 +20,7 @@ export const sidebarMenus = [
     icon: 'mdi-card-account-details',
     to: '/admin/privilege',
     roles: [
-      'ROOT', 'ORG_ADMIN'
+      'ROOT'
     ]
   },
   {

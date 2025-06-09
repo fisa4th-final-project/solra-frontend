@@ -5,6 +5,7 @@
     @selected="selected"
     @is-empty="isEmpty"
     v-if="auth.hasPerm('DEPLOYMENT_READ')"
+    ref="$dataCardList"
   >
     <template v-slot:item="{ item }">
       <tr>
@@ -20,6 +21,7 @@ import DataCardList from '@/components/common/DataCardList.vue';
 import type { GetDeployListRequestParam, GetDeployListResponseDto } from '@/lib/api/deploy/deployDto';
 import { apiHandler } from '@/lib/global/apiManager';
 import { useAuthStore } from '@/store/auth';
+import { ref } from 'vue';
 
 const auth = useAuthStore();
 
@@ -43,5 +45,11 @@ const selected = (item: GetDeployListResponseDto) => {
 const dataHandler = async (req: GetDeployListRequestParam) => {
   return await apiHandler.getDeployListApi(req);
 };
+
+const $dataCardList = ref();
+
+defineExpose({
+  loadData: async () => await $dataCardList.value?.loadData?.()
+});
 
 </script>

@@ -5,10 +5,10 @@
         <span class="text-h5">부서 정보</span>
       </v-col>
       <v-col lg="4" md="12" sm="12">
-        <GetDeptDetail title="소속 부서" :req="deptReq" />
+        <GetDeptDetail title="소속 부서" />
       </v-col>
       <v-col lg="8" md="12" sm="12">
-        <GetUserList :req="userReq" />
+        <GetUserList :req="userReq" :is-in-workspace="true"/>
       </v-col>
     </v-row>
     <v-divider class="my-16"></v-divider>
@@ -32,7 +32,7 @@
       <v-col cols="12">
         <v-row justify="space-between" align="center" class="px-3">
           <span class="text-h5 text-uppercase pa-0">
-            pod
+            POD
           </span>
           <v-col>
             <v-row v-if="isEmptyList['pod']">
@@ -46,19 +46,18 @@
             <v-divider/>
           </v-col>
           
-          <v-icon> <!-- TODO: 새로고침 기능 추가 -->
-            mdi-refresh
-          </v-icon>   
+          <v-btn flat variant="plain" icon="mdi-refresh" @click="$getPodList?.loadData()"/>
         </v-row>
         <GetPodList 
           :req="{clusterId: form.cluster.clusterId, nsName: form.ns.name}"
           @is-empty="(empty) => isEmpty('pod', empty)"
+          ref="$getPodList"
         />
       </v-col>
       <v-col cols="12">
         <v-row justify="space-between" align="center" class="px-3">
           <span class="text-h5 text-uppercase pa-0">
-            SVC
+            DEPLOY
           </span>
           <v-col>
             <v-row v-if="isEmptyList['deploy']">
@@ -71,19 +70,18 @@
             </v-row>
             <v-divider/>
           </v-col>
-          <v-icon> <!-- TODO: 새로고침 기능 추가 -->
-            mdi-refresh
-          </v-icon>   
+          <v-btn flat variant="plain" icon="mdi-refresh" @click="$getDeployList?.loadData()"/>
         </v-row>
         <GetDeployList 
           :req="{clusterId: form.cluster.clusterId, nsName: form.ns.name}"
           @is-empty="(empty) => isEmpty('deploy', empty)"
+          ref="$getDeployList"
         />
       </v-col>
       <v-col cols="12">
         <v-row justify="space-between" align="center" class="px-3">
           <span class="text-h5 text-uppercase pa-0">
-            Deploy
+            SVC
           </span>
           <v-col>
             <v-row v-if="isEmptyList['svc']">
@@ -96,13 +94,12 @@
             </v-row>
             <v-divider/>
           </v-col> 
-          <v-icon> <!-- TODO: 새로고침 기능 추가 -->
-            mdi-refresh
-          </v-icon>   
+          <v-btn flat variant="plain" icon="mdi-refresh" @click="$getSvcList?.loadData()"/>
         </v-row>
         <GetSvcList 
           :req="{clusterId: form.cluster.clusterId, nsName: form.ns.name}"
           @is-empty="(empty) => isEmpty('svc', empty)"
+          ref="$getSvcList"
         />
       </v-col>
 
@@ -119,7 +116,6 @@ import GetSvcList from '@/components/data/GetSvcList.vue';
 import GetUserList from '@/components/data/GetUserList.vue';
 import SelectClusterList from '@/components/data/SelectClusterList.vue';
 import SelectNSList from '@/components/data/SelectNSList.vue';
-import type { GetDeptDetailRequestParam } from '@/lib/api/dept/deptDto';
 import type { GetUserListQueryParam } from '@/lib/api/user/userDto';
 import { useAuthStore } from '@/store/auth';
 import { onMounted, ref, watch } from 'vue';
@@ -127,8 +123,6 @@ import { onMounted, ref, watch } from 'vue';
 const auth = useAuthStore();
 
 const valid = ref(false);
-
-const deptReq = ref<GetDeptDetailRequestParam>({} as GetDeptDetailRequestParam);
 
 const userReq = ref<GetUserListQueryParam>({} as GetUserListQueryParam);
 
@@ -152,18 +146,19 @@ const form = ref<{
 
 const isEmptyList = ref<Record<string, boolean>>({});
 
+const $getPodList = ref();
+const $getSvcList = ref();
+const $getDeployList = ref();
+
 const isEmpty = (type: string, empty: boolean) => {
   isEmptyList.value[type] = empty;
 }
 
 onMounted(() => {
-  deptReq.value.deptId = auth.getMe.auth.deptId;
   userReq.value.deptName = auth.getMe.user.deptName;
-  console.log(valid);
 });
 
 watch(() => auth.getMe, () => {
-  deptReq.value.deptId = auth.getMe.auth.deptId;
   userReq.value.deptName = auth.getMe.user.deptName;
 });
 

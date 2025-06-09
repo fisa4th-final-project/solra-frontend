@@ -69,6 +69,7 @@ const props = defineProps<{
     orgName?: string;
     deptName?: string;
   }
+  isInWorkspace?: boolean;
 }>();
 
 const emit = defineEmits<{
@@ -104,8 +105,12 @@ const loadUser = (options?: any) => {
     page.value = options.page;
     size.value = options.itemsPerPage;
   }
+  const req = (auth.hasPerm('USER_READ') && !props.isInWorkspace) ? props.req : {
+    orgName: auth.getMe.user.orgName,
+    deptName: auth.getMe.user.deptName 
+  }
   apiHandler.getUserListApi({
-    ...props.req,
+    ...req,
     page: page.value - 1,
     size: size.value,
   }).then((res) => {

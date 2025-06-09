@@ -5,6 +5,7 @@
     @selected="selected"
     @is-empty="isEmpty"
     v-if="auth.hasPerm('POD_READ')"
+    ref="$dataCardList"
   >
     <template v-slot:item="{ item }">
       <tr >
@@ -21,6 +22,7 @@ import DataCardList from '@/components/common/DataCardList.vue';
 import type { GetPodListRequestParam, GetPodListResponseDto } from '@/lib/api/pod/podDto';
 import { apiHandler } from '@/lib/global/apiManager';
 import { useAuthStore } from '@/store/auth';
+import { ref } from 'vue';
 
 const auth = useAuthStore();
 
@@ -43,5 +45,11 @@ const isEmpty = (item: boolean) => {
 const dataHandler = async (req: GetPodListRequestParam) => {
   return await apiHandler.getPodListApi(req);
 };
+
+const $dataCardList = ref();
+
+defineExpose({
+  loadData: async () => await $dataCardList.value?.loadData?.()
+})
 
 </script>

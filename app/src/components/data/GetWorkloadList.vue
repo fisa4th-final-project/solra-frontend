@@ -5,6 +5,7 @@
     :detail="{enable:true}"
     @selected="selected"
     @is-empty="isEmpty"
+    ref="$dataCardList"
   >
     <template v-slot:detailTitle>
       <v-row justify="space-between" align="center">
@@ -114,5 +115,11 @@ const dataHandler = async (req: GetPodListRequestParam) => {
     svcList: svcList, deployList: deployList
   });
 };
+
+const $dataCardList = ref();
+
+defineExpose({
+  loadData: async () => await $dataCardList.value?.loadData?.()
+});
 
 </script>

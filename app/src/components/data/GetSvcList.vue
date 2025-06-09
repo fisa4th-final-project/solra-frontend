@@ -5,6 +5,7 @@
     @selected="selected"
     @is-empty="isEmpty"
     v-if="auth.hasPerm('SERVICE_READ')"
+    ref="$dataCardList"
   >
     <template v-slot:item="{ item }">
 
@@ -31,6 +32,7 @@ import type { GetSvcListRequestParam, GetSvcListResponseDto } from '@/lib/api/sv
 import DataCardList from '@/components/common/DataCardList.vue';
 import { apiHandler } from '@/lib/global/apiManager';
 import { useAuthStore } from '@/store/auth';
+import { ref } from 'vue';
 
 const auth = useAuthStore();
 
@@ -53,5 +55,11 @@ const isEmpty = (item: boolean) => {
 const dataHandler = async (req: GetSvcListRequestParam) => {
   return await apiHandler.getSvcListApi(req);
 };
+
+const $dataCardList = ref();
+
+defineExpose({
+  loadData: async () => await $dataCardList.value?.loadData?.()
+});
 
 </script>
