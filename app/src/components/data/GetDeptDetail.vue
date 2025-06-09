@@ -1,7 +1,7 @@
 <template>
   <DataCard
     :header="{title, icon: 'mdi-briefcase'}"
-    :api="{req: req ?? {deptId: auth.getMe.auth.deptId}, dataHandler}"
+    :api="{req: computeReq, dataHandler}"
     v-if="auth.hasPerm('DEPT_READ')"
   >      
     <template v-slot:item="{ item }">
@@ -55,16 +55,21 @@ import DataCard from '@/components/common/DataCard.vue';
 import type { GetDeptDetailRequestParam } from '@/lib/api/dept/deptDto';
 import { apiHandler } from '@/lib/global/apiManager';
 import { useAuthStore } from '@/store/auth';
+import { computed } from 'vue';
 
 const auth = useAuthStore();
 
-defineProps<{
+const props = defineProps<{
   title: string;
   req?: GetDeptDetailRequestParam;
 }>();
 
+const computeReq = computed(() => {
+  return props.req ?? {deptId: auth.getMe.auth.deptId}
+})
+
 const dataHandler = async (req: GetDeptDetailRequestParam) => {
-  return await apiHandler.getDeptDetailApi(req);
+  if (req.deptId) return await apiHandler.getDeptDetailApi(req);
 };
 
 </script>
