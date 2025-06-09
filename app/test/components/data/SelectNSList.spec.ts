@@ -24,6 +24,7 @@ describe('SelectNSList.vue', () => {
 
   const mockResponse = [
     {
+      clusterId: 1,
       name: 'test-ns-name-01',
       status: 'test-ns-status-01',
       labels: '{}',
@@ -31,6 +32,7 @@ describe('SelectNSList.vue', () => {
       createdAt: new Date('2025-05-19')
     },
     {
+      clusterId: 1,
       name: 'test-ns-name-02',
       status: 'test-ns-status-02',
       labels: '{}',
