@@ -8,13 +8,16 @@
   >
     <div>
       <v-list-item
-        prepend-icon="mdi-weather-sunny" 
         value="/"
         style="
+          padding-left: 0;
           padding-top: 20px;
           padding-bottom: 20px;
         "
       >
+        <template v-slot:prepend>
+          <v-img src="/solra.png" width="56" height="56" class="mr-4"/>
+        </template>
         <v-list-item-title
           class="text-h6"
           style="
