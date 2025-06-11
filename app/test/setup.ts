@@ -1,3 +1,12 @@
+vi.mock('@/store/auth', () => {
+  return {
+    useAuthStore: () => ({
+      hasPerm: vi.fn().mockReturnValue(true),
+      hasAnyRoles: vi.fn().mockReturnValue(true),
+    }),
+  }
+});
+
 // test/setup.ts
 import { config } from '@vue/test-utils'
 import { createTestingPinia } from '@pinia/testing'
@@ -6,6 +15,8 @@ import * as components from 'vuetify/components'
 import * as directives from 'vuetify/directives'
 import { createRouter, createWebHistory } from 'vue-router'
 import { routes } from '@/router/routes'
+import { setActivePinia } from 'pinia'
+import { vi } from 'vitest'
 
 // Vuetify 테마 설정
 const lightTheme = {
@@ -47,8 +58,13 @@ const router = createRouter({
 })
 
 // 글로벌 설정 적용
+const pinia = createTestingPinia({
+  stubActions: false,
+})
+setActivePinia(pinia)
+
 config.global.plugins = [
-  createTestingPinia({ stubActions: false }), // 실제 store 동작 허용
+  pinia,
   vuetify,
   router,
 ]
@@ -57,7 +73,7 @@ config.global.stubs = {
   Transition: false,
 }
 
-// test/setup.ts 하단에 추가
+// ResizeObserver mock
 global.ResizeObserver = class {
   observe() { }
   unobserve() { }
